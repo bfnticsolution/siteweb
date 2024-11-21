@@ -1,0 +1,2315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="NTIC Solution - Votre partenaire pour la transformation numérique">
+    <title>NTIC Solution</title>
+
+    <!-- Styles Bootstrap et police -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <!-- Styles personnalisés -->
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        header {
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .carousel-item {
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .carousel-caption h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            text-shadow: 0 4px 6px rgb(192, 77, 0);
+        }
+
+        .carousel-caption p {
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            text-shadow: 0 3px 5px rgba(0, 0, 0, 0.6);
+        }
+
+        nav a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #f58c00;
+        }
+
+        .logo {
+            height: 50px;
+            width: auto;
+        }
+
+        /* Modales */
+        .modal {
+            z-index: 1050;
+        }
+
+        .modal-backdrop {
+            z-index: 1040;
+        }
+
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        .modal-content {
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal img {
+            border-radius: 10px;
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+
+        .modal-body {
+            text-align: justify;
+            line-height: 1.8;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .modal.fade .modal-dialog {
+            transform: translateY(-50px);
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+        }
+
+        .modal.show .modal-dialog {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Animation de fade-in */
+.animate-fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 1.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animation slide-up */
+.animate-slide-up {
+    opacity: 0;
+    transform: translateY(50px);
+    animation: slideUp 1.5s ease-out forwards;
+}
+
+@keyframes slideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animation zoom-in */
+.animate-zoom-in {
+    transform: scale(0.8);
+    opacity: 0;
+    animation: zoomIn 1.2s ease-out forwards;
+}
+
+@keyframes zoomIn {
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Animation balayage sur les titres */
+.animate-swipe {
+    position: relative;
+    overflow: hidden;
+    color: transparent;
+    animation: swipe 1.5s forwards;
+}
+
+.animate-swipe::before {
+    content: '';
+    position: absolute;
+    background-color: #f58c00;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    animation: swipe-bg 1.5s forwards;
+}
+
+@keyframes swipe {
+    50% {
+        color: transparent;
+    }
+    100% {
+        color: #003366;
+    }
+}
+
+@keyframes swipe-bg {
+    0% {
+        left: 0;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+/* Animation au survol (mise en lumière) */
+.card:hover {
+    transform: translateY(-10px);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* 1. Fade-In */
+.animate-fade-in {
+    opacity: 0;
+    animation: fadeIn 1.5s ease-in forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+/* 2. Slide-In-Left */
+.animate-slide-in-left {
+    opacity: 0;
+    transform: translateX(-50px);
+    animation: slideInLeft 1.5s ease-out forwards;
+}
+
+@keyframes slideInLeft {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* 3. Slide-In-Right */
+.animate-slide-in-right {
+    opacity: 0;
+    transform: translateX(50px);
+    animation: slideInRight 1.5s ease-out forwards;
+}
+
+@keyframes slideInRight {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* 4. Zoom-In */
+.animate-zoom-in {
+    opacity: 0;
+    transform: scale(0.8);
+    animation: zoomIn 1.5s ease-in-out forwards;
+}
+
+@keyframes zoomIn {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* 5. Bounce */
+.animate-bounce {
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+/* 6. Rotate-In */
+.animate-rotate-in {
+    opacity: 0;
+    transform: rotate(-90deg);
+    animation: rotateIn 1.5s ease-out forwards;
+}
+
+@keyframes rotateIn {
+    to {
+        opacity: 1;
+        transform: rotate(0);
+    }
+}
+
+/* 7. Flip-In */
+.animate-flip-in {
+    opacity: 0;
+    transform: rotateY(-180deg);
+    animation: flipIn 1.5s ease-in-out forwards;
+}
+
+@keyframes flipIn {
+    to {
+        opacity: 1;
+        transform: rotateY(0);
+    }
+}
+
+/* 8. Fade-In Scale */
+.animate-fade-in-scale {
+    opacity: 0;
+    transform: scale(0.8);
+    animation: fadeInScale 1.5s ease-out forwards;
+}
+
+@keyframes fadeInScale {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* 9. Wobble */
+.animate-wobble {
+    animation: wobble 1.5s infinite;
+}
+
+@keyframes wobble {
+    0%, 100% {
+        transform: rotate(0);
+    }
+    25% {
+        transform: rotate(-5deg);
+    }
+    50% {
+        transform: rotate(5deg);
+    }
+}
+
+/* 10. Bounce-In */
+.animate-bounce-in {
+    opacity: 0;
+    transform: scale(0.5);
+    animation: bounceIn 1.5s ease-out forwards;
+}
+
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(1.2);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+/* Général */
+.testimonial-card {
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Icône des témoignages */
+.testimonial-icon {
+    font-size: 2rem;
+    color: #f58c00;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* Animations */
+.animate-fade-in {
+    animation: fadeIn 1.5s ease-out forwards;
+}
+
+.animate-slide-in-left {
+    animation: slideInLeft 1.5s ease-out forwards;
+}
+
+.animate-slide-in-right {
+    animation: slideInRight 1.5s ease-out forwards;
+}
+
+.animate-zoom-in {
+    animation: zoomIn 1.5s ease-out forwards;
+}
+
+.animate-rotate-in {
+    animation: rotateIn 1.5s ease-out forwards;
+}
+
+.animate-bounce {
+    animation: bounce 2s infinite;
+}
+
+.animate-fade-in-scale {
+    animation: fadeInScale 1.5s ease-out forwards;
+}
+
+.animate-wobble {
+    animation: wobble 1.5s infinite;
+}
+
+.animate-flip-in {
+    animation: flipIn 1.5s ease-out forwards;
+}
+
+.animate-slide-up {
+    animation: slideUp 1.5s ease-out forwards;
+}
+
+.animate-bounce-in {
+    animation: bounceIn 1.5s ease-out forwards;
+}
+
+/* Keyframes */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes rotateIn {
+    from {
+        transform: rotate(-90deg);
+        opacity: 0;
+    }
+    to {
+        transform: rotate(0);
+        opacity: 1;
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes wobble {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(-5deg);
+    }
+    50% {
+        transform: rotate(5deg);
+    }
+}
+
+@keyframes flipIn {
+    from {
+        transform: rotateY(-180deg);
+        opacity: 0;
+    }
+    to {
+        transform: rotateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes bounceIn {
+    from {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.8;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+#testimonials .card {
+    border-radius: 10px;
+    padding: 1.5rem;
+    text-align: center;
+    background: #024980;
+    box-shadow: 0 4px 10px rgb(215, 112, 1);
+}
+
+#testimonials .card-text {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: #fdfdfd;
+}
+
+#testimonials .text-muted {
+    font-size: 0.9rem;
+    color: #945a02;
+}
+            #back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: inline-block;
+    background-color: #f58c00;
+    color: #fff;
+    padding: 10px;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 24px; /* Augmentez pour une plus grande icône */
+    box-shadow: 0px 4px 6px rgba(217, 84, 12, 0.956);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#back-to-top:hover {
+    background-color: #003366; /* Changement de couleur au survol */
+    transform: scale(1.1); /* Légère augmentation au survol */
+}
+
+.list-group-item {
+    font-size: 0.9rem;
+    padding: 0.75rem 1rem;
+    background-color: #f8f9fa;
+    border: none;
+}
+.list-group-item:hover {
+    background-color: #f58c00;
+    color: #fff;
+    transition: background-color 0.3s ease;
+}
+.card-body a {
+    margin-left: 10px;
+}
+
+.list-group-item {
+    font-size: 1rem;
+    border: none;
+    padding: 10px 15px;
+    background: #f8f9fa;
+    transition: background-color 0.3s ease;
+}
+
+.list-group-item:hover {
+    background-color: #f58c00;
+    color: white;
+}
+
+.modal-body h3, .modal-body h4 {
+    color: #003366;
+    font-weight: bold;
+}
+
+.modal-body a.btn {
+    font-size: 0.9rem;
+    padding: 10px 20px;
+}
+
+@keyframes fadeInScale {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(1.1);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.animate-fade-in-scale {
+    opacity: 0;
+    transform: scale(0.8);
+    animation: fadeInScale 1.5s ease-out forwards;
+}
+
+/* Swipe animation for heading */
+@keyframes swipe-in {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.animate-swipe {
+    animation: swipe-in 1.5s ease-in-out;
+}
+
+/* Hover effect on cards */
+.animate-hover:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Fade-in effect */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 1.5s ease-in-out forwards;
+}
+
+/* Slide-in effects */
+@keyframes slide-in-left {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.animate-slide-in-left {
+    animation: slide-in-left 10.5s ease-out forwards;
+}
+
+@keyframes slide-in-right {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.animate-slide-in-right {
+    animation: slide-in-right 1.5s ease-out forwards;
+}
+
+/* Zoom-in scale effect */
+@keyframes zoom-in-scale {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.animate-zoom-in-scale {
+    animation: zoom-in-scale 1.2s ease-out forwards;
+}
+
+/* Pulse effect */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.animate-pulse {
+    animation: pulse 1.5s infinite;
+}
+
+/* Bounce-in effect */
+@keyframes bounce-in {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.animate-bounce-in {
+    animation: bounce-in 1.5s ease-out forwards;
+}
+
+/* Wobble effect */
+@keyframes wobble {
+    0%, 100% {
+        transform: rotate(0);
+    }
+    25% {
+        transform: rotate(-5deg);
+    }
+    50% {
+        transform: rotate(5deg);
+    }
+}
+
+.animate-wobble {
+    animation: wobble 1.2s infinite;
+}
+
+/* Conteneur général Breaking News */
+.breaking-news {
+    background-color: #003366;
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+/* Titre Breaking News */
+.breaking-news-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-right: 15px;
+    background-color: #f58c00;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    animation: pulse 2s infinite;
+}
+
+/* Liste des actualités */
+.breaking-content {
+    flex: 1;
+    overflow: hidden;
+}
+
+.newsticker {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    height: 20px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.5s ease;
+}
+
+.newsticker li {
+    font-size: 1rem;
+    padding: 5px 0;
+    color: white;
+    display: block;
+    text-align: left;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.7s forwards;
+}
+
+.newsticker li a {
+    text-decoration: none;
+    color: white;
+    transition: color 0.3s ease, font-weight 0.3s ease;
+}
+
+.newsticker li a:hover {
+    color: #f58c00;
+    font-weight: bold;
+}
+
+/* Animation pour la section Breaking News */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animation Pulse sur le titre */
+@keyframes pulse {
+    0%, 100% {
+        background-color: #f58c00;
+    }
+    50% {
+        background-color: #ff9a32;
+    }
+}
+/* Conteneur général Breaking News */
+.breaking-news {
+    background-color: #003366;
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+/* Titre Breaking News */
+.breaking-news-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-right: 15px;
+    background-color: #f58c00;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    animation: pulse 2s infinite;
+}
+
+/* Liste des actualités */
+.breaking-content {
+    flex: 1;
+    overflow: hidden;
+}
+
+.newsticker {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    height: 20px;
+    display: flex;
+    flex-direction: column;
+    animation: scrollNews 10s linear infinite;
+}
+
+.newsticker li {
+    font-size: 1rem;
+    padding: 5px 0;
+    color: white;
+    text-align: left;
+    animation: fadeInUp 0.7s forwards;
+}
+
+.newsticker li a {
+    text-decoration: none;
+    color: white;
+    transition: color 0.3s ease, font-weight 0.3s ease;
+}
+
+.newsticker li a:hover {
+    color: #f58c00;
+    font-weight: bold;
+}
+
+/* Animation pour la section Breaking News */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animation défilement */
+@keyframes scrollNews {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-100%);
+    }
+}
+
+/* Animation Pulse sur le titre */
+@keyframes pulse {
+    0%, 100% {
+        background-color: #f58c00;
+    }
+    50% {
+        background-color: #ff9a32;
+    }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .breaking-news {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .breaking-news-title {
+        margin-bottom: 10px;
+    }
+}
+
+.breaking-news-title i {
+    margin-right: 8px; /* Espace entre l'icône et le texte */
+    color: white; /* Couleur de l'icône */
+    animation: bounce 2s infinite; /* Ajout d'une animation */
+}
+
+/* Animation Bounce */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+#main-content .card {
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+    background: #f9f9f9;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#main-content .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+#main-content .card-title {
+    font-size: 1.2rem;
+    color: #003366;
+    margin-bottom: 0.5rem;
+}
+
+#main-content .card-text {
+    font-size: 0.95rem;
+    color: #555;
+}
+
+#main-content .btn-primary {
+    background-color: #f58c00;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+#main-content .btn-primary:hover {
+    background-color: #d86e00;
+}
+
+.nav-link i {
+    margin-right: 8px; /* Espacement entre l'icône et le texte */
+    color: #f58c00;    /* Couleur de l'icône */
+    font-size: 1.2em;  /* Taille de l'icône */
+}
+
+.nav-link:hover i {
+    color: white;    /* Couleur au survol */
+}
+.custom-navbar {
+    background-color: #003366;
+}
+
+.footer {
+    background: #003366;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}
+
+.footer {
+    background: #003366;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.footer-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+.footer-section {
+    text-align: left;
+}
+
+.footer-section h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #ff6600;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 5px;
+}
+
+.footer-section ul li a {
+    text-decoration: none;
+    color: white;
+    transition: color 0.3s;
+}
+
+.footer-section ul li a:hover {
+    color: #ff6600;
+}
+
+.footer-section p, .footer-section a {
+    font-size: 14px;
+    color: white;
+    margin: 5px 0;
+}
+
+.social-icons a {
+    display: inline-block;
+    margin-right: 10px;
+    width: 24px;
+    height: 24px;
+}
+
+.social-icons img {
+    width: 100%;
+    height: auto;
+}
+
+/* Section Styling */
+#contact {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    font-family: 'Roboto', sans-serif;
+    animation: fadeInDown 1.2s ease-in-out;
+}
+
+/* Form Fields */
+.animated-input {
+    transition: all 0.3s ease;
+}
+
+.animated-input:focus {
+    border-color: #003366;
+    box-shadow: 0px 0px 8px rgba(0, 51, 102, 0.3);
+}
+
+/* Button Styling */
+.btn {
+    background-color: #003366;
+    border: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+    background-color: #002244;
+    transform: scale(1.05);
+}
+
+/* Success Message */
+#successMessage {
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Animations */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
+        </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="#"><img src="images/logo ntic.png" alt="NTIC Solution Logo" class="logo"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="#home"><i class="fas fa-home"></i> Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/academievirtuelle/index.html"><i class="fas fa-graduation-cap"></i>Nos Formations</a></li>                    
+                    <li class="nav-item"><a class="nav-link" href="#services"><i class="fas fa-cogs"></i> Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#portfolio"><i class="fas fa-briefcase"></i> Portfolio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#blog"><i class="fas fa-blog"></i> Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about"><i class="fas fa-info-circle"></i> À propos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Accueil -->
+    <header id="home" class="text-white text-center position-relative">
+        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active" style="background-image: url('https://f.hellowork.com/blogdumoderateur/2019/04/formation-marketing-digital.jpg');">
+                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center h-100">
+                        <h1 class="animated-text">Boostez votre entreprise avec des solutions innovantes</h1>
+                        <p class="lead mt-3 animated-text">Explorez nos services pour une transformation digitale réussie.</p>
+                    </div>
+                </div>
+                <div class="carousel-item active" style="background-image: url('https://www.tiz.fr/app/uploads/2019/11/cabinet-conseil-transformation-digitale-1920x944.jpeg');">
+                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center h-100">
+                        <h1 class="animated-text">Votre partenaire pour une transformation numérique réussie</h1>
+                        <p class="lead mt-3 animated-text">Nous offrons des solutions sur mesure pour répondre à vos besoins numériques.</p>
+                    </div>
+                </div>
+                <div class="carousel-item" style="background-image: url('https://dynamicmedia.accenture.com/is/image/accenture/Accenture-Ever-Ready-Parallax-1600x900?qlt=85&wid=1024&ts=1706776101359&fit=constrain&dpr=off');">
+                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center h-100">
+                        <h1 class="animated-text">Boostez votre entreprise avec des solutions innovantes</h1>
+                        <p class="lead mt-3 animated-text">Explorez nos services pour une transformation digitale réussie.</p>
+                    </div>
+                </div>
+                <div class="carousel-item" style="background-image: url('https://img.freepik.com/photos-gratuite/groupe-hommes-affaires-divers-gestionnaires-analysant-graphiques-entreprise_482257-2396.jpg');">
+                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center h-100">
+                        <h1 class="animated-text">L'avenir de votre entreprise commence ici</h1>
+                        <p class="lead mt-3 animated-text">NTIC Solution, votre allié dans le numérique.</p>
+                    </div>
+                </div>
+                <div class="carousel-item active" style="background-image: url(' https://www.millennium-digital.com/wp-content/uploads/2024/06/04957feethumbnail-1170x576.jpeg');">
+                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center h-100">
+                        <h1 class="animated-text">Votre partenaire pour une transformation numérique réussie</h1>
+                        <p class="lead mt-3 animated-text">Nous offrons des solutions sur mesure pour répondre à vos besoins numériques.</p>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Précédent</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Suivant</span>
+            </button>
+        </div>
+    </header>
+    <section class="breaking-news breaking-news-style-1">
+        <div class="breaking-news-title">
+            <i class="fas fa-bullhorn"></i> À la une
+        </div>        
+        <div class="breaking-content">
+            <ul class="newsticker">
+                <li><a href="#">🚀 Offre exclusive : boostez votre visibilité avec notre service de marketing digital.</a></li>
+                <li><a href="#">📢 Nous recrutons ! Rejoignez l'équipe NTIC Solution en 2025.</a></li>
+                <li><a href="#">🌍 Lancement de notre nouvelle plateforme de formation en ligne.</a></li>
+                <li><a href="#">📊 Augmentez votre productivité avec nos outils de gestion en ligne.</a></li>
+                <li><a href="#">🔒 Guide complet pour sécuriser vos données en entreprise.</a></li>
+            </ul>
+        </div>
+    </section>
+    <section id="main-content" class="py-5">
+        <div class="container">
+            <div class="row g-4">
+                <!-- Colonne 1 -->
+                <div class="col-md-3">
+                    <div class="card shadow">
+                        <img src="images/Creation-de-Site-Internet-Professionnel_.webp" alt="Développement Web" class="card-img-top animate-zoom-in">
+                        <div class="card-body">
+                            <h5 class="card-title animate-slide-in-left">Développement Web</h5>
+                            <p class="card-text">Création de sites vitrines et e-commerce avec des designs modernes et fonctionnels.</p>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#service1Modal">En savoir plus</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Colonne 2 -->
+                <div class="col-md-3">
+                    <div class="card shadow">
+                        <img src="images/applications-mobiles.webp" alt="Développement Mobile" class="card-img-top animate-slide-up">
+                        <div class="card-body">
+                            <h5 class="card-title animate-slide-in-right">Développement Mobile</h5>
+                            <p class="card-text">Applications Android et iOS performantes pour répondre à vos besoins spécifiques.</p>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#service2ModalLabel">En savoir plus</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Colonne 3 -->
+                <div class="col-md-3">
+                    <div class="card shadow">
+                        <img src="images/services-informatiques-agence-digitale.webp" alt="Marketing Digital" class="card-img-top animate-zoom-in">
+                        <div class="card-body">
+                            <h5 class="card-title animate-bounce">Marketing Digital</h5>
+                            <p class="card-text">SEO, campagnes publicitaires et gestion de réseaux sociaux pour booster votre visibilité.</p>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#service1Modal">En savoir plus</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Nouvelle Colonne -->
+                <div class="col-md-3">
+                    <div class="card shadow">
+                        <img src="https://deliveredsocial.com/wp-content/uploads/2024/01/The-Landscape-of-Social-Media-Marketing.png" alt="Réseaux Sociaux" class="card-img-top animate-slide-up">
+                        <div class="card-body">
+                            <h5 class="card-title animate-wobble">Réseaux Sociaux</h5>
+                            <p class="card-text">Stratégies pour gérer votre branding et engager vos communautés en ligne.</p>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#service1Modal">En savoir plus</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio -->
+    <section id="portfolio" class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-4">Nos réalisations récentes</h2>
+        <div class="row g-4">
+            <!-- Projet 1 -->
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <img src="images/pasted image 0 (1).png" alt="Développement d'une plateforme e-commerce" class="card-img-top" style="height: 200px; object-fit: cover;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Développement d'une plateforme e-commerce</h5>
+                        <p class="card-text">
+                            Création d'une plateforme e-commerce moderne pour une marque de mode, intégrant des fonctionnalités avancées telles que le paiement en ligne, la gestion de stock, et une expérience utilisateur fluide.
+                        </p>
+                        <ul class="list-group list-group-flush mb-3 text-start">
+                            <li class="list-group-item">✨ <strong>Technologies utilisées :</strong> HTML, CSS, JavaScript, et une intégration avec WooCommerce.</li>
+                            <li class="list-group-item">📦 <strong>Fonctionnalités clés :</strong> Recherche avancée, gestion des commandes, et suivi des livraisons en temps réel.</li>
+                            <li class="list-group-item">🎨 <strong>Design :</strong> Responsive et optimisé pour les appareils mobiles, avec une interface utilisateur moderne.</li>
+                        </ul>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#project1Modal">En savoir plus</button>
+                    </div>
+                    </div>
+            </div>
+            <!-- Projet 2 -->
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <img src="images/logo université virtuelle.png" alt="Plateforme de formation en ligne" class="card-img-top" style="height: 200px; object-fit: cover;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Académie Virtuelle</h5>
+                        <p class="card-text">
+                            Développement d'une plateforme éducative complète pour des cours en ligne, intégrant vidéos, boutique PDF,  quiz et certification.
+                        </p>
+                        <ul class="list-group list-group-flush mb-3 text-start">
+                            <li class="list-group-item">📚 <strong>Fonctionnalités :</strong> Gestion des cours, suivi des progrès des utilisateurs, et paiements en ligne.</li>
+                            <li class="list-group-item">🎥 <strong>Supports :</strong> Vidéos, PDF, et quiz interactifs pour un apprentissage engageant.</li>
+                            <li class="list-group-item">🌐 <strong>Technologies :</strong> React, Node.js, MongoDB, et API Stripe pour les paiements sécurisés.</li>
+                        </ul>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#project2Modal">En savoir plus</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Projet 3 -->
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <img src="images/8275611_rmcsport.jpg" alt="Africa Box TV" class="card-img-top" style="height: 200px; object-fit: cover;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Africa Box TV</h5>
+                        <p class="card-text">
+                            Développement d'une application de streaming TV avec une expérience fluide pour les utilisateurs. L'application propose des chaînes africaines et internationales avec des flux en direct.
+                        </p>
+                        <ul class="list-group list-group-flush mb-3 text-start">
+                            <li class="list-group-item">📺 <strong>Fonctionnalités :</strong> Streaming en direct, abonnements premium, et support multi-plateformes.</li>
+                            <li class="list-group-item">🔗 <strong>Compatibilité :</strong> Mobile, tablette et Smart TV.</li>
+                            <li class="list-group-item">🌍 <strong>Accès :</strong> Chaînes locales et internationales adaptées à divers publics.</li>
+                        </ul>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#projectAfricaBoxTVModal">En savoir plus</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Projet 1 -->
+    <div class="modal fade" id="project1Modal" tabindex="-1" aria-labelledby="project1ModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="project1ModalLabel">Développement d'une plateforme e-commerce</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="https://example.com/project-image.jpg" alt="Projet 1" class="img-fluid mb-3">
+                    <p>
+                        Ce projet consistait à développer une plateforme e-commerce personnalisée pour une marque de mode. L'objectif principal était de fournir une solution complète et intuitive, permettant au client de gérer facilement ses produits, ses commandes, et d'offrir une excellente expérience utilisateur à ses clients.
+                    </p>
+                    <ul>
+                        <li><strong>Objectifs :</strong> Augmenter les ventes en ligne et améliorer la présence numérique de la marque.</li>
+                        <li><strong>Résultats :</strong> +300% d'augmentation des ventes en ligne en six mois après le lancement.</li>
+                        <li><strong>Points forts :</strong> Intégration d'une passerelle de paiement sécurisée, une interface utilisateur simple mais élégante, et un design responsive adapté à tous les appareils.</li>
+                    </ul>
+                    <p>
+                        Vous souhaitez en savoir plus sur ce type de projet ou avez une idée similaire ? Contactez-nous pour discuter de vos besoins !
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal Projet 2 -->
+    <div class="modal fade" id="project2Modal" tabindex="-1" aria-labelledby="project2ModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="project2ModalLabel">Académie Virtuelle</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="https://example.com/education-platform.jpg" alt="Plateforme de formation en ligne" class="img-fluid mb-3">
+                    <p>
+                        Ce projet consistait à concevoir une plateforme de formation en ligne destinée aux jeunes passionnés des nouvelles technologies de l'information et de la communication, aux étudiants et aux professionnels, offrant une large gamme de cours dans différents domaines.
+                    </p>
+                    <ul>
+                        <li><strong>Objectifs :</strong> Fournir une solution éducative intuitive et accessible pour permettre aux utilisateurs d'apprendre à leur propre rythme.</li>
+                        <li><strong>Résultats :</strong> Plus de 10 000 utilisateurs inscrits au cours des six premiers mois après le lancement.</li>
+                        <li><strong>Fonctionnalités :</strong>
+                            <ul>
+                                <li>Interface utilisateur moderne et facile à naviguer.</li>
+                                <li>Système de quiz interactifs pour valider les connaissances acquises.</li>
+                                <li>Gestion des abonnements avec des options de paiement sécurisées.</li>
+                                <li>Certificats de fin de cours générés automatiquement.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Technologies utilisées :</strong> React pour l'interface utilisateur, Node.js pour le back-end, MongoDB pour la base de données, et Stripe pour les paiements en ligne.</li>
+                    </ul>
+                    <p>
+                        Vous êtes intéressé par une solution éducative similaire pour votre entreprise ou organisation ? Contactez-nous dès maintenant pour en discuter !
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Projet 3 -->
+    <div class="modal fade" id="projectAfricaBoxTVModal" tabindex="-1" aria-labelledby="projectAfricaBoxTVModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="projectAfricaBoxTVModalLabel">Africa Box TV</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="https://example.com/africa-box-tv-details.jpg" alt="Africa Box TV" class="img-fluid mb-3">
+                    <p>
+                        **Africa Box TV** est une application révolutionnaire permettant aux utilisateurs d'accéder à une vaste collection de chaînes télévisées africaines et internationales. Le projet se concentre sur la fourniture d'une expérience utilisateur fluide et un contenu accessible sur plusieurs plateformes.
+                    </p>
+                    <ul>
+                        <li><strong>Objectifs :</strong> Offrir une solution de streaming fiable et accessible pour les utilisateurs africains et de la diaspora.</li>
+                        <li><strong>Fonctionnalités clés :</strong>
+                            <ul>
+                                <li>Flux M3U8 pour un streaming en direct de haute qualité.</li>
+                                <li>Abonnements premium pour débloquer des chaînes exclusives.</li>
+                                <li>Système d'auto-reconnexion pour assurer une expérience ininterrompue.</li>
+                                <li>Interface intuitive avec un guide des programmes intégré.</li>
+                                <li>Mode hors ligne pour le téléchargement de vidéos sélectionnées.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Technologies utilisées :</strong> Flutter pour le développement multi-plateformes (Android, iOS, Smart TV) et Firebase pour la gestion des utilisateurs et des abonnements.</li>
+                        <li><strong>Résultats :</strong> Plus de 50 000 téléchargements au cours des 6 premiers mois avec une satisfaction client élevée.</li>
+                        <li><strong>Support :</strong> Intégration d'une assistance en temps réel via WhatsApp et email (support@africaboxtv.com).</li>
+                    </ul>
+                    <p>
+                        Africa Box TV continue d'innover en ajoutant régulièrement de nouvelles chaînes et fonctionnalités pour améliorer l'expérience utilisateur.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Titre de la Modale</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Contenu de la modale.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+    <!-- Blog -->
+                <section id="blog" class="py-5 bg-light">
+                    <div class="container">
+                        <h2 class="text-center mb-4 animate-fade-in-scale">Notre Blog</h2>
+
+                        <div class="row g-4">
+                            <!-- Article 1 -->
+                            <div class="col-md-6">
+                                <div class="card animate-slide-in-left">
+                                    <img src="https://www.eficio.ca/wp-content/uploads/2023/04/Les-cl%C3%A9s-de-succ%C3%A8s-pour-une-transformation-num%C3%A9rique-r%C3%A9ussie-Banni%C3%A8re-site-web.png" class="card-img-top animate-zoom-in" alt="Transformation numérique">
+                                    <div class="card-body">
+                                        <h5 class="card-title animate-bounce">Les clés de la transformation numérique réussie</h5>
+                                        <p class="card-text">
+                                            La transformation numérique est bien plus qu’un simple processus technologique. C’est une stratégie globale qui révolutionne la manière dont les entreprises opèrent et interagissent avec leurs clients. Voici comment elle peut changer votre entreprise :
+                                        </p>
+                                        <ul class="list-group list-group-flush mb-3">
+                                            <li class="list-group-item">
+                                                <strong>🚀 Augmentez votre productivité grâce à l'automatisation :</strong> Automatisez les tâches répétitives pour permettre à vos équipes de se concentrer sur des activités à forte valeur ajoutée.
+                                            </li>
+                                            <li class="list-group-item">
+                                                <strong>📊 Prenez des décisions éclairées avec l'analyse des données :</strong> Utilisez des outils d’analyse avancés pour collecter, traiter et exploiter les données, et ainsi anticiper les tendances du marché.
+                                            </li>
+                                            <li class="list-group-item">
+                                                <strong>🌐 Améliorez votre visibilité grâce à une présence numérique renforcée :</strong> Une stratégie digitale bien conçue (site web, réseaux sociaux, SEO) peut vous aider à toucher un public plus large.
+                                            </li>
+                                            <li class="list-group-item">
+                                                <strong>🛠️ Intégrez des outils modernes :</strong> Le cloud computing, l’intelligence artificielle et les applications collaboratives facilitent le travail à distance et améliorent l’efficacité.
+                                            </li>
+                                            <li class="list-group-item">
+                                                <strong>📞 Renforcez l'expérience client :</strong> Offrez une expérience personnalisée et fluide grâce à des solutions telles que le CRM et les chatbots intelligents.
+                                            </li>
+                                        </ul>
+                                        <p class="card-text">
+                                            Avec une approche bien pensée, la transformation numérique vous permet de rester compétitif, d'améliorer votre agilité face aux évolutions du marché, et d'assurer une croissance durable pour votre entreprise.
+                                        </p>
+                                        <p class="card-text text-muted">
+                                            Nos experts vous accompagnent à chaque étape, depuis l’audit initial jusqu’à la mise en œuvre des solutions adaptées à vos besoins spécifiques.
+                                        </p>
+                                        <p class="card-text">
+                                            Pour en savoir plus, contactez-nous à <strong>contact@nticsolution.org</strong> ou sur WhatsApp au <strong>+22605585868</strong>. 
+                                        </p>
+                                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#blog1Modal">Lire plus</button>
+                                        <a href="#contact" class="btn btn-outline-secondary">Contactez-nous</a>
+                                    </div>
+                                    
+                                    
+                                </div>
+                            </div>
+                
+                            <!-- Article 2 -->
+                            <div class="col-md-6">
+                                <div class="card animate-slide-in-right">
+                                    <img src="https://inventiv-it.fr/wp-content/uploads/tendances-technologiques-en-2024-1-scaled.jpg" class="card-img-top animate-fade-in-scale" alt="Tendances technologiques">
+                                    <div class="card-body">
+                                        <h5 class="card-title animate-flip-in">Les 5 tendances technologiques à suivre en 2024</h5>
+                                        <p class="card-text">
+                                            Découvrez les avancées technologiques qui redéfinissent le paysage numérique en 2024. Voici un aperçu des cinq technologies incontournables :
+                                            <ul>
+                                                <li><strong>Intelligence Artificielle (IA) Générative :</strong> Transforme la manière dont les entreprises créent du contenu et interagissent avec leurs utilisateurs grâce à des modèles comme ChatGPT et DALL-E.</li>
+                                                <li><strong>Blockchain Appliquée :</strong> Pas seulement pour les cryptomonnaies, mais aussi pour renforcer la sécurité des transactions et optimiser les chaînes d'approvisionnement.</li>
+                                                <li><strong>Cybersécurité Renforcée :</strong> Avec la montée des menaces numériques, les solutions de cybersécurité deviennent indispensables pour protéger les données sensibles.</li>
+                                                <li><strong>Technologies de Réalité Mixte (AR/VR) :</strong> Fusionnant les mondes réel et virtuel, elles ouvrent des opportunités dans les secteurs de l'éducation, du divertissement et de la formation professionnelle.</li>
+                                                <li><strong>Automatisation des Processus :</strong> L'automatisation via l'IA et la robotique redéfinit les flux de travail, augmentant la productivité et réduisant les coûts.</li>
+                                            </ul>
+                                        </p>
+                                        <p class="card-text">
+                                            Ces innovations ouvrent des opportunités incroyables pour les entreprises prêtes à adopter le changement. Que ce soit pour améliorer l'efficacité, renforcer la sécurité ou offrir de nouvelles expériences client, ces tendances sont incontournables.
+                                        </p>
+                                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#blog2Modal">Lire plus</button>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                
+                            <!-- Article 3 -->
+                            <div class="col-md-6">
+                                <div class="card animate-rotate-in">
+                                    <img src="https://www.adimeo.com/hubfs/Photo%20strat%C3%A9gie%20marketing%20digital.webp" class="card-img-top animate-zoom-in" alt="Marketing Digital">
+                                    <div class="card-body">
+                                        <h5 class="card-title animate-wobble">Comment construire une stratégie de marketing digital efficace</h5>
+                                        <p class="card-text">
+                                            Une stratégie de marketing digital réussie repose sur une approche structurée et bien pensée. Voici les étapes clés pour bâtir une stratégie qui propulse votre entreprise au sommet :
+                                            <ul>
+                                                <li><strong>Analyse de votre audience cible :</strong> Identifiez les besoins, les préférences et les comportements de vos clients potentiels pour mieux adapter vos campagnes.</li>
+                                                <li><strong>Définir des objectifs clairs :</strong> Fixez des objectifs SMART (Spécifiques, Mesurables, Atteignables, Réalistes et Temporels) pour suivre l’efficacité de vos efforts marketing.</li>
+                                                <li><strong>Optimisation SEO :</strong> Améliorez la visibilité de votre site sur les moteurs de recherche grâce à un contenu de qualité, des mots-clés pertinents et une structure technique solide.</li>
+                                                <li><strong>Campagnes sur les réseaux sociaux :</strong> Engagez votre public sur des plateformes comme Facebook, Instagram, LinkedIn ou TikTok, en adaptant le ton et le contenu à chaque réseau.</li>
+                                                <li><strong>Utilisation du marketing par email :</strong> Créez des campagnes d’emailing ciblées pour fidéliser vos clients et promouvoir vos produits/services.</li>
+                                                <li><strong>Analyse des données :</strong> Utilisez des outils comme Google Analytics pour mesurer vos performances et ajuster votre stratégie en fonction des résultats.</li>
+                                            </ul>
+                                        </p>
+                                        <p class="card-text">
+                                            En suivant ces étapes, vous serez en mesure de concevoir une stratégie de marketing digital cohérente et performante, adaptée aux besoins de votre entreprise.
+                                            Faites de votre présence en ligne un véritable levier de croissance !
+                                        </p>
+                                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#blog3Modal">Lire plus</button>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                
+                            <!-- Article 4 -->
+                            <div class="col-md-6">
+                                <div class="card animate-bounce-in">
+                                    <img src="https://oclock.io/wp-content/uploads/2024/05/Cybersecurite-oclock.webp" class="card-img-top animate-slide-in-left" alt="Cybersécurité">
+                                    <div class="card-body">
+                                        <h5 class="card-title animate-bounce">La cybersécurité : un enjeu majeur pour les entreprises</h5>
+                                        <p class="card-text">
+                                            La cybersécurité est devenue un pilier essentiel pour les entreprises de toutes tailles, dans un monde où les cybermenaces évoluent constamment. Voici quelques conseils pratiques pour protéger vos données, vos systèmes et vos clients :
+                                            <ul>
+                                                <li><strong>Mettez à jour vos logiciels régulièrement :</strong> Les mises à jour contiennent souvent des correctifs pour des failles de sécurité. Assurez-vous que vos systèmes et logiciels sont toujours à jour.</li>
+                                                <li><strong>Utilisez des mots de passe complexes :</strong> Encouragez vos équipes à créer des mots de passe longs et uniques, et mettez en place une politique de renouvellement périodique.</li>
+                                                <li><strong>Adoptez une authentification à deux facteurs (2FA) :</strong> Ajoutez une couche de sécurité supplémentaire pour protéger l’accès aux données sensibles.</li>
+                                                <li><strong>Formez vos employés :</strong> La plupart des violations de données sont dues à des erreurs humaines. Organisez des formations régulières sur la reconnaissance des emails de phishing et des pratiques de sécurité en ligne.</li>
+                                                <li><strong>Effectuez des sauvegardes régulières :</strong> Mettez en place des systèmes de sauvegarde automatiques pour vous assurer que vos données critiques sont récupérables en cas d’attaque.</li>
+                                                <li><strong>Surveillez votre réseau :</strong> Utilisez des outils de surveillance en temps réel pour détecter toute activité suspecte ou intrusion potentielle.</li>
+                                            </ul>
+                                        </p>
+                                        <p class="card-text">
+                                            Investir dans la cybersécurité, c’est protéger la réputation de votre entreprise et garantir la confiance de vos clients. La prévention est la clé pour éviter les pertes financières et les atteintes à la confidentialité des données.
+                                        </p>
+                                        <p class="card-text">
+                                            Pour une assistance personnalisée ou des solutions sur mesure, contactez-nous dès maintenant à <strong>contact@nticsolution.org</strong> ou via WhatsApp au <strong>+22605585868</strong>.
+                                        </p>
+                                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#blog4Modal">Lire plus</button>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+    
+        <!-- Modal Article 1 -->
+        <div class="modal fade" id="blog1Modal" tabindex="-1" aria-labelledby="blog1ModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="blog1ModalLabel">Les clés de la transformation numérique réussie</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="https://www.eficio.ca/wp-content/uploads/2023/04/Les-cl%C3%A9s-de-succ%C3%A8s-pour-une-transformation-num%C3%A9rique-r%C3%A9ussie-Banni%C3%A8re-site-web.png" class="img-fluid mb-3" alt="Transformation numérique">
+                        <h3 class="mb-3">Pourquoi la transformation numérique est essentielle ?</h3>
+                        <p>
+                            La transformation numérique est bien plus qu'une simple tendance : elle est devenue une nécessité stratégique pour les entreprises souhaitant 
+                            prospérer dans un monde en constante évolution. Grâce à l'intégration des nouvelles technologies, les entreprises peuvent :
+                        </p>
+                        <ul class="list-group mb-4">
+                            <li class="list-group-item">✔ <strong>Améliorer l'efficacité opérationnelle :</strong> Automatisez les tâches répétitives pour gagner du temps et réduire les coûts.</li>
+                            <li class="list-group-item">✔ <strong>Offrir une expérience client exceptionnelle :</strong> Personnalisez vos interactions pour répondre aux attentes croissantes des consommateurs.</li>
+                            <li class="list-group-item">✔ <strong>Augmenter votre compétitivité :</strong> Adoptez des solutions innovantes qui vous placent en tête de votre secteur.</li>
+                            <li class="list-group-item">✔ <strong>Accélérer la prise de décision :</strong> Utilisez l'analyse de données pour des stratégies basées sur des faits concrets.</li>
+                        </ul>
+                    
+                        <h4 class="mb-3">Les étapes clés pour une transformation numérique réussie</h4>
+                        <ol class="mb-4">
+                            <li><strong>Évaluation des besoins :</strong> Identifiez vos défis actuels et déterminez les objectifs à atteindre.</li>
+                            <li><strong>Choix des technologies :</strong> Sélectionnez des outils adaptés à vos processus, tels que l'intelligence artificielle, le cloud computing, ou les CRM.</li>
+                            <li><strong>Formation des équipes :</strong> Sensibilisez et formez vos collaborateurs pour qu'ils adoptent facilement les nouveaux outils.</li>
+                            <li><strong>Analyse des résultats :</strong> Mesurez l'impact des changements grâce à des indicateurs clés de performance (KPI).</li>
+                        </ol>
+                    
+                        <h4 class="mb-3">Nos solutions pour vous accompagner</h4>
+                        <p>
+                            Chez <strong>NTIC Solution</strong>, nous vous aidons à chaque étape de votre transformation numérique. Nos services incluent :
+                        </p>
+                        <ul class="list-group mb-4">
+                            <li class="list-group-item">🔹 Audit numérique de votre entreprise.</li>
+                            <li class="list-group-item">🔹 Développement d'applications sur mesure.</li>
+                            <li class="list-group-item">🔹 Optimisation de votre présence en ligne (SEO, marketing digital).</li>
+                            <li class="list-group-item">🔹 Mise en place de solutions de gestion avancées (ERP, CRM).</li>
+                        </ul>
+                    
+                        <p class="mb-3">
+                            <strong>Vous souhaitez discuter de votre projet de transformation numérique ?</strong> Contactez-nous pour une consultation gratuite.
+                        </p>
+                        <div class="d-flex justify-content-center">
+                            <a href="#contact" class="btn btn-primary me-2">Nous Contacter</a>
+                            <a href="#services" class="btn btn-outline-secondary">Découvrir nos services</a>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Article 2 -->
+        <div class="modal fade" id="blog2Modal" tabindex="-1" aria-labelledby="blog2ModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="blog2ModalLabel">Les 5 tendances technologiques à suivre en 2024</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="https://inventiv-it.fr/wp-content/uploads/tendances-technologiques-en-2024-1-scaled.jpg" class="img-fluid mb-3" alt="Tendances technologiques">
+                        <h3 class="mb-3">Les 5 Tendances Technologiques à Suivre en 2024</h3>
+                        <p>
+                            L'année 2024 est marquée par une accélération des avancées technologiques, transformant la manière dont les entreprises et les particuliers interagissent avec le monde numérique. Voici un aperçu des tendances qui redéfinissent les secteurs d'activité et ouvrent de nouvelles opportunités.
+                        </p>
+                    
+                        <h4 class="mb-3">1. Intelligence Artificielle Générative</h4>
+                        <p>
+                            L'IA générative, alimentée par des modèles tels que GPT et DALL-E, révolutionne des domaines comme la création de contenu, le design et le marketing. Les entreprises adoptent cette technologie pour générer des idées, automatiser des tâches complexes et personnaliser leurs interactions avec les clients.
+                        </p>
+                        <ul>
+                            <li>Création de contenu automatisée (textes, images, vidéos).</li>
+                            <li>Personnalisation de l'expérience client en temps réel.</li>
+                            <li>Applications dans la médecine et la recherche scientifique.</li>
+                        </ul>
+                    
+                        <h4 class="mb-3">2. Blockchain au-delà des Cryptomonnaies</h4>
+                        <p>
+                            La blockchain continue de s'étendre au-delà des cryptomonnaies pour inclure des applications dans la chaîne d'approvisionnement, la gestion des données et les contrats intelligents. Les entreprises adoptent cette technologie pour renforcer la transparence et la sécurité.
+                        </p>
+                        <ul>
+                            <li>Gestion des chaînes d'approvisionnement avec des suivis en temps réel.</li>
+                            <li>Contrats intelligents pour automatiser les processus juridiques.</li>
+                            <li>Renforcement de la cybersécurité grâce à des registres immuables.</li>
+                        </ul>
+                    
+                        <h4 class="mb-3">3. Cybersécurité et Résilience Numérique</h4>
+                        <p>
+                            Avec l'augmentation des cyberattaques, la cybersécurité reste une priorité absolue pour les entreprises et les gouvernements. En 2024, l'accent est mis sur la résilience numérique pour prévenir, détecter et répondre rapidement aux menaces.
+                        </p>
+                        <ul>
+                            <li>Utilisation accrue de l'IA pour détecter les cybermenaces.</li>
+                            <li>Adoption des modèles "Zero Trust" pour limiter les accès non autorisés.</li>
+                            <li>Solutions de sauvegarde avancées pour prévenir les pertes de données.</li>
+                        </ul>
+                    
+                        <h4 class="mb-3">4. Réalité Augmentée et Réalité Virtuelle</h4>
+                        <p>
+                            La RA et la RV deviennent des outils essentiels pour les entreprises, qu'il s'agisse de créer des expériences immersives pour les clients ou d'améliorer les formations des employés. Ces technologies trouvent également des applications dans le commerce, la santé et l'éducation.
+                        </p>
+                        <ul>
+                            <li>Essor des espaces de travail virtuels collaboratifs.</li>
+                            <li>Utilisation dans le commerce pour des essais virtuels de produits.</li>
+                            <li>Applications dans les soins de santé pour les diagnostics et traitements.</li>
+                        </ul>
+                    
+                        <h4 class="mb-3">5. Développement Durable via la Technologie</h4>
+                        <p>
+                            Les entreprises intègrent de plus en plus des technologies durables pour réduire leur empreinte carbone et répondre aux attentes des consommateurs soucieux de l'environnement. L'essor des énergies renouvelables, des bâtiments intelligents et de l'économie circulaire en témoigne.
+                        </p>
+                        <ul>
+                            <li>Optimisation énergétique grâce aux capteurs IoT.</li>
+                            <li>Utilisation de l'IA pour améliorer l'efficacité des énergies renouvelables.</li>
+                            <li>Recyclage avancé avec des technologies innovantes.</li>
+                        </ul>
+                    
+                        <h4 class="mb-3">Pourquoi ces tendances sont importantes pour votre entreprise ?</h4>
+                        <p>
+                            En comprenant et en adoptant ces tendances, vous pouvez garder une longueur d'avance sur vos concurrents, améliorer vos processus internes et répondre aux attentes de vos clients avec des solutions modernes et innovantes.
+                        </p>
+                    
+                        <div class="d-flex justify-content-center">
+                            <a href="#contact" class="btn btn-primary me-2">Discutez avec un expert</a>
+                            <a href="#services" class="btn btn-outline-secondary">Voir nos solutions technologiques</a>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    
+        <!-- Modal Article 3 -->
+        <div class="modal fade" id="blog3Modal" tabindex="-1" aria-labelledby="blog3ModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="blog3ModalLabel">Comment construire une stratégie de marketing digital efficace</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="https://www.adimeo.com/hubfs/Photo%20strat%C3%A9gie%20marketing%20digital.webp" class="img-fluid mb-3" alt="Marketing Digital">
+                        <h3 class="mb-3">Comment construire une stratégie de marketing digital efficace</h3>
+                        <p>
+                            Une stratégie de marketing digital réussie repose sur une compréhension claire de votre marché, de vos objectifs commerciaux et des outils numériques à votre disposition. Voici les étapes essentielles pour élaborer une stratégie performante qui maximise vos résultats.
+                        </p>
+                    
+                        <h4 class="mb-3">1. Analyse de votre audience cible</h4>
+                        <p>
+                            Pour capter l'attention de vos clients potentiels, commencez par les comprendre en détail. Analysez leurs besoins, leurs comportements en ligne, et leurs points de douleur.
+                        </p>
+                        <ul>
+                            <li>Utilisez des outils comme Google Analytics ou les sondages pour recueillir des données.</li>
+                            <li>Créez des personas clients pour segmenter efficacement votre audience.</li>
+                            <li>Identifiez les plateformes où votre audience est la plus active.</li>
+                        </ul>
+                    
+                        <h4 class="mb-3">2. Définir des objectifs SMART</h4>
+                        <p>
+                            Fixez des objectifs spécifiques, mesurables, atteignables, réalistes et temporellement définis (SMART). Ces objectifs vous permettront de rester concentré et de mesurer vos progrès.
+                        </p>
+                        <ul>
+                            <li>Augmenter les ventes en ligne de 20% en six mois.</li>
+                            <li>Améliorer le trafic web organique de 30% d'ici la fin de l'année.</li>
+                            <li>Générer 50 nouveaux prospects qualifiés chaque mois.</li>
+                        </ul>
+                    
+                        <h4 class="mb-3">3. Choisir les canaux de marketing pertinents</h4>
+                        <p>
+                            Identifiez les canaux de marketing qui correspondent le mieux à votre audience et à vos objectifs. Une combinaison efficace peut inclure :
+                        </p>
+                        <ul>
+                            <li>SEO : Améliorez votre visibilité sur les moteurs de recherche grâce à un contenu optimisé.</li>
+                            <li>Publicité Payante (SEA) : Lancez des campagnes publicitaires ciblées sur Google Ads et les réseaux sociaux.</li>
+                            <li>Marketing par email : Créez des campagnes personnalisées pour fidéliser vos clients.</li>
+                            <li>Réseaux sociaux : Engagez votre communauté sur Facebook, Instagram, LinkedIn, ou TikTok.</li>
+                        </ul>
+                    
+                        <h4 class="mb-3">4. Créer un contenu de qualité</h4>
+                        <p>
+                            Le contenu est au cœur de toute stratégie de marketing digital. Proposez des articles de blog, des vidéos, des infographies et d'autres formats qui répondent aux besoins de votre audience.
+                        </p>
+                        <ul>
+                            <li>Rédigez des articles informatifs pour renforcer votre crédibilité.</li>
+                            <li>Publiez des vidéos engageantes pour capter l'attention sur les réseaux sociaux.</li>
+                            <li>Proposez des livres blancs ou des guides téléchargeables pour générer des leads.</li>
+                        </ul>
+                    
+                        <h4 class="mb-3">5. Mesurer et optimiser vos performances</h4>
+                        <p>
+                            Une fois votre stratégie en place, surveillez régulièrement vos performances à l'aide d'outils d'analyse pour identifier ce qui fonctionne et ce qui nécessite des ajustements.
+                        </p>
+                        <ul>
+                            <li>Suivez des indicateurs clés comme le taux de conversion, le coût par clic (CPC), et le retour sur investissement (ROI).</li>
+                            <li>Effectuez des tests A/B pour optimiser vos campagnes publicitaires.</li>
+                            <li>Réagissez rapidement aux tendances du marché pour ajuster votre stratégie.</li>
+                        </ul>
+                    
+                        <h4 class="mb-3">Pourquoi une stratégie efficace est essentielle ?</h4>
+                        <p>
+                            Une stratégie bien pensée vous permet d'attirer plus de prospects, de fidéliser vos clients existants, et d'optimiser vos investissements marketing. Cela vous donne également un avantage concurrentiel dans un marché en constante évolution.
+                        </p>
+                    
+                        <div class="d-flex justify-content-center">
+                            <a href="#contact" class="btn btn-primary me-2">Parlez à un expert en marketing</a>
+                            <a href="#services" class="btn btn-outline-secondary">Découvrez nos services</a>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    
+        <!-- Modal Article 4 -->
+        <div class="modal fade" id="blog4Modal" tabindex="-1" aria-labelledby="blog4ModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="blog4ModalLabel">La cybersécurité : un enjeu majeur pour les entreprises</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="https://oclock.io/wp-content/uploads/2024/05/Cybersecurite-oclock.webp" class="img-fluid mb-3" alt="Cybersécurité">
+                        <h3 class="mb-3">La cybersécurité : Un enjeu majeur pour les entreprises</h3>
+                        <p>
+                            À mesure que les entreprises adoptent de nouvelles technologies, elles deviennent de plus en plus vulnérables aux cyberattaques. 
+                            La cybersécurité n'est plus une option, mais une nécessité absolue pour protéger les données sensibles, assurer la continuité 
+                            des activités et maintenir la confiance des clients.
+                        </p>
+                    
+                        <h4 class="mb-3">1. Comprendre les menaces potentielles</h4>
+                        <p>
+                            Les cyberattaques évoluent constamment. Voici quelques-unes des menaces les plus courantes auxquelles les entreprises doivent faire face :
+                        </p>
+                        <ul>
+                            <li><strong>Phishing :</strong> Tentatives de voler des informations personnelles via des emails ou sites frauduleux.</li>
+                            <li><strong>Ransomware :</strong> Logiciels malveillants qui bloquent vos données jusqu'à ce qu'une rançon soit payée.</li>
+                            <li><strong>Attaques DDoS :</strong> Surcharger vos systèmes pour perturber vos services en ligne.</li>
+                            <li><strong>Vulnérabilités des logiciels :</strong> Exploitation des failles dans les applications ou systèmes non mis à jour.</li>
+                        </ul>
+                    
+                        <h4 class="mb-3">2. Mettre en place des protocoles de sécurité</h4>
+                        <p>
+                            La prévention est la clé pour minimiser les risques de cyberattaques. Voici les mesures essentielles à adopter :
+                        </p>
+                        <ul>
+                            <li><strong>Utiliser des mots de passe forts :</strong> Encouragez l'utilisation de mots de passe complexes et uniques, et implémentez l'authentification à deux facteurs.</li>
+                            <li><strong>Mettre à jour régulièrement les logiciels :</strong> Installez les dernières mises à jour pour corriger les vulnérabilités connues.</li>
+                            <li><strong>Installer un pare-feu :</strong> Protégez votre réseau contre les accès non autorisés.</li>
+                            <li><strong>Effectuer des sauvegardes régulières :</strong> Sauvegardez vos données critiques pour les récupérer en cas d'incident.</li>
+                        </ul>
+                    
+                        <h4 class="mb-3">3. Sensibiliser et former les employés</h4>
+                        <p>
+                            Les employés sont souvent la première ligne de défense contre les cyberattaques. Il est crucial de :
+                        </p>
+                        <ul>
+                            <li>Former les équipes à reconnaître les emails ou liens suspects.</li>
+                            <li>Mettre en place des politiques de cybersécurité claires et accessibles.</li>
+                            <li>Organiser des simulations régulières d'attaques pour évaluer leur vigilance.</li>
+                        </ul>
+                    
+                        <h4 class="mb-3">4. Surveillance et réponse rapide</h4>
+                        <p>
+                            Investir dans des outils de surveillance et un plan de réponse rapide permet de réduire l'impact d'une cyberattaque :
+                        </p>
+                        <ul>
+                            <li>Surveiller en temps réel les activités suspectes sur votre réseau.</li>
+                            <li>Créer un plan d'urgence pour répondre rapidement en cas d'incident.</li>
+                            <li>Collaborer avec des experts en cybersécurité pour renforcer vos systèmes.</li>
+                        </ul>
+                    
+                        <h4 class="mb-3">Pourquoi investir dans la cybersécurité ?</h4>
+                        <p>
+                            Protéger votre entreprise contre les cybermenaces ne se limite pas à éviter les pertes financières. C'est également une question de :
+                        </p>
+                        <ul>
+                            <li>Maintenir la confiance de vos clients et partenaires.</li>
+                            <li>Garantir la conformité aux réglementations en vigueur (ex. RGPD).</li>
+                            <li>Assurer la pérennité et la compétitivité de votre entreprise.</li>
+                        </ul>
+                    
+                        <div class="d-flex justify-content-center mt-4">
+                            <a href="#services" class="btn btn-primary me-2">Explorez nos services de cybersécurité</a>
+                            <a href="#contact" class="btn btn-outline-secondary">Contactez un expert en sécurité</a>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="testimonials" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-4 animate-fade-in">Ce que disent nos clients</h2>
+            <div class="row g-4">
+                <!-- Testimonial 1 -->
+                <div class="col-md-4">
+                    <div class="card testimonial-card animate-slide-in-left">
+                        <div class="card-body">
+                            <div class="testimonial-icon">
+                                <i class="fas fa-quote-left"></i>
+                            </div>
+                            <p class="card-text">"Un service impeccable et des résultats impressionnants. NTIC Solution est mon choix numéro un pour la transformation numérique."</p>
+                            <p class="text-muted">- Jean Jacques</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testimonial 2 -->
+                <div class="col-md-4">
+                    <div class="card testimonial-card shadow-lg animate-zoom-in">
+                        <div class="card-body">
+                            <div class="testimonial-icon">
+                                <i class="fas fa-quote-left"></i>
+                            </div>
+                            <p class="card-text">"Grâce à leur expertise, notre entreprise a vu une augmentation significative de son trafic en ligne."</p>
+                            <p class="text-muted">- Marie OUEDRAOGO</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testimonial 3 -->
+                <div class="col-md-4">
+                    <div class="card testimonial-card animate-slide-in-right">
+                        <div class="card-body">
+                            <div class="testimonial-icon">
+                                <i class="fas fa-quote-left"></i>
+                            </div>
+                            <p class="card-text">"Une équipe professionnelle et un service de grande qualité. Je recommande vivement NTIC Solution."</p>
+                            <p class="text-muted">- Alexandre KONFE</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testimonial 4 -->
+                <div class="col-md-4">
+                    <div class="card testimonial-card shadow animate-rotate-in">
+                        <div class="card-body">
+                            <div class="testimonial-icon">
+                                <i class="fas fa-quote-left"></i>
+                            </div>
+                            <p class="card-text">"Je suis ravi de leur efficacité et de leur approche centrée sur le client. Une collaboration réussie."</p>
+                            <p class="text-muted">- Sarah BAKOUAN</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testimonial 5 -->
+                <div class="col-md-4">
+                    <div class="card testimonial-card animate-bounce">
+                        <div class="card-body">
+                            <div class="testimonial-icon">
+                                <i class="fas fa-quote-left"></i>
+                            </div>
+                            <p class="card-text">"Leur équipe nous a aidés à moderniser nos systèmes. Je les recommande sans hésitation."</p>
+                            <p class="text-muted">- Thomas YAO</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testimonial 6 -->
+                <div class="col-md-4">
+                    <div class="card testimonial-card shadow-lg animate-fade-in-scale">
+                        <div class="card-body">
+                            <div class="testimonial-icon">
+                                <i class="fas fa-quote-left"></i>
+                            </div>
+                            <p class="card-text">"Des solutions innovantes adaptées à nos besoins. NTIC Solution est un vrai partenaire de confiance."</p>
+                            <p class="text-muted">- Souley SARR</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testimonial 7 -->
+                <div class="col-md-4">
+                    <div class="card testimonial-card animate-wobble">
+                        <div class="card-body">
+                            <div class="testimonial-icon">
+                                <i class="fas fa-quote-left"></i>
+                            </div>
+                            <p class="card-text">"Leurs conseils nous ont permis d'augmenter notre productivité. Merci NTIC Solution !"</p>
+                            <p class="text-muted">- Michel KOUM</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testimonial 8 -->
+                <div class="col-md-4">
+                    <div class="card testimonial-card shadow animate-flip-in">
+                        <div class="card-body">
+                            <div class="testimonial-icon">
+                                <i class="fas fa-quote-left"></i>
+                            </div>
+                            <p class="card-text">"Leur accompagnement a été exceptionnel. Une équipe compétente et réactive."</p>
+                            <p class="text-muted">- Aliou N'BOUR</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testimonial 9 -->
+                <div class="col-md-4">
+                    <div class="card testimonial-card animate-slide-up">
+                        <div class="card-body">
+                            <div class="testimonial-icon">
+                                <i class="fas fa-quote-left"></i>
+                            </div>
+                            <p class="card-text">"Des résultats concrets et une communication claire tout au long du projet."</p>
+                            <p class="text-muted">- François OUATTARA</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact -->
+    <section id="contact" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Contactez-nous</h2>
+            <form id="contactForm">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Nom</label>
+                    <input type="text" class="form-control animated-input" id="name" placeholder="Entrez votre nom">
+                    <small class="text-danger d-none" id="nameError">Veuillez entrer un nom valide.</small>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control animated-input" id="email" placeholder="Entrez votre email">
+                    <small class="text-danger d-none" id="emailError">Veuillez entrer un email valide.</small>
+                </div>
+                <div class="mb-3">
+                    <label for="message" class="form-label">Message</label>
+                    <textarea class="form-control animated-input" id="message" rows="4" placeholder="Votre message"></textarea>
+                    <small class="text-danger d-none" id="messageError">Le message ne peut pas être vide.</small>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Envoyer</button>
+            </form>
+            <div id="successMessage" class="alert alert-success mt-4 d-none">
+                Merci pour votre message ! Nous vous répondrons bientôt.
+            </div>
+        </div>
+    </section>
+    
+ <!-- Retour en haut -->
+ <a href="#home" id="back-to-top" class="d-none">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-section">
+            <h3>À Propos</h3>
+            <p>
+                Chez <strong>NTIC Solution</strong>, nous sommes passionnés par la technologie et son potentiel à transformer 
+                les entreprises. Depuis notre création, nous avons collaboré avec des clients de divers secteurs pour les aider 
+                à naviguer dans l'univers numérique. Nous croyons que chaque entreprise mérite des solutions sur mesure 
+                qui répondent à ses besoins spécifiques.
+            </p>
+            <div class="footer-section">
+            <h3>Notre Mission</h3>
+            <p>
+                Notre mission est de simplifier la transformation numérique pour nos clients. Nous nous engageons à fournir des 
+                solutions innovantes, fiables et adaptées aux besoins de chaque client, qu'il s'agisse de petites entreprises ou 
+                de grandes organisations. Nous sommes là pour connecter vos idées aux outils modernes de demain.
+            </p>
+        </div>
+        </div>
+        <div class="footer-section">
+                <h3>Nos Valeurs</h3>
+                    <ul>
+                        <li><strong>Innovation :</strong> Toujours à la pointe des technologies pour vous offrir un avantage concurrentiel.</li>
+                        <li><strong>Excellence :</strong> Un souci du détail et un engagement envers la qualité à chaque étape.</li>
+                        <li><strong>Transparence :</strong> Des relations basées sur la confiance et une communication claire.</li>
+                        <li><strong>Engagement :</strong> Nous mesurons notre succès par celui de nos clients.</li>
+                    </ul>
+                
+            </div>
+            
+        <div class="footer-section">
+            <h3>Nos Produits</h3>
+            <p>A venir...</p>
+        </div>
+    
+    <div class="footer-section">
+        <h3>Nous Contacter</h3>
+        <p>Email : <a href="mailto:contact@nticsolution.org">contact@nticsolution.org</a></p>
+        <p>Téléphone 1: 00226 05 58 58 68 </p>
+        <p>Téléphone 2: 00226 69 69 69 24 </p>
+        <p>Téléphone 3: 00226 02 71 71 55 </p>
+        <div class="social-icons">
+            <a href="https://facebook.com/tvafricabox" target="_blank"><img src="https://static.vecteezy.com/system/resources/previews/023/741/208/non_2x/facebook-logo-icon-social-media-icon-free-png.png" alt="Facebook"></a>
+            <a href="https://twitter.com/#" target="_blank"><img src="https://static.vecteezy.com/system/resources/previews/016/716/467/non_2x/twitter-icon-free-png.png" alt="Twitter"></a>
+            <a href="https://chat.whatsapp.com/IbL05nkT3TLDwyVyYgC3Bh" target="_blank"><img src="https://static.vecteezy.com/system/resources/previews/016/716/480/non_2x/whatsapp-icon-free-png.png" alt="WhatsApp"></a>
+        </div>
+    </div>
+    </div>
+    <p>&copy; 2024 NTIC Solution. Tous droits réservés.</p>
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const sections = document.querySelectorAll("section");
+
+            const revealSection = (entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("visible");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            };
+
+            const observer = new IntersectionObserver(revealSection, {
+                threshold: 0.1,
+            });
+
+            sections.forEach(section => {
+                section.classList.add("hidden");
+                observer.observe(section);
+            });
+        });
+
+        // Smooth Scroll pour la navigation
+        const navLinks = document.querySelectorAll("nav a");
+
+        navLinks.forEach(link => {
+            link.addEventListener("click", e => {
+                e.preventDefault();
+                const target = document.querySelector(e.target.getAttribute("href"));
+                target.scrollIntoView({
+                    behavior: "smooth",
+                });
+            });
+        });
+
+        // Effet de survol pour le portfolio
+        const portfolioImages = document.querySelectorAll("#portfolio img");
+
+        portfolioImages.forEach(img => {
+            img.addEventListener("mouseenter", () => {
+                img.style.transform = "scale(1.1)";
+            });
+
+            img.addEventListener("mouseleave", () => {
+                img.style.transform = "scale(1)";
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('contactForm');
+
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault(); // Empêche le rechargement de la page lors de la soumission
+
+        // Récupérer les données du formulaire
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const message = document.getElementById('message').value.trim();
+
+        // Validation simple
+        if (!name || !email || !message) {
+            alert('Veuillez remplir tous les champs.');
+            return;
+        }
+
+        const formData = { name, email, message };
+
+        try {
+            // Envoi des données au script Google Apps Script
+            const response = await fetch('https://script.google.com/macros/s/AKfycbykB5LXev2HPadm54rNRV22ExXN5F7PTIoghug_drS7Qcycx4ev_DK3a4xuEo_q4zw/exec', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                alert('Votre message a été envoyé avec succès !');
+                form.reset(); // Réinitialise le formulaire
+            } else {
+                alert('Une erreur est survenue lors de l\'envoi. Veuillez réessayer.');
+                console.error('Erreur du serveur :', result);
+            }
+        } catch (error) {
+            alert('Erreur lors de l\'envoi du message. Veuillez réessayer.');
+            console.error('Erreur de la requête :', error);
+        }
+    });
+});
+
+        document.addEventListener("DOMContentLoaded", () => {
+    const cards = document.querySelectorAll(".card");
+
+    const revealCards = (entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("visible"); // Ajoute la classe visible
+                observer.unobserve(entry.target); // Arrête l'observation
+            }
+        });
+    };
+
+    const observer = new IntersectionObserver(revealCards, {
+        threshold: 0.1, // Active l'animation quand 10% de la carte est visible
+    });
+
+    cards.forEach(card => {
+        observer.observe(card); // Observe chaque carte
+    });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    const elements = document.querySelectorAll("#about img, #about h3, #about p, #about ul");
+
+    const revealElements = (entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+                observer.unobserve(entry.target);
+            }
+        });
+    };
+
+    const observer = new IntersectionObserver(revealElements, {
+        threshold: 0.1,
+    });
+
+    elements.forEach(element => {
+        observer.observe(element);
+    });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    // Sélectionnez toutes les modales
+    const modals = document.querySelectorAll('.modal');
+
+    // Ajoutez des événements pour chaque modale
+    modals.forEach(modal => {
+        // Événement déclenché lorsque la modale s'ouvre
+        modal.addEventListener('shown.bs.modal', () => {
+            console.log(`La modale ${modal.id} est maintenant visible.`);
+        });
+
+        // Événement déclenché lorsque la modale se ferme
+        modal.addEventListener('hidden.bs.modal', () => {
+            console.log(`La modale ${modal.id} a été fermée.`);
+        });
+    });
+
+    // Logs supplémentaires pour interaction utilisateur
+    const buttons = document.querySelectorAll('.btn[data-bs-toggle="modal"]');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            console.log(`Bouton cliqué pour ouvrir la modale : ${button.getAttribute('data-bs-target')}`);
+        });
+    });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                modal.addEventListener('shown.bs.modal', () => {
+                    console.log(`La modale ${modal.id} est maintenant visible.`);
+                });
+                modal.addEventListener('hidden.bs.modal', () => {
+                    console.log(`La modale ${modal.id} a été fermée.`);
+                });
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+    const elements = document.querySelectorAll(".animate-fade-in, .animate-slide-up, .animate-zoom-in, .animate-swipe");
+
+    const revealElement = (entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+                observer.unobserve(entry.target); // Stop observing once revealed
+            }
+        });
+    };
+
+    const observer = new IntersectionObserver(revealElement, {
+        threshold: 0.2
+    });
+
+    elements.forEach(element => {
+        observer.observe(element);
+    });
+});
+
+// Back to top
+const backToTop = document.getElementById('back-to-top');
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 100) {
+        backToTop.classList.remove('d-none');
+    } else {
+        backToTop.classList.add('d-none');
+    }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    const ticker = document.querySelector(".newsticker");
+    const newsItems = ticker.children;
+    let index = 0;
+
+    function scrollNews() {
+        newsItems[index].style.marginTop = "-20px"; // Move up
+        setTimeout(() => {
+            ticker.appendChild(newsItems[index]); // Move to the end
+            newsItems[index].style.marginTop = "0"; // Reset
+            index = (index + 1) % newsItems.length; // Increment index
+        }, 500);
+    }
+
+    setInterval(scrollNews, 3000); // Call every 3 seconds
+});
+
+
+    </script>
+</body>
+</html>
