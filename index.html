@@ -1138,7 +1138,50 @@ h2 {
     }
 }
 
+/* Styles pour la section Formation */
+#formation .card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+    border-radius: 10px;
+    background-color: #0618ba;
+    color: #f8f9fa;
+}
 
+#formation .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 20px rgb(243, 237, 237)
+}
+
+#formation .list-group-item {
+    border: none;
+    padding: 0.75rem 1rem;
+    background-color: #ec8e02;
+    font-size: 1rem;
+    color: #f8f9fa;
+}
+
+#formation .card-title {
+    color: rgb(246, 249, 252);
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+#formation .btn-primary {
+    background-color: #f58c00;
+    border: none;
+    transition: background-color 0.3s ease;
+    font-size: 1.1rem;
+    padding: 10px 30px;
+}
+
+#formation .btn-primary:hover {
+    background-color: #d86e00;
+}
+
+#formation .lead {
+    font-size: 1.2rem;
+    color: #555;
+}
         </style>
 </head>
 
@@ -1215,7 +1258,7 @@ h2 {
         </div>        
         <div class="breaking-content">
             <ul class="newsticker">
-                <li><a href="https://wa.me/message/VGETLVP7NFHTC1">🚀 Offre exclusive : boostez votre visibilité avec notre service de marketing digital.</a></li>
+                <li><a href="https://wa.me/message/VGETLVP7NFHTC1">🚀 Apprenez à créer des sites web professionnels et des applications mobiles.</a></li>
                 <li><a href="https://wa.me/message/VGETLVP7NFHTC1">📢 Nous recrutons ! Rejoignez l'équipe NTIC Solution en 2025.</a></li>
                 <li><a href="https://wa.me/message/VGETLVP7NFHTC1">🌍 Lancement de notre nouvelle plateforme de formation en ligne.</a></li>
                 <li><a href="https://wa.me/message/VGETLVP7NFHTC1">📊 Augmentez votre productivité avec nos outils de gestion en ligne.</a></li>
@@ -1223,6 +1266,98 @@ h2 {
             </ul>
         </div>
     </section>
+    
+    <!-- Section Formation Pratique -->
+<section id="formation" class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-4 animate-fade-in">Annonce</h2>
+        <p class="text-center lead mb-5 animate-slide-in-left">
+            Apprenez à créer des sites web professionnels et des applications mobiles modernes tout en obtenant une certification reconnue !
+        </p>
+
+        <!-- Contenu de la Formation -->
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="card shadow animate-zoom-in">
+                    <div class="card-body">
+                        <h3 class="card-title">🔥 Ce que tu apprendras :</h3>
+                        <ul class="list-group list-group-flush mb-3">
+                            <li class="list-group-item">✅ Concevoir et développer un site web de A à Z</li>
+                            <li class="list-group-item">✅ Créer une application mobile performante</li>
+                            <li class="list-group-item">✅ Gérer les bases de données et l’hébergement</li>
+                            <li class="list-group-item">✅ Améliorer l’expérience utilisateur et optimiser les performances</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card shadow animate-slide-up">
+                    <div class="card-body">
+                        <h3 class="card-title">🎯 Pour qui ?</h3>
+                        <p class="card-text">
+                            Débutants, étudiants, entrepreneurs et toute personne passionnée par le digital.
+                        </p>
+                        <h3 class="card-title mt-4">💡 Pourquoi nous choisir ?</h3>
+                        <ul class="list-group list-group-flush mb-3">
+                            <li class="list-group-item">✔ Formation 100% pratique et accessible</li>
+                            <li class="list-group-item">✔ Certification à la fin du programme</li>
+                            <li class="list-group-item">✔ Coaching et suivi personnalisé</li>
+                            <li class="list-group-item">✔ Accès à une communauté d’apprenants</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="text-center mt-5 animate-fade-in">
+            <h3>📆 Places limitées !</h3>
+            <p class="lead">Ne rate pas cette opportunité. Inscris-toi dès maintenant et booste tes compétences !</p>
+            <a href="#contact" class="btn btn-lg btn-primary">Je m'inscris maintenant</a>
+        </div>
+        <!-- Bouton "En savoir plus" -->
+<div class="text-center mt-4">
+    <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#formationDetailsModal">
+        En savoir plus
+    </button>
+</div>
+
+<!-- Modal pour les détails de la formation -->
+<div class="modal fade" id="formationDetailsModal" tabindex="-1" aria-labelledby="formationDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="formationDetailsModalLabel">Détails de la Formation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h4>Programme détaillé :</h4>
+                <ul>
+                    <li><strong>Module 1 :</strong> Introduction au développement web (HTML, CSS, JavaScript)</li>
+                    <li><strong>Module 2 :</strong> Création d'applications mobiles avec React Native</li>
+                    <li><strong>Module 3 :</strong> Gestion des bases de données (MySQL, Firebase)</li>
+                    <li><strong>Module 4 :</strong> Hébergement et déploiement (Netlify, Heroku)</li>
+                    <li><strong>Module 5 :</strong> Optimisation des performances et UX/UI Design</li>
+                </ul>
+                <h4>Certification :</h4> 
+                <p>
+                    À la fin de la formation, vous recevrez une certification reconnue, attestant de vos compétences en développement web et mobile.
+                </p>
+                <h4>Tarifs :</h4>
+                <p>
+                    Le coût de la formation est de 500 000 FCFA. Des options de paiement échelonné sont disponibles.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <a href="#contact" class="btn btn-primary">Je m'inscris</a>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+</section>
     <section id="main-content" class="py-5">
         <div class="container">
             <div class="row g-4">
@@ -1279,6 +1414,26 @@ h2 {
     <div class="container">
         <h2 class="text-center mb-4">Nos réalisations récentes</h2>
         <div class="row g-4">
+
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <img src="images/wari-logo.png" alt="Projet Wari" class="card-img-top" style="height: 200px; object-fit: cover;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Projet Wari</h5>
+                        <p class="card-text">
+                            Développement d'une plateforme de transfert d'argent et de services financiers, offrant une expérience utilisateur fluide et sécurisée.
+                        </p>
+                        <ul class="list-group list-group-flush mb-3 text-start">
+                            <li class="list-group-item">💳 <strong>Fonctionnalités :</strong> Transfert d'argent, paiement de factures, et gestion de portefeuille électronique.</li>
+                            <li class="list-group-item">🔒 <strong>Sécurité :</strong> Chiffrement des données et authentification à deux facteurs (2FA).</li>
+                            <li class="list-group-item">🌐 <strong>Technologies :</strong> React Native, Node.js, MongoDB, et API de paiement sécurisé.</li>
+                            <li class="list-group-item">📱 <strong>Plateformes :</strong> Application mobile disponible sur iOS et Android.</li>
+                        </ul>
+                        <a href="https://pcode.nticsolution.org" class="btn btn-outline-secondary">Visitez le site</a>
+                    </div>
+                </div>
+            </div>
+
             <!-- Projet 1 -->
             <div class="col-md-4">
                 <div class="card shadow-sm">
