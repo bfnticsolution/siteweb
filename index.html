@@ -2,18 +2,37 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="handheldFriendly" content="true">
     <title>NTIC Solution - Expertise IT & Cybersécurité</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <!-- Loader / Animation d'ouverture -->
+    <div class="loader">
+        <div class="loader-content">
+            <div class="loader-logo">
+                <span>NTIC Solution</span>
+            </div>
+            <p class="loader-text">Chargement de l'expérience...</p>
+            <div class="loader-progress">
+                <div class="loader-progress-bar"></div>
+            </div>
+            <div class="loader-spinner"></div>
+        </div>
+    </div>
+
     <!-- Header -->
     <header class="header">
         <div class="container">
             <div class="logo">
                 <span>NTIC Solution</span>
+            </div>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
             </div>
             <nav class="navbar">
                 <ul>
@@ -25,9 +44,6 @@
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
             </nav>
-            <div class="menu-toggle">
-                <i class="fas fa-bars"></i>
-            </div>
         </div>
     </header>
 
@@ -37,7 +53,7 @@
             <div class="slide-overlay"></div>
             <img src="https://www2.0zz0.com/2025/01/29/16/524315191.jpg" alt="Bannière NTIC Solution" class="slide-image">
             <div class="container">
-                <div class="slide-content fade-in">
+                <div class="slide-content">
                     <h1>Innovation, Performance & Sécurité Digitale</h1>
                     <p>Experts en transformation numérique, cybersécurité et solutions cloud sur mesure pour votre entreprise.</p>
                     <div class="cta-buttons">
@@ -56,12 +72,12 @@
     </section>
 
     <!-- Présentation Rapide -->
-    <section class="intro-section">
+    <section class="intro-section services-page fade-in">
         <div class="container">
-           <center> <div class="section-header fade-in">
+            <div class="section-header fade-in">
                 <h2 class="section-title">Votre Partenaire Technologique</h2>
                 <p class="section-subtitle">Nous transformons vos défis numériques en opportunités concrètes</p>
-            </div></center>
+            </div>
             
             <div class="stats fade-in">
                 <div class="stat-item floating" style="--delay: 0.1s">
@@ -89,8 +105,8 @@
                 </div>
             </div>
             
-            <div class="features-grid fade-in">
-                <div class="feature-card">
+            <div class="features-grid">
+                <div class="feature-card fade-in">
                     <div class="feature-icon">
                         <i class="fas fa-rocket"></i>
                     </div>
@@ -98,7 +114,7 @@
                     <p>Solutions technologiques à la pointe pour rester compétitif</p>
                 </div>
                 
-                <div class="feature-card">
+                <div class="feature-card fade-in" style="animation-delay: 0.2s">
                     <div class="feature-icon">
                         <i class="fas fa-shield-alt"></i>
                     </div>
@@ -106,7 +122,7 @@
                     <p>Protection maximale de vos données et infrastructures</p>
                 </div>
                 
-                <div class="feature-card">
+                <div class="feature-card fade-in" style="animation-delay: 0.4s">
                     <div class="feature-icon">
                         <i class="fas fa-chart-line"></i>
                     </div>
@@ -118,7 +134,7 @@
     </section>
 
     <!-- Clients / Partenaires -->
-   <center><section class="clients-section">
+    <section class="clients-section fade-in">
         <div class="container">
             <div class="section-header fade-in">
                 <h2 class="section-title">Ils nous font confiance</h2>
@@ -135,17 +151,17 @@
                 </div>
             </div>
         </div>
-    </section></center> 
+    </section>
 
     <!-- Newsletter -->
-    <section class="newsletter-section">
+    <section class="newsletter-section fade-in">
         <div class="container">
-            <div class="newsletter-box fade-in">
-                <div class="newsletter-content">
+            <div class="newsletter-box">
+                <div class="newsletter-content fade-in">
                     <h3>Restez informé</h3>
                     <p>Abonnez-vous à notre newsletter pour recevoir nos dernières actualités et offres spéciales</p>
                 </div>
-                <form class="newsletter-form">
+                <form class="newsletter-form fade-in" style="animation-delay: 0.3s">
                     <input type="email" placeholder="Votre email" required>
                     <button type="submit" class="btn btn-primary">
                         <span>S'abonner</span>
@@ -157,10 +173,10 @@
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="footer fade-in">
         <div class="container">
             <div class="footer-grid">
-                <div class="footer-col">
+                <div class="footer-col fade-in" style="animation-delay: 0.1s">
                     <div class="logo">NTIC Solution</div>
                     <p class="footer-about">Votre partenaire de confiance pour toutes vos solutions technologiques innovantes.</p>
                     <div class="footer-social">
@@ -171,106 +187,293 @@
                     </div>
                 </div>
                 
-                <div class="footer-col">
+                <div class="footer-col fade-in" style="animation-delay: 0.3s">
                     <h4>Services</h4>
                     <ul>
-                        <li><a href="#">Développement Web</a></li>
-                        <li><a href="#">Applications Mobiles</a></li>
-                        <li><a href="#">Marketing Digital</a></li>
-                        <li><a href="#">Infographie</a></li>
-                        <li><a href="#">Cybersécurité</a></li>
+                        <li><a href="services.html#web">Développement Web</a></li>
+                        <li><a href="services.html#mobile">Applications Mobiles</a></li>
+                        <li><a href="services.html#marketing">Marketing Digital</a></li>
+                        <li><a href="services.html#design">Infographie</a></li>
+                        <li><a href="services.html#cyber">Cybersécurité</a></li>
                     </ul>
                 </div>
                 
-                <div class="footer-col">
+                <div class="footer-col fade-in" style="animation-delay: 0.5s">
                     <h4>Entreprise</h4>
                     <ul>
                         <li><a href="about.html">À propos</a></li>
                         <li><a href="projects.html">Projets</a></li>
                         <li><a href="blog.html">Blog</a></li>
-                        <li><a href="#">Carrières</a></li>
-                        <li><a href="#">Presse</a></li>
+                        <li><a href="careers.html">Carrières</a></li>
+                        <li><a href="press.html">Presse</a></li>
                     </ul>
                 </div>
                 
-                <div class="footer-col">
+                <div class="footer-col fade-in" style="animation-delay: 0.7s">
                     <h4>Contact</h4>
                     <ul class="footer-contact">
                         <li><i class="fas fa-envelope"></i> nticsolution.bf@gmail.com</li>
                         <li><i class="fas fa-phone-alt"></i> +226 05 58 58 68</li>
                         <li><i class="fas fa-map-marker-alt"></i> Ouagadougou, Burkina Faso</li>
+                        <li><i class="fas fa-clock"></i> Lun - Ven: 8h - 18h</li>
                     </ul>
                 </div>
             </div>
             
-            <div class="footer-bottom">
+            <div class="footer-bottom fade-in">
                 <div class="copyright">&copy; 2025 NTIC Solution. Tous droits réservés.</div>
                 <div class="footer-links">
-                    <a href="#">Mentions légales</a>
-                    <a href="#">Politique de confidentialité</a>
-                    <a href="#">Conditions d'utilisation</a>
+                    <a href="legal.html">Mentions légales</a>
+                    <a href="privacy.html">Politique de confidentialité</a>
+                    <a href="terms.html">Conditions d'utilisation</a>
                 </div>
             </div>
         </div>
     </footer>
 
+    <!-- Bouton retour en haut -->
+    <a href="#" class="back-to-top fade-in">
+        <i class="fas fa-chevron-up"></i>
+    </a>
+
     <script src="js/main.js"></script>
     <script>
-        // Animation des statistiques
-        function animateStats() {
-            const statNumbers = document.querySelectorAll('.stat-number');
+        // Animation de chargement
+        document.addEventListener('DOMContentLoaded', function() {
+            const loader = document.querySelector('.loader');
+            const progressBar = document.querySelector('.loader-progress-bar');
             
-            statNumbers.forEach(stat => {
-                const target = parseInt(stat.getAttribute('data-count'));
-                const duration = 2000;
-                const step = target / (duration / 16);
-                let current = 0;
-                
-                const timer = setInterval(() => {
-                    current += step;
-                    if (current >= target) {
-                        stat.textContent = target + '+';
-                        clearInterval(timer);
-                    } else {
-                        stat.textContent = Math.floor(current);
-                    }
-                }, 16);
-            });
-        }
-        
-        // Activer l'animation lorsque la section est visible
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    animateStats();
-                    observer.unobserve(entry.target);
+            // Simuler la progression
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 10;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
                 }
-            });
-        }, { threshold: 0.5 });
-        
-        observer.observe(document.querySelector('.stats'));
-        
-        // Animation du carrousel des logos clients
-        const logoTrack = document.querySelector('.logo-track');
-        if (logoTrack) {
-            let direction = -1;
+                progressBar.style.width = progress + '%';
+            }, 100);
             
-            function animateLogos() {
-                const firstLogo = logoTrack.firstElementChild;
-                const lastLogo = logoTrack.lastElementChild;
+            // Cacher le loader après 2.5 secondes
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                loader.style.visibility = 'hidden';
+                document.body.style.overflow = 'auto';
                 
-                if (direction === -1 && firstLogo.getBoundingClientRect().right < 0) {
-                    logoTrack.appendChild(firstLogo.cloneNode(true));
-                    firstLogo.remove();
-                }
+                // Initialiser les animations
+                initAnimations();
+            }, 2500);
+        });
+
+        // Initialiser toutes les animations
+        function initAnimations() {
+            // Animation des statistiques
+            function animateStats() {
+                const statNumbers = document.querySelectorAll('.stat-number');
                 
-                requestAnimationFrame(animateLogos);
+                statNumbers.forEach(stat => {
+                    const target = parseInt(stat.getAttribute('data-count'));
+                    const duration = 2000;
+                    const step = target / (duration / 16);
+                    let current = 0;
+                    
+                    const timer = setInterval(() => {
+                        current += step;
+                        if (current >= target) {
+                            stat.textContent = target + '+';
+                            clearInterval(timer);
+                        } else {
+                            stat.textContent = Math.floor(current);
+                        }
+                    }, 16);
+                });
             }
             
-            animateLogos();
+            // Activer l'animation lorsque la section est visible
+            const statsObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        setTimeout(animateStats, 500);
+                        statsObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            const statsSection = document.querySelector('.stats');
+            if (statsSection) {
+                statsObserver.observe(statsSection);
+            }
+            
+            // Animation du carrousel des logos clients
+            const logoTrack = document.querySelector('.logo-track');
+            if (logoTrack) {
+                let scrollSpeed = 1;
+                
+                function animateLogos() {
+                    const trackWidth = logoTrack.scrollWidth;
+                    const containerWidth = logoTrack.parentElement.offsetWidth;
+                    
+                    if (logoTrack.scrollLeft <= 0) {
+                        scrollSpeed = Math.abs(scrollSpeed);
+                    } else if (logoTrack.scrollLeft >= trackWidth - containerWidth) {
+                        scrollSpeed = -Math.abs(scrollSpeed);
+                    }
+                    
+                    logoTrack.scrollLeft += scrollSpeed;
+                    requestAnimationFrame(animateLogos);
+                }
+                
+                setTimeout(() => animateLogos(), 1000);
+            }
+            
+            // Menu mobile
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navbar = document.querySelector('.navbar');
+            const navLinks = document.querySelectorAll('.navbar a');
+            
+            if (menuToggle) {
+                // Toggle menu
+                menuToggle.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    navbar.classList.toggle('active');
+                    menuToggle.classList.toggle('active');
+                });
+                
+                // Fermer le menu au clic sur un lien
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        navbar.classList.remove('active');
+                        menuToggle.classList.remove('active');
+                    });
+                });
+                
+                // Fermer le menu au clic en dehors
+                document.addEventListener('click', (e) => {
+                    if (!navbar.contains(e.target) && !menuToggle.contains(e.target)) {
+                        navbar.classList.remove('active');
+                        menuToggle.classList.remove('active');
+                    }
+                });
+            }
+            
+            // Header scroll effect
+            window.addEventListener('scroll', () => {
+                const header = document.querySelector('.header');
+                const backToTop = document.querySelector('.back-to-top');
+                
+                if (window.scrollY > 100) {
+                    header.classList.add('scrolled');
+                    if (backToTop) backToTop.classList.add('visible');
+                } else {
+                    header.classList.remove('scrolled');
+                    if (backToTop) backToTop.classList.remove('visible');
+                }
+            });
+            
+            // Bouton retour en haut
+            const backToTopBtn = document.querySelector('.back-to-top');
+            if (backToTopBtn) {
+                backToTopBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+            
+            // Animation d'apparition au scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            // Observer les éléments à animer
+            document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+            
+            // Animation des cartes au hover
+            const cards = document.querySelectorAll('.feature-card, .service-card, .project-card, .blog-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'translateY(-10px)';
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'translateY(0)';
+                });
+            });
+            
+            // Newsletter form submission
+            const newsletterForm = document.querySelector('.newsletter-form');
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const emailInput = this.querySelector('input[type="email"]');
+                    
+                    if (emailInput.value) {
+                        // Animation de succès
+                        const submitBtn = this.querySelector('button');
+                        const originalText = submitBtn.innerHTML;
+                        
+                        submitBtn.innerHTML = '<i class="fas fa-check"></i> Inscription réussie!';
+                        submitBtn.classList.add('btn-success');
+                        
+                        setTimeout(() => {
+                            submitBtn.innerHTML = originalText;
+                            submitBtn.classList.remove('btn-success');
+                            emailInput.value = '';
+                        }, 3000);
+                        
+                        // Ici, vous pouvez ajouter l'appel AJAX pour l'inscription
+                        console.log('Email inscrit:', emailInput.value);
+                    }
+                });
+            }
+            
+            // Effet parallaxe sur l'hero
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                const hero = document.querySelector('.hero-slider');
+                
+                if (hero) {
+                    hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+                }
+            });
+            
+            // Animation des icônes au scroll
+            const floatingIcons = document.querySelectorAll('.floating');
+            floatingIcons.forEach(icon => {
+                const delay = getComputedStyle(icon).getPropertyValue('--delay') || '0s';
+                icon.style.animationDelay = delay;
+            });
         }
+        
+        // Redirection vers les pages services avec animation
+        document.querySelectorAll('a[href*="services.html"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.getAttribute('href').includes('#')) {
+                    return; // Laisser les ancres fonctionner normalement
+                }
+                e.preventDefault();
+                
+                // Animation de transition
+                document.body.style.opacity = '0.7';
+                document.body.style.transition = 'opacity 0.3s';
+                
+                setTimeout(() => {
+                    window.location.href = this.href;
+                }, 300);
+            });
+        });
     </script>
 </body>
 </html>
-
-
