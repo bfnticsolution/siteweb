@@ -2,7 +2,7 @@
 /* BASE & VARIABLES */
 /* ================ */
 :root {
-  --primary: #003366;
+  --primary: #00000;
   --secondary: #ff6600;
   --accent: #00a8e8;
   --light: #f5f7fa;
@@ -2428,3 +2428,4 @@ h3 { font-size: clamp(1.5rem, 3vw, 2rem); }
     }
 
 }
+
