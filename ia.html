@@ -1,0 +1,1476 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI FORGE • Installation & Utilisation des IA</title>
+    <style>
+        /* ===== RESET & VARIABLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --dark: #0f0f1a;
+            --darker: #07070f;
+            --light: #f3f4f6;
+            --glow: rgba(99, 102, 241, 0.5);
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+            --font-mono: 'Fira Code', 'Courier New', monospace;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        /* ===== BASE ===== */
+        body {
+            font-family: var(--font-sans);
+            background: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes gradient-move {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes border-flow {
+            0%, 100% { border-color: var(--primary); }
+            33% { border-color: var(--secondary); }
+            66% { border-color: var(--accent); }
+        }
+
+        @keyframes glow-pulse {
+            0%, 100% { box-shadow: 0 0 30px var(--glow); }
+            50% { box-shadow: 0 0 60px var(--glow), 0 0 90px var(--secondary); }
+        }
+
+        /* ===== BACKGROUND EFFECTS ===== */
+        .noise-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.15), transparent 40%),
+                        radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.15), transparent 40%),
+                        radial-gradient(circle at 40% 80%, rgba(236, 72, 153, 0.15), transparent 40%);
+            z-index: -2;
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(99, 102, 241, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99, 102, 241, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+        }
+
+        .floating-orbs {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.4;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .orb1 {
+            width: 300px;
+            height: 300px;
+            background: var(--primary);
+            top: 10%;
+            left: 5%;
+        }
+
+        .orb2 {
+            width: 400px;
+            height: 400px;
+            background: var(--secondary);
+            bottom: 10%;
+            right: 5%;
+            animation-delay: -5s;
+        }
+
+        .orb3 {
+            width: 200px;
+            height: 200px;
+            background: var(--accent);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -10s;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            position: relative;
+            padding: 4rem 2rem;
+            text-align: center;
+            border-bottom: 2px solid transparent;
+            border-image: var(--gradient);
+            border-image-slice: 1;
+            background: rgba(7, 7, 15, 0.8);
+            backdrop-filter: blur(10px);
+            margin-bottom: 3rem;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, var(--primary), transparent 30%);
+            animation: spin-slow 10s linear infinite;
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .title {
+            font-size: clamp(3rem, 12vw, 6rem);
+            font-weight: 900;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            margin-bottom: 1rem;
+            animation: glow-pulse 4s infinite;
+            position: relative;
+            display: inline-block;
+        }
+
+        .title::after {
+            content: 'AI';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            filter: blur(20px);
+            opacity: 0.5;
+            z-index: -1;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: #a5b4fc;
+            letter-spacing: 4px;
+            word-spacing: 8px;
+            margin-top: 1rem;
+            font-family: var(--font-mono);
+        }
+
+        .ai-badge-container {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .ai-badge {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid;
+            border-radius: 40px;
+            padding: 0.8rem 2rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: default;
+            animation: border-flow 6s infinite;
+        }
+
+        .ai-badge:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px currentColor;
+        }
+
+        /* ===== MAIN CONTAINER ===== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* ===== SEARCH & FILTER SECTION ===== */
+        .search-section {
+            margin: 3rem 0;
+        }
+
+        .search-wrapper {
+            background: rgba(15, 15, 26, 0.7);
+            backdrop-filter: blur(10px);
+            border: 2px solid;
+            border-image: var(--gradient);
+            border-image-slice: 1;
+            border-radius: 60px;
+            padding: 0.8rem 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .search-icon {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-left: 0.5rem;
+        }
+
+        #searchInput {
+            flex: 2;
+            min-width: 250px;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.1rem;
+            padding: 1rem;
+            outline: none;
+            font-family: var(--font-sans);
+        }
+
+        #searchInput::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+            font-style: italic;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            padding: 0.5rem;
+        }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 0.6rem 1.5rem;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(4px);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .filter-btn.active {
+            background: var(--gradient);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 0 20px var(--primary);
+        }
+
+        .filter-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* ===== STATS PANEL ===== */
+        .stats-panel {
+            background: rgba(15, 15, 26, 0.7);
+            backdrop-filter: blur(10px);
+            border: 2px solid;
+            border-image: var(--gradient);
+            border-image-slice: 1;
+            border-radius: 30px;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .counter {
+            font-size: 1.3rem;
+        }
+
+        .counter span {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-right: 0.5rem;
+        }
+
+        .reset-btn {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            padding: 0.7rem 2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .reset-btn:hover {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 0 30px var(--accent);
+        }
+
+        /* ===== CATEGORY CARDS ===== */
+        .category-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .category-card {
+            background: rgba(15, 15, 26, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid;
+            border-radius: 30px;
+            padding: 2rem 1rem;
+            text-align: center;
+            transition: all 0.4s;
+            cursor: pointer;
+            animation: border-flow 6s infinite;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .category-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .category-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .category-count {
+            color: #a5b4fc;
+            font-size: 0.9rem;
+        }
+
+        /* ===== MAIN GRID ===== */
+        .commands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        /* ===== AI COMMAND CARDS ===== */
+        .ai-card {
+            background: rgba(15, 15, 26, 0.7);
+            backdrop-filter: blur(10px);
+            border: 2px solid;
+            border-radius: 30px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: border-flow 8s infinite;
+        }
+
+        .ai-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, var(--primary), transparent 30%);
+            animation: spin-slow 20s linear infinite;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .ai-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(99, 102, 241, 0.3);
+        }
+
+        .card-header {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .ai-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 15px;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: white;
+        }
+
+        .ai-name {
+            font-size: 1.8rem;
+            font-weight: 800;
+            font-family: var(--font-mono);
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .command-tag {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.4rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1px solid;
+            animation: border-flow 6s infinite;
+        }
+
+        .command-desc {
+            position: relative;
+            z-index: 1;
+            font-size: 1rem;
+            margin: 1.5rem 0;
+            color: #d1d5db;
+            line-height: 1.7;
+        }
+
+        .code-block {
+            background: #0a0a14;
+            border-radius: 20px;
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+            position: relative;
+            border-left: 4px solid;
+            animation: border-flow 6s infinite;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        .code-block pre {
+            margin: 0;
+            color: #a5b4fc;
+        }
+
+        .features-list {
+            position: relative;
+            z-index: 1;
+            margin: 1.5rem 0;
+            list-style: none;
+        }
+
+        .features-list li {
+            margin: 0.8rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: #e5e7eb;
+        }
+
+        .feature-icon {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .platform-tags {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin: 1.5rem 0;
+        }
+
+        .platform-tag {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            border: 1px solid;
+            animation: border-flow 6s infinite;
+        }
+
+        .card-footer {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .difficulty {
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .difficulty.beginner { background: #10b98120; color: #10b981; border: 1px solid #10b981; }
+        .difficulty.intermediate { background: #f59e0b20; color: #f59e0b; border: 1px solid #f59e0b; }
+        .difficulty.advanced { background: #ef444420; color: #ef4444; border: 1px solid #ef4444; }
+
+        .copy-btn {
+            background: transparent;
+            border: 2px solid;
+            animation: border-flow 6s infinite;
+            color: var(--light);
+            padding: 0.6rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .copy-btn:hover {
+            background: var(--gradient);
+            border-color: transparent;
+            color: white;
+            box-shadow: 0 0 20px var(--primary);
+        }
+
+        /* ===== RESOURCES SECTION ===== */
+        .resources-section {
+            margin: 5rem 0;
+            padding: 3rem;
+            background: rgba(15, 15, 26, 0.7);
+            backdrop-filter: blur(10px);
+            border: 2px solid;
+            border-image: var(--gradient);
+            border-image-slice: 1;
+            border-radius: 50px;
+        }
+
+        .resources-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .resource-item {
+            padding: 2rem;
+            border: 1px solid;
+            border-radius: 30px;
+            animation: border-flow 6s infinite;
+            transition: all 0.3s;
+        }
+
+        .resource-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .resource-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .resource-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .resource-item p {
+            color: #9ca3af;
+            margin-bottom: 1.5rem;
+        }
+
+        .resource-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border-bottom: 2px solid transparent;
+        }
+
+        .resource-link:hover {
+            border-bottom-color: var(--primary);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: rgba(7, 7, 15, 0.9);
+            backdrop-filter: blur(10px);
+            border-top: 2px solid;
+            border-image: var(--gradient);
+            border-image-slice: 1;
+            padding: 3rem;
+            margin-top: 5rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-title {
+            font-size: 2rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--light);
+            text-decoration: none;
+            transition: all 0.3s;
+            border-bottom: 2px solid transparent;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.5rem;
+                letter-spacing: 4px;
+            }
+            
+            .commands-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .search-wrapper {
+                border-radius: 30px;
+            }
+            
+            .stats-panel {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .category-showcase {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .category-showcase {
+                grid-template-columns: 1fr;
+            }
+            
+            .ai-name {
+                font-size: 1.3rem;
+            }
+            
+            .filter-btn {
+                padding: 0.4rem 1rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar {
+            width: 10px;
+            background: var(--darker);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gradient);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="noise-bg"></div>
+    <div class="grid-overlay"></div>
+    <div class="floating-orbs">
+        <div class="orb orb1"></div>
+        <div class="orb orb2"></div>
+        <div class="orb orb3"></div>
+    </div>
+
+    <header class="header">
+        <div class="header-content">
+            <h1 class="title">AI FORGE</h1>
+            <div class="subtitle">⚡ INSTALLATION • CONFIGURATION • UTILISATION DES IA ⚡</div>
+            <div class="ai-badge-container">
+                <span class="ai-badge">DEEPSEEK</span>
+                <span class="ai-badge">CHATGPT</span>
+                <span class="ai-badge">CLAUDE AI</span>
+                <span class="ai-badge">MISTRAL</span>
+                <span class="ai-badge">LLAMA</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Search Section -->
+        <div class="search-section">
+            <div class="search-wrapper">
+                <span class="search-icon">🔮</span>
+                <input type="text" id="searchInput" placeholder="Rechercher une IA, une commande, une plateforme...">
+                <div class="filter-group" id="categoryFilter">
+                    <!-- Généré par JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Panel -->
+        <div class="stats-panel">
+            <div class="counter"><span id="commandCount">0</span> ressources IA disponibles</div>
+            <button class="reset-btn" id="resetFilters">⟲ RÉINITIALISER</button>
+        </div>
+
+        <!-- Category Cards -->
+        <div class="category-showcase" id="categoryShowcase">
+            <!-- Généré par JS -->
+        </div>
+
+        <!-- Main Grid -->
+        <div id="commandsGrid" class="commands-grid">
+            <!-- Généré par JS -->
+        </div>
+
+        <!-- Resources Section -->
+        <div class="resources-section">
+            <h2 class="resources-title">📚 RESSOURCES COMPLÉMENTAIRES</h2>
+            <div class="resources-grid">
+                <div class="resource-item">
+                    <div class="resource-icon">📖</div>
+                    <h3>Documentation Officielle</h3>
+                    <p>Accédez aux guides complets pour chaque IA : API, paramètres avancés, meilleures pratiques.</p>
+                    <a href="#" class="resource-link">Explorer →</a>
+                </div>
+                <div class="resource-item">
+                    <div class="resource-icon">⚡</div>
+                    <h3>Prompts Expert</h3>
+                    <p>Collection de prompts avancés pour maximiser les capacités de chaque modèle d'IA.</p>
+                    <a href="#" class="resource-link">Découvrir →</a>
+                </div>
+                <div class="resource-item">
+                    <div class="resource-icon">🔧</div>
+                    <h3>Outils & Intégrations</h3>
+                    <p>Plugins, extensions et outils pour intégrer les IA dans vos projets.</p>
+                    <a href="#" class="resource-link">Voir les outils →</a>
+                </div>
+                <div class="resource-item">
+                    <div class="resource-icon">🌐</div>
+                    <h3>Communauté</h3>
+                    <p>Forums, Discord, groupes d'entraide pour les passionnés d'IA.</p>
+                    <a href="#" class="resource-link">Rejoindre →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-title">AI FORGE</div>
+            <p style="color: #9ca3af; margin: 1rem 0;">Votre guide complet pour l'installation et l'utilisation des intelligences artificielles</p>
+            <div class="footer-links">
+                <a href="#">DeepSeek</a>
+                <a href="#">ChatGPT</a>
+                <a href="#">Claude AI</a>
+                <a href="#">Mistral</a>
+                <a href="#">Llama</a>
+                <a href="#">API Guides</a>
+            </div>
+            <p style="color: #6b7280; margin-top: 2rem;">© 2025 AI FORGE • Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            // ============================================
+            // BASE DE DONNÉES COMPLÈTE DES IA
+            // ============================================
+            const aiCommands = [
+                // ========== DEEPSEEK ==========
+                {
+                    name: "DeepSeek",
+                    icon: "🧠",
+                    desc: "Installation et utilisation de DeepSeek - Modèle de langage avancé",
+                    category: "deepseek",
+                    install: "pip install deepseek-ai\n# Ou via Docker:\ndocker pull deepseek/deepseek:latest",
+                    usage: "from deepseek import DeepSeek\nclient = DeepSeek(api_key='votre_clé')\nresponse = client.chat(messages=[{'role': 'user', 'content': 'Bonjour'}])",
+                    config: "Configuration API :\n1. Obtenir une clé sur platform.deepseek.com\n2. Configurer les variables d'env : DEEPSEEK_API_KEY\n3. Paramètres avancés : temperature, max_tokens, top_p",
+                    features: [
+                        "Modèle open-source performant",
+                        "Support multilingue dont français",
+                        "Contexte de 1M tokens",
+                        "Rapide et économique"
+                    ],
+                    platforms: ["Python", "Docker", "API REST", "Ollama"],
+                    difficulty: "beginner",
+                    tags: ["installation", "api", "local", "chat"],
+                    links: {
+                        docs: "https://platform.deepseek.com/docs",
+                        github: "https://github.com/deepseek-ai",
+                        api: "https://platform.deepseek.com/api"
+                    }
+                },
+                {
+                    name: "DeepSeek Coder",
+                    icon: "💻",
+                    desc: "Version spécialisée pour le code - Génération, analyse et debug",
+                    category: "deepseek",
+                    install: "pip install deepseek-coder\n# Ou via HuggingFace:\nfrom transformers import AutoModelForCausalLM, AutoTokenizer",
+                    usage: "from deepseek_coder import DeepSeekCoder\ncoder = DeepSeekCoder(model='deepseek-coder-6.7b-instruct')\ncode = coder.generate('Écris une fonction fibonacci en Python')",
+                    config: "Configuration pour le code :\n1. Choisir la taille du modèle (1.3B, 6.7B, 33B)\n2. Optimiser pour GPU/CPU\n3. Utiliser avec VS Code via extension",
+                    features: [
+                        "Génération de code",
+                        "Complétion intelligente",
+                        "Debug assisté",
+                        "Support 40+ langages"
+                    ],
+                    platforms: ["Python", "VS Code", "Jupyter", "CLI"],
+                    difficulty: "intermediate",
+                    tags: ["coding", "generation", "debug"]
+                },
+                {
+                    name: "DeepSeek API",
+                    icon: "🔌",
+                    desc: "Utilisation avancée de l'API DeepSeek (batch, streaming, fine-tuning)",
+                    category: "deepseek",
+                    install: "pip install requests\n# Ou SDK officiel\npip install deepseek-sdk",
+                    usage: "import requests\nresponse = requests.post(\n    'https://api.deepseek.com/v1/chat/completions',\n    headers={'Authorization': 'Bearer YOUR_API_KEY'},\n    json={\n        'model': 'deepseek-chat',\n        'messages': [{'role': 'user', 'content': 'Bonjour'}],\n        'stream': True\n    }\n)",
+                    config: "Configuration API avancée :\n- Rate limiting : 60 requêtes/min\n- Batch processing\n- Fine-tuning personnalisé\n- Webhooks",
+                    features: [
+                        "Streaming en temps réel",
+                        "Batch processing",
+                        "Fine-tuning",
+                        "Modèles personnalisés"
+                    ],
+                    platforms: ["REST", "Python", "JavaScript", "curl"],
+                    difficulty: "advanced",
+                    tags: ["api", "integration", "advanced"]
+                },
+
+                // ========== CHATGPT (OPENAI) ==========
+                {
+                    name: "ChatGPT (OpenAI)",
+                    icon: "🤖",
+                    desc: "Installation et utilisation de l'API OpenAI pour ChatGPT",
+                    category: "chatgpt",
+                    install: "pip install openai\n# Configuration de la clé API\nexport OPENAI_API_KEY='votre_clé'",
+                    usage: "from openai import OpenAI\nclient = OpenAI()\nresponse = client.chat.completions.create(\n    model='gpt-4',\n    messages=[{'role': 'user', 'content': 'Bonjour'}]\n)",
+                    config: "Configuration :\n1. Créer un compte sur platform.openai.com\n2. Générer une clé API\n3. Choisir le modèle (gpt-4, gpt-3.5-turbo)\n4. Gérer le quota et billing",
+                    features: [
+                        "Modèles GPT-4 et GPT-3.5",
+                        "Vision (GPT-4V)",
+                        "DALL-E pour images",
+                        "TTS (Text-to-Speech)"
+                    ],
+                    platforms: ["Python", "JavaScript", "REST API", "Azure OpenAI"],
+                    difficulty: "beginner",
+                    tags: ["openai", "gpt4", "chat", "api"]
+                },
+                {
+                    name: "ChatGPT Desktop (Application)",
+                    icon: "💬",
+                    desc: "Installation de l'application desktop ChatGPT pour Windows/Mac",
+                    category: "chatgpt",
+                    install: "Windows : Télécharger depuis openai.com/chatgpt/desktop\nMac : Télécharger depuis App Store\nLinux : Version web ou client tiers",
+                    usage: "1. Télécharger l'installateur\n2. Lancer l'installation\n3. Se connecter avec compte OpenAI\n4. Utiliser l'interface native",
+                    config: "Configuration avancée :\n- Raccourcis clavier personnalisés\n- Mode sombre/clair\n- Gestion des conversations\n- Export des données",
+                    features: [
+                        "Interface native",
+                        "Offline mode (limité)",
+                        "Raccourcis clavier",
+                        "Historique local"
+                    ],
+                    platforms: ["Windows", "macOS", "Linux (web)"],
+                    difficulty: "beginner",
+                    tags: ["desktop", "app", "native"]
+                },
+                {
+                    name: "Fine-tuning OpenAI",
+                    icon: "⚙️",
+                    desc: "Personnalisation des modèles OpenAI avec vos données",
+                    category: "chatgpt",
+                    install: "pip install openai\n# Préparer les données au format JSONL",
+                    usage: "openai api fine_tunes.create -t training_data.jsonl -m gpt-3.5-turbo",
+                    config: "Étapes :\n1. Collecter et formater les données\n2. Uploader les fichiers\n3. Lancer le fine-tuning\n4. Utiliser le modèle personnalisé",
+                    features: [
+                        "Modèles personnalisés",
+                        "Réduction des coûts",
+                        "Meilleure précision",
+                        "Style adapté"
+                    ],
+                    platforms: ["Python", "CLI"],
+                    difficulty: "expert",
+                    tags: ["finetuning", "custom", "training"]
+                },
+
+                // ========== CLAUDE AI ==========
+                {
+                    name: "Claude AI (Anthropic)",
+                    icon: "🌿",
+                    desc: "Installation et utilisation de Claude via API",
+                    category: "claude",
+                    install: "pip install anthropic\n# Ou via SDK officiel",
+                    usage: "from anthropic import Anthropic\nclient = Anthropic(api_key='votre_clé')\nresponse = client.messages.create(\n    model='claude-3-opus-20240229',\n    max_tokens=1000,\n    messages=[{'role': 'user', 'content': 'Bonjour'}]\n)",
+                    config: "Configuration :\n1. S'inscrire sur console.anthropic.com\n2. Obtenir une clé API\n3. Choisir le modèle (Opus, Sonnet, Haiku)\n4. Gérer le rate limiting",
+                    features: [
+                        "Claude 3 (Opus, Sonnet, Haiku)",
+                        "Contexte 200K tokens",
+                        "Vision et analyse d'images",
+                        "Tool use (function calling)"
+                    ],
+                    platforms: ["Python", "JavaScript", "REST API", "Amazon Bedrock"],
+                    difficulty: "intermediate",
+                    tags: ["claude", "anthropic", "api"]
+                },
+                {
+                    name: "Claude Console Web",
+                    icon: "🌐",
+                    desc: "Utilisation de Claude via interface web (claude.ai)",
+                    category: "claude",
+                    install: "1. Créer compte sur claude.ai\n2. Choisir abonnement (free ou pro)\n3. Accéder directement",
+                    usage: "Fonctionnalités web :\n- Chat en temps réel\n- Upload de fichiers (PDF, images, texte)\n- Gestion des conversations\n- Projets collaboratifs",
+                    config: "Paramètres :\n- Thème clair/sombre\n- Langue de l'interface\n- Préférences de réponse\n- Export des conversations",
+                    features: [
+                        "Gratuit (limité)",
+                        "Upload de documents",
+                        "Analyse d'images",
+                        "Historique cloud"
+                    ],
+                    platforms: ["Web", "Mobile (web)"],
+                    difficulty: "beginner",
+                    tags: ["web", "interface", "chat"]
+                },
+                {
+                    name: "Claude API avec streaming",
+                    icon: "📡",
+                    desc: "Utilisation avancée de l'API Claude avec streaming",
+                    category: "claude",
+                    install: "pip install anthropic\n# Version avec async support",
+                    usage: "import asyncio\nfrom anthropic import AsyncAnthropic\n\nasync def main():\n    client = AsyncAnthropic()\n    async with client.messages.stream(\n        model='claude-3-sonnet-20240229',\n        messages=[{'role': 'user', 'content': 'Raconte une histoire'}]\n    ) as stream:\n        async for text in stream.text_stream:\n            print(text, end='')",
+                    config: "Configuration avancée :\n- Streaming temps réel\n- Async support\n- Webhooks\n- Rate limiting optimisé",
+                    features: [
+                        "Streaming en direct",
+                        "Async/await support",
+                        "Gestion d'erreurs avancée",
+                        "Optimisation performance"
+                    ],
+                    platforms: ["Python", "Node.js"],
+                    difficulty: "advanced",
+                    tags: ["streaming", "async", "real-time"]
+                },
+
+                // ========== MISTRAL AI ==========
+                {
+                    name: "Mistral AI",
+                    icon: "🌪️",
+                    desc: "Installation des modèles Mistral (open-source)",
+                    category: "mistral",
+                    install: "pip install mistralai\n# Via HuggingFace\npip install transformers",
+                    usage: "from mistralai.client import MistralClient\nclient = MistralClient(api_key='votre_clé')\nresponse = client.chat(\n    model='mistral-large-latest',\n    messages=[{'role': 'user', 'content': 'Bonjour'}]\n)",
+                    config: "Configuration :\n1. Obtenir une clé sur console.mistral.ai\n2. Choisir modèle (tiny, small, medium, large)\n3. Optimiser pour production",
+                    features: [
+                        "Modèles open-source",
+                        "Multilingue",
+                        "Efficacité énergétique",
+                        "Performances élevées"
+                    ],
+                    platforms: ["Python", "API REST", "Ollama", "HuggingFace"],
+                    difficulty: "intermediate",
+                    tags: ["mistral", "open-source", "efficient"]
+                },
+                {
+                    name: "Mistral Local",
+                    icon: "💾",
+                    desc: "Installation et exécution locale des modèles Mistral",
+                    category: "mistral",
+                    install: "pip install mistral-inference\n# Via Ollama\nollama pull mistral",
+                    usage: "from mistral_inference.model import MistralForCausalLM\nfrom mistral_inference.tokenizer import Tokenizer\n\nmodel = MistralForCausalLM.from_pretrained('mistralai/Mistral-7B-v0.1')\ntokenizer = Tokenizer.from_pretrained('mistralai/Mistral-7B-v0.1')",
+                    config: "Configuration locale :\n- GPU recommandé (minimum 8GB VRAM)\n- Version quantisée pour CPU\n- Optimisation avec llama.cpp",
+                    features: [
+                        "Exécution 100% locale",
+                        "Pas de dépendance API",
+                        "Confidentialité totale",
+                        "Personnalisable"
+                    ],
+                    platforms: ["Python", "Ollama", "llama.cpp", "LM Studio"],
+                    difficulty: "advanced",
+                    tags: ["local", "offline", "privacy"]
+                },
+
+                // ========== LLAMA (META) ==========
+                {
+                    name: "Llama 3 (Meta)",
+                    icon: "🦙",
+                    desc: "Installation des modèles Llama 3 de Meta",
+                    category: "llama",
+                    install: "pip install transformers\n# Demander accès sur huggingface.co/meta-llama",
+                    usage: "from transformers import AutoTokenizer, AutoModelForCausalLM\n\ntokenizer = AutoTokenizer.from_pretrained('meta-llama/Meta-Llama-3-8B')\nmodel = AutoModelForCausalLM.from_pretrained('meta-llama/Meta-Llama-3-8B')",
+                    config: "Étapes :\n1. Demander accès sur HuggingFace\n2. Accepter les conditions\n3. Télécharger les poids\n4. Exécuter localement",
+                    features: [
+                        "Modèle open-source",
+                        "8B et 70B paramètres",
+                        "Multilingue",
+                        "Performances SOTA"
+                    ],
+                    platforms: ["HuggingFace", "Ollama", "llama.cpp", "PyTorch"],
+                    difficulty: "advanced",
+                    tags: ["meta", "llama", "open-source", "large"]
+                },
+                {
+                    name: "Llama avec Ollama",
+                    icon: "🐫",
+                    desc: "Utilisation simplifiée de Llama via Ollama",
+                    category: "llama",
+                    install: "# Installer Ollama\ncurl -fsSL https://ollama.com/install.sh | sh\n# Télécharger Llama\nollama pull llama3",
+                    usage: "ollama run llama3\n# En Python\nimport ollama\nresponse = ollama.chat(model='llama3', messages=[{'role': 'user', 'content': 'Bonjour'}])",
+                    config: "Configuration Ollama :\n- Modèles disponibles : llama3, llama2, codellama\n- API locale sur port 11434\n- Multi-modèles supportés",
+                    features: [
+                        "Installation simple",
+                        "API locale",
+                        "Multi-modèles",
+                        "Cross-platform"
+                    ],
+                    platforms: ["macOS", "Linux", "Windows (WSL2)"],
+                    difficulty: "beginner",
+                    tags: ["ollama", "local", "easy"]
+                },
+
+                // ========== PLATEFORMES & OUTILS ==========
+                {
+                    name: "Ollama - Gestionnaire de modèles",
+                    icon: "📦",
+                    desc: "Plateforme unifiée pour gérer et exécuter des modèles localement",
+                    category: "platform",
+                    install: "# macOS/Linux\ncurl -fsSL https://ollama.com/install.sh | sh\n# Windows\nTélécharger depuis ollama.com",
+                    usage: "ollama pull deepseek-coder\nollama pull mistral\nollama pull llama3\n# Lancer le serveur\nollama serve",
+                    config: "Configuration :\n- Modèles stockés dans ~/.ollama\n- API sur localhost:11434\n- Support GPU/CPU\n- Modèles personnalisables",
+                    features: [
+                        "Unifie tous les modèles",
+                        "API REST locale",
+                        "Multi-plateforme",
+                        "Communauté active"
+                    ],
+                    platforms: ["macOS", "Linux", "Windows"],
+                    difficulty: "beginner",
+                    tags: ["manager", "local", "all-models"]
+                },
+                {
+                    name: "LangChain - Framework IA",
+                    icon: "⛓️",
+                    desc: "Framework pour développer des applications avec les LLMs",
+                    category: "platform",
+                    install: "pip install langchain langchain-openai langchain-anthropic",
+                    usage: "from langchain_openai import ChatOpenAI\nfrom langchain_anthropic import ChatAnthropic\nfrom langchain.chains import LLMChain\n\nllm = ChatOpenAI(model='gpt-4')\nchain = LLMChain.from_string(llm, 'Traduis en français: {text}')",
+                    config: "Configuration avancée :\n- Multi-providers (OpenAI, Anthropic, etc.)\n- Agents et outils\n- Mémoire conversationnelle\n- RAG (Retrieval)",
+                    features: [
+                        "Multi-modèles",
+                        "Agents intelligents",
+                        "Intégration vectorielle",
+                        "Chaînes complexes"
+                    ],
+                    platforms: ["Python", "JavaScript"],
+                    difficulty: "advanced",
+                    tags: ["framework", "development", "chains"]
+                },
+                {
+                    name: "LM Studio",
+                    icon: "🎨",
+                    desc: "Interface graphique pour exécuter des modèles localement",
+                    category: "platform",
+                    install: "Télécharger depuis lmstudio.ai\nInstallation automatique",
+                    usage: "1. Ouvrir LM Studio\n2. Rechercher un modèle\n3. Télécharger\n4. Charger et discuter",
+                    config: "Fonctionnalités :\n- Interface intuitive\n- Serveur API intégré\n- Multi-modèles\n- Export de code",
+                    features: [
+                        "Interface graphique",
+                        "Pas de code requis",
+                        "Serveur local",
+                        "Multi-OS"
+                    ],
+                    platforms: ["Windows", "macOS", "Linux"],
+                    difficulty: "beginner",
+                    tags: ["gui", "local", "easy"]
+                },
+                {
+                    name: "HuggingFace Transformers",
+                    icon: "🤗",
+                    desc: "Bibliothèque principale pour les modèles transformers",
+                    category: "platform",
+                    install: "pip install transformers torch accelerate",
+                    usage: "from transformers import pipeline\n\nclassifier = pipeline('sentiment-analysis', model='nlptown/bert-base-multilingual-uncased-sentiment')\nresult = classifier('Ce produit est génial !')",
+                    config: "Configuration avancée :\n- Accélération GPU\n- Quantization\n- Pipeline personnalisés\n- Fine-tuning",
+                    features: [
+                        "Milliers de modèles",
+                        "Multi-tâches",
+                        "Fine-tuning",
+                        "Communauté active"
+                    ],
+                    platforms: ["Python", "PyTorch", "TensorFlow", "JAX"],
+                    difficulty: "intermediate",
+                    tags: ["transformers", "hub", "models"]
+                },
+                {
+                    name: "Continue.dev",
+                    icon: "🔧",
+                    desc: "Extension VS Code pour l'assistance IA dans le code",
+                    category: "platform",
+                    install: "1. Ouvrir VS Code\n2. Installer extension 'Continue'\n3. Configurer les modèles",
+                    usage: "Fonctionnalités :\n- Chat dans l'IDE\n- Autocomplétion IA\n- Génération de code\n- Refactoring assisté",
+                    config: "Configuration :\n- Choisir modèle (GPT-4, Claude, DeepSeek)\n- API keys\n- Raccourcis personnalisés",
+                    features: [
+                        "Intégration VS Code",
+                        "Multi-modèles",
+                        "Gratuit",
+                        "Open-source"
+                    ],
+                    platforms: ["VS Code"],
+                    difficulty: "intermediate",
+                    tags: ["ide", "coding", "assistant"]
+                },
+
+                // ========== PROMPTS & TECHNIQUES ==========
+                {
+                    name: "Prompt Engineering - DeepSeek",
+                    icon: "🎯",
+                    desc: "Techniques avancées de prompting pour DeepSeek",
+                    category: "prompts",
+                    install: "Techniques sans installation",
+                    usage: "Exemples de prompts optimisés :\n\n1. Chain-of-thought:\n'Explique étape par étape comment résoudre ce problème mathématique: 23 * 47'\n\n2. Few-shot learning:\n'Traduis ces phrases en anglais:\nFrançais: Bonjour le monde → Anglais: Hello world\nFrançais: Comment vas-tu? → Anglais: How are you?\nFrançais: Je suis content → Anglais:'\n\n3. Rôle playing:\n'Agis en tant qu'expert en cybersécurité. Explique-moi comment protéger mon réseau WiFi.'",
+                    config: "Paramètres optimaux :\n- Temperature: 0.7 pour créativité, 0.2 pour précision\n- max_tokens: 2048\n- top_p: 0.9\n- frequency_penalty: 0.3",
+                    features: [
+                        "Chain-of-thought",
+                        "Few-shot learning",
+                        "Role playing",
+                        "Structured outputs"
+                    ],
+                    platforms: ["Toutes les IA"],
+                    difficulty: "intermediate",
+                    tags: ["prompts", "techniques", "optimization"]
+                },
+                {
+                    name: "RAG (Retrieval Augmented Generation)",
+                    icon: "📚",
+                    desc: "Technique pour enrichir les réponses avec vos données",
+                    category: "prompts",
+                    install: "pip install langchain chromadb sentence-transformers",
+                    usage: "from langchain.embeddings import HuggingFaceEmbeddings\nfrom langchain.vectorstores import Chroma\nfrom langchain.chains import RetrievalQA\n\n# Charger documents\ndocuments = load_documents()\n\n# Créer embeddings\nembeddings = HuggingFaceEmbeddings()\nvectordb = Chroma.from_documents(documents, embeddings)\n\n# QA avec contexte\nqa = RetrievalQA.from_chain_type(llm=llm, retriever=vectordb.as_retriever())",
+                    config: "Configuration RAG :\n- Chunk size: 500-1000 tokens\n- Overlap: 100-200 tokens\n- Embedding model: 'all-MiniLM-L6-v2'\n- Top-k retrieval: 3-5",
+                    features: [
+                        "Contexte personnalisé",
+                        "Documents d'entreprise",
+                        "Réponses précises",
+                        "Mise à jour facile"
+                    ],
+                    platforms: ["LangChain", "LlamaIndex", "Custom"],
+                    difficulty: "expert",
+                    tags: ["rag", "retrieval", "context"]
+                },
+                {
+                    name: "Function Calling",
+                    icon: "🔌",
+                    desc: "Permettre aux IA d'appeler des fonctions externes",
+                    category: "prompts",
+                    install: "Support natif dans OpenAI/Claude",
+                    usage: "import json\n\nfunctions = [\n    {\n        'name': 'get_weather',\n        'description': 'Obtenir la météo',\n        'parameters': {\n            'type': 'object',\n            'properties': {\n                'city': {'type': 'string'}\n            }\n        }\n    }\n]\n\nresponse = client.chat.completions.create(\n    model='gpt-4',\n    messages=[{'role': 'user', 'content': 'Météo à Paris?'}],\n    functions=functions\n)",
+                    config: "Implémentation :\n1. Définir les fonctions disponibles\n2. Parse la réponse de l'IA\n3. Exécuter la fonction\n4. Renvoyer le résultat",
+                    features: [
+                        "Interaction avec APIs",
+                        "Actions automatisées",
+                        "Workflows complexes",
+                        "Intégration systèmes"
+                    ],
+                    platforms: ["OpenAI", "Claude", "Gemini"],
+                    difficulty: "expert",
+                    tags: ["functions", "tools", "automation"]
+                }
+            ];
+
+            // ============================================
+            // ÉTAT DE L'APPLICATION
+            // ============================================
+            let currentCategory = "all";
+            let searchTerm = "";
+
+            // ============================================
+            // FONCTIONS DE RENDU
+            // ============================================
+            function renderCategories() {
+                const categories = [...new Set(aiCommands.map(cmd => cmd.category))];
+                const container = document.getElementById('categoryFilter');
+                
+                const categoryNames = {
+                    'deepseek': 'DEEPSEEK',
+                    'chatgpt': 'CHATGPT',
+                    'claude': 'CLAUDE',
+                    'mistral': 'MISTRAL',
+                    'llama': 'LLAMA',
+                    'platform': 'PLATEFORMES',
+                    'prompts': 'PROMPTS'
+                };
+
+                let html = `<button class="filter-btn active" data-cat="all">TOUS</button>`;
+                categories.forEach(cat => {
+                    html += `<button class="filter-btn" data-cat="${cat}">${categoryNames[cat] || cat.toUpperCase()}</button>`;
+                });
+                container.innerHTML = html;
+
+                // Category cards
+                const showcaseContainer = document.getElementById('categoryShowcase');
+                let showcaseHtml = '';
+                categories.forEach(cat => {
+                    const count = aiCommands.filter(cmd => cmd.category === cat).length;
+                    showcaseHtml += `
+                        <div class="category-card" data-cat="${cat}">
+                            <div class="category-icon">${getCategoryIcon(cat)}</div>
+                            <div class="category-name">${categoryNames[cat] || cat}</div>
+                            <div class="category-count">${count} ressources</div>
+                        </div>
+                    `;
+                });
+                showcaseContainer.innerHTML = showcaseHtml;
+
+                // Event listeners for categories
+                document.querySelectorAll('.filter-btn, .category-card').forEach(el => {
+                    el.addEventListener('click', (e) => {
+                        const cat = el.dataset.cat;
+                        if (cat) {
+                            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                            document.querySelector(`.filter-btn[data-cat="${cat}"]`).classList.add('active');
+                            currentCategory = cat;
+                            renderGrid();
+                        }
+                    });
+                });
+            }
+
+            function getCategoryIcon(category) {
+                const icons = {
+                    'deepseek': '🧠',
+                    'chatgpt': '🤖',
+                    'claude': '🌿',
+                    'mistral': '🌪️',
+                    'llama': '🦙',
+                    'platform': '🔧',
+                    'prompts': '🎯'
+                };
+                return icons[category] || '📦';
+            }
+
+            function filterCommands() {
+                return aiCommands.filter(cmd => {
+                    const matchCategory = currentCategory === "all" || cmd.category === currentCategory;
+                    const matchSearch = searchTerm === "" || 
+                        cmd.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        cmd.desc.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        cmd.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        (cmd.tags && cmd.tags.some(tag => tag.includes(searchTerm.toLowerCase())));
+                    return matchCategory && matchSearch;
+                });
+            }
+
+            function renderGrid() {
+                const filtered = filterCommands();
+                const grid = document.getElementById('commandsGrid');
+                const countSpan = document.getElementById('commandCount');
+                countSpan.textContent = filtered.length;
+
+                if (filtered.length === 0) {
+                    grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:4rem; background:rgba(15,15,26,0.7); border:2px solid var(--accent); border-radius:40px; font-size:1.5rem;">🔍 Aucune ressource trouvée</div>`;
+                    return;
+                }
+
+                let html = '';
+                filtered.forEach(cmd => {
+                    html += `
+                        <div class="ai-card">
+                            <div class="card-header">
+                                <div class="ai-logo">${cmd.icon}</div>
+                                <span class="ai-name">${cmd.name}</span>
+                                <span class="command-tag">${cmd.category}</span>
+                            </div>
+                            <div class="command-desc">${cmd.desc}</div>
+                            
+                            <div style="margin: 1.5rem 0;">
+                                <div style="color: var(--primary); font-weight: 600; margin-bottom: 0.5rem;">📦 Installation</div>
+                                <div class="code-block">
+                                    <pre>${cmd.install}</pre>
+                                </div>
+                            </div>
+                            
+                            <div style="margin: 1.5rem 0;">
+                                <div style="color: var(--primary); font-weight: 600; margin-bottom: 0.5rem;">⚡ Utilisation</div>
+                                <div class="code-block">
+                                    <pre>${cmd.usage}</pre>
+                                </div>
+                            </div>
+                            
+                            ${cmd.config ? `
+                            <div style="margin: 1.5rem 0;">
+                                <div style="color: var(--primary); font-weight: 600; margin-bottom: 0.5rem;">⚙️ Configuration</div>
+                                <div class="code-block">
+                                    <pre>${cmd.config}</pre>
+                                </div>
+                            </div>
+                            ` : ''}
+                            
+                            <ul class="features-list">
+                                ${cmd.features.map(f => `<li><span class="feature-icon">✨</span> ${f}</li>`).join('')}
+                            </ul>
+                            
+                            <div class="platform-tags">
+                                ${cmd.platforms.map(p => `<span class="platform-tag">${p}</span>`).join('')}
+                            </div>
+                            
+                            <div class="card-footer">
+                                <span class="difficulty ${cmd.difficulty}">${cmd.difficulty}</span>
+                                <button class="copy-btn" data-cmd="Installation:\n${cmd.install}\n\nUtilisation:\n${cmd.usage}">📋 COPIER COMMANDES</button>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                grid.innerHTML = html;
+
+                // Copy functionality
+                document.querySelectorAll('.copy-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const cmdText = btn.dataset.cmd;
+                        navigator.clipboard.writeText(cmdText).then(() => {
+                            const originalText = btn.textContent;
+                            btn.textContent = '✅ COPIÉ !';
+                            btn.style.background = 'var(--gradient)';
+                            btn.style.color = 'white';
+                            setTimeout(() => {
+                                btn.textContent = originalText;
+                                btn.style.background = 'transparent';
+                                btn.style.color = 'var(--light)';
+                            }, 2000);
+                        });
+                    });
+                });
+            }
+
+            // ============================================
+            // INITIALISATION
+            // ============================================
+            document.addEventListener('DOMContentLoaded', () => {
+                renderCategories();
+                renderGrid();
+
+                document.getElementById('searchInput').addEventListener('input', (e) => {
+                    searchTerm = e.target.value;
+                    renderGrid();
+                });
+
+                document.getElementById('resetFilters').addEventListener('click', () => {
+                    document.getElementById('searchInput').value = '';
+                    searchTerm = '';
+                    
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelector('.filter-btn[data-cat="all"]').classList.add('active');
+                    currentCategory = 'all';
+                    
+                    renderGrid();
+                });
+            });
+        })();
+    </script>
+</body>
+</html>
