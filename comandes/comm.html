@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PowerShell Nexus • Commandes futuristes</title>
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at 20% 30%, #0a0f1e, #03050a);
+            color: #e0f2fe;
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* ===== ANIMATIONS GLOBALES ===== */
+        @keyframes scanline {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 5px #00ffff, 0 0 20px #00aaff; }
+            50% { box-shadow: 0 0 20px #00ffff, 0 0 40px #0077ff; }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes border-glow {
+            0%, 100% { border-color: rgba(0, 255, 255, 0.3); }
+            50% { border-color: rgba(0, 255, 255, 0.8); }
+        }
+
+        /* ===== ÉLÉMENTS DÉCORATIFS ===== */
+        .cyber-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .scan-line {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(to bottom, transparent, rgba(0, 255, 255, 0.4), transparent);
+            opacity: 0.5;
+            animation: scanline 8s linear infinite;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .particle {
+            position: fixed;
+            background: cyan;
+            border-radius: 50%;
+            filter: blur(2px);
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .glow-orbe {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.15), transparent 70%);
+            border-radius: 50%;
+            filter: blur(40px);
+            z-index: 0;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            position: relative;
+            z-index: 20;
+            padding: 2rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+            background: rgba(5, 10, 20, 0.7);
+            backdrop-filter: blur(10px);
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.1);
+        }
+
+        .title {
+            font-size: clamp(2rem, 8vw, 4.5rem);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            background: linear-gradient(135deg, #fff, #00ffff, #aaffff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 30px #00ffff;
+            margin-bottom: 0.5rem;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #88ffff;
+            letter-spacing: 3px;
+            word-spacing: 8px;
+            text-shadow: 0 0 15px cyan;
+        }
+
+        .terminal-status {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(0, 255, 255, 0.1);
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            border: 1px solid cyan;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .led {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #00ff00;
+            box-shadow: 0 0 15px #00ff00;
+            animation: pulse-glow 2s infinite;
+        }
+
+        /* ===== CONTAINER PRINCIPAL ===== */
+        .container {
+            position: relative;
+            z-index: 20;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ===== BARRE DE RECHERCHE ===== */
+        .search-section {
+            margin-bottom: 3rem;
+        }
+
+        .search-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 20, 40, 0.6);
+            backdrop-filter: blur(5px);
+            border: 1px solid cyan;
+            border-radius: 60px;
+            padding: 0.8rem 1.5rem;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+            transition: all 0.3s;
+        }
+
+        .search-wrapper:focus-within {
+            box-shadow: 0 0 40px cyan;
+            border-color: #ffffff;
+        }
+
+        #searchInput {
+            flex: 2;
+            min-width: 250px;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            padding: 0.8rem;
+            outline: none;
+            font-family: 'Courier New', monospace;
+        }
+
+        #searchInput::placeholder {
+            color: rgba(0, 255, 255, 0.5);
+            font-style: italic;
+        }
+
+        .category-filter {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: rgba(0, 50, 80, 0.7);
+            border: 1px solid #0cf;
+            color: #0cf;
+            padding: 0.6rem 1.5rem;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            backdrop-filter: blur(4px);
+            font-size: 0.9rem;
+        }
+
+        .filter-btn.active {
+            background: cyan;
+            color: black;
+            box-shadow: 0 0 20px cyan;
+        }
+
+        .filter-btn:hover {
+            background: rgba(0, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        /* ===== COMPTEUR ===== */
+        .stats-panel {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 2rem 0 1rem;
+            background: rgba(0, 20, 40, 0.7);
+            backdrop-filter: blur(5px);
+            border: 1px solid #0cf;
+            border-radius: 20px;
+            padding: 1rem 2rem;
+            flex-wrap: wrap;
+        }
+
+        .counter {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .counter span {
+            color: cyan;
+            font-size: 2rem;
+            margin-right: 0.3rem;
+        }
+
+        .reset-btn {
+            background: transparent;
+            border: 1px solid cyan;
+            color: cyan;
+            padding: 0.5rem 2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .reset-btn:hover {
+            background: cyan;
+            color: black;
+            box-shadow: 0 0 20px cyan;
+        }
+
+        /* ===== GRILLE DES CARTES ===== */
+        .commands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.8rem;
+            margin: 2rem 0 4rem;
+        }
+
+        .command-card {
+            background: rgba(10, 20, 40, 0.7);
+            backdrop-filter: blur(8px);
+            border: 1px solid;
+            border-radius: 24px;
+            padding: 1.5rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            animation: border-glow 4s infinite;
+        }
+
+        .command-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 255, 255, 0.3);
+            border-color: #fff;
+        }
+
+        .card-glow {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.2), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+
+        .command-card:hover .card-glow {
+            opacity: 1;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            border-bottom: 1px dashed rgba(0, 255, 255, 0.4);
+            padding-bottom: 0.8rem;
+        }
+
+        .command-name {
+            font-size: 1.7rem;
+            font-weight: 700;
+            font-family: 'Courier New', monospace;
+            color: #ffffff;
+            text-shadow: 0 0 10px cyan;
+            letter-spacing: -0.5px;
+        }
+
+        .command-tag {
+            background: cyan;
+            color: black;
+            padding: 0.3rem 0.8rem;
+            border-radius: 30px;
+            font-weight: 800;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .command-desc {
+            font-size: 1rem;
+            margin: 1rem 0;
+            color: #bbffff;
+            line-height: 1.5;
+            min-height: 3.2rem;
+        }
+
+        .command-example {
+            background: rgba(0, 0, 0, 0.5);
+            border-left: 4px solid cyan;
+            padding: 0.8rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            border-radius: 0 10px 10px 0;
+            color: #aaffff;
+            margin: 1rem 0;
+            white-space: nowrap;
+            overflow-x: auto;
+            transition: 0.2s;
+        }
+
+        .command-example:hover {
+            background: rgba(0, 50, 80, 0.8);
+        }
+
+        .command-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: #7fbfbf;
+            margin-top: 1rem;
+        }
+
+        .copy-btn {
+            background: transparent;
+            border: 1px solid cyan;
+            color: cyan;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: cyan;
+            color: black;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            position: relative;
+            z-index: 20;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            border-top: 1px solid cyan;
+            background: rgba(5, 10, 20, 0.7);
+            backdrop-filter: blur(10px);
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 0.8rem;
+        }
+
+        .footer-links a {
+            color: cyan;
+            text-decoration: none;
+            border-bottom: 1px dotted cyan;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 700px) {
+            .title {
+                font-size: 2.5rem;
+                letter-spacing: 3px;
+            }
+            
+            .commands-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .search-wrapper {
+                border-radius: 30px;
+            }
+            
+            .stats-panel {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .command-name {
+                font-size: 1.3rem;
+            }
+            
+            .filter-btn {
+                padding: 0.4rem 1rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0a1a2a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: cyan;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00aaff;
+        }
+    </style>
+</head>
+<body>
+    <!-- Éléments d'ambiance cyber -->
+    <div class="cyber-grid"></div>
+    <div class="scan-line"></div>
+    <div class="glow-orbe" style="top: 10%; left: 5%;"></div>
+    <div class="glow-orbe" style="bottom: 10%; right: 5%; width: 400px; height: 400px;"></div>
+
+    <header>
+        <h1 class="title">⚡ POWERSHELL NEXUS ⚡</h1>
+        <div class="subtitle">INTERFACE DE COMMANDES FUTURISTE v2.0</div>
+        <div class="terminal-status">
+            <div class="status-item"><span class="led"></span> SYSTÈME: ONLINE</div>
+            <div class="status-item"><span class="led"></span> BASE: 70+ COMMANDES</div>
+            <div class="status-item"><span class="led"></span> SÉCURITÉ: MAX</div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Barre de recherche & filtres -->
+        <div class="search-section">
+            <div class="search-wrapper">
+                <input type="text" id="searchInput" placeholder="Rechercher une commande (ex: Get-Process, network...)">
+                <div class="category-filter" id="categoryFilter">
+                    <button class="filter-btn active" data-cat="all">TOUS</button>
+                    <!-- Les catégories seront générées en JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats et reset -->
+        <div class="stats-panel">
+            <div class="counter"><span id="commandCount">0</span> commandes affichées</div>
+            <button class="reset-btn" id="resetFilters">⭮ RÉINITIALISER</button>
+        </div>
+
+        <!-- Grille des commandes -->
+        <div id="commandsGrid" class="commands-grid">
+            <!-- Rempli par JavaScript -->
+        </div>
+    </div>
+
+    <footer>
+        <div>© 2025 POWERSHELL NEXUS • INTERFACE HOLOGRAPHIQUE</div>
+        <div class="footer-links">
+            <a href="#">CYBER-GUIDE</a>
+            <a href="#">API</a>
+            <a href="#">GITHUB</a>
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            // --------------------------------------------------------------
+            // BASE DE DONNÉES DES COMMANDES (liste enrichie)
+            // --------------------------------------------------------------
+            const commands = [
+                // GESTION FICHIERS
+                { name: "Get-ChildItem", desc: "Liste le contenu d'un dossier (fichiers/dossiers)", example: "Get-ChildItem C:\\Users", category: "fichiers" },
+                { name: "Set-Location", desc: "Change de répertoire (cd)", example: "Set-Location C:\\Windows", category: "fichiers" },
+                { name: "New-Item", desc: "Crée un fichier ou dossier", example: "New-Item -Path 'test.txt' -ItemType File", category: "fichiers" },
+                { name: "Remove-Item", desc: "Supprime un fichier/dossier", example: "Remove-Item C:\\temp\\old.log", category: "fichiers" },
+                { name: "Copy-Item", desc: "Copie des fichiers/dossiers", example: "Copy-Item source.txt destination.txt", category: "fichiers" },
+                { name: "Move-Item", desc: "Déplace ou renomme", example: "Move-Item old.txt new.txt", category: "fichiers" },
+                { name: "Get-Content", desc: "Affiche le contenu d'un fichier", example: "Get-Content C:\\logs\\app.log", category: "fichiers" },
+                { name: "Set-Content", desc: "Écrit du texte dans un fichier", example: "Set-Content test.txt -Value 'Hello'", category: "fichiers" },
+                
+                // RESEAU
+                { name: "Get-NetIPAddress", desc: "Affiche les adresses IP", example: "Get-NetIPAddress -AddressFamily IPv4", category: "reseau" },
+                { name: "Test-Connection", desc: "Ping une machine", example: "Test-Connection google.com -Count 4", category: "reseau" },
+                { name: "Test-NetConnection", desc: "Test complet de connectivité", example: "Test-NetConnection google.com -Port 80", category: "reseau" },
+                { name: "Resolve-DnsName", desc: "Résout un nom DNS", example: "Resolve-DnsName microsoft.com", category: "reseau" },
+                { name: "Get-DnsClientCache", desc: "Affiche le cache DNS", example: "Get-DnsClientCache", category: "reseau" },
+                { name: "Get-NetTCPConnection", desc: "Affiche les connexions TCP", example: "Get-NetTCPConnection -State Established", category: "reseau" },
+                { name: "Get-NetNeighbor", desc: "Affiche la table ARP (voisins)", example: "Get-NetNeighbor -AddressFamily IPv4", category: "reseau" },
+                
+                // PROCESSUS
+                { name: "Get-Process", desc: "Liste les processus en cours", example: "Get-Process | Sort-Object CPU", category: "processus" },
+                { name: "Start-Process", desc: "Démarre un processus", example: "Start-Process notepad.exe", category: "processus" },
+                { name: "Stop-Process", desc: "Arrête un processus", example: "Stop-Process -Name 'notepad' -Force", category: "processus" },
+                
+                // DISQUES
+                { name: "Get-PSDrive", desc: "Liste tous les lecteurs", example: "Get-PSDrive -PSProvider FileSystem", category: "disques" },
+                { name: "Get-Disk", desc: "Affiche les disques physiques", example: "Get-Disk | Where-Object Size -gt 100GB", category: "disques" },
+                { name: "Get-Volume", desc: "Affiche les volumes", example: "Get-Volume | Format-Table DriveLetter", category: "disques" },
+                { name: "Get-Partition", desc: "Affiche les partitions", example: "Get-Partition -DiskNumber 0", category: "disques" },
+                
+                // UTILISATEURS
+                { name: "Get-LocalUser", desc: "Liste les utilisateurs locaux", example: "Get-LocalUser | Where-Object Enabled -eq true", category: "utilisateurs" },
+                { name: "New-LocalUser", desc: "Crée un utilisateur", example: "New-LocalUser -Name 'John' -Password (ConvertTo-SecureString 'Pass' -AsPlainText -Force)", category: "utilisateurs" },
+                { name: "Add-LocalGroupMember", desc: "Ajoute à un groupe", example: "Add-LocalGroupMember -Group 'Administrators' -Member 'John'", category: "utilisateurs" },
+                
+                // SERVICES
+                { name: "Get-Service", desc: "Liste les services", example: "Get-Service | Where-Object Status -eq 'Running'", category: "services" },
+                { name: "Start-Service", desc: "Démarre un service", example: "Start-Service -Name 'Spooler'", category: "services" },
+                { name: "Stop-Service", desc: "Arrête un service", example: "Stop-Service -Name 'Spooler'", category: "services" },
+                { name: "Restart-Service", desc: "Redémarre un service", example: "Restart-Service -Name 'Spooler'", category: "services" },
+                
+                // SYSTEME
+                { name: "Get-ComputerInfo", desc: "Infos complètes sur le PC", example: "Get-ComputerInfo | Select-Object WindowsVersion", category: "systeme" },
+                { name: "Get-CimInstance", desc: "Infos via WMI", example: "Get-CimInstance Win32_BIOS", category: "systeme" },
+                { name: "Get-EventLog", desc: "Lit les journaux d'événements", example: "Get-EventLog -LogName System -Newest 50", category: "systeme" },
+                { name: "Get-HotFix", desc: "Affiche les mises à jour", example: "Get-HotFix | Where-Object InstalledOn -gt '2025-01-01'", category: "systeme" },
+                
+                // SECURITE
+                { name: "Get-ExecutionPolicy", desc: "Affiche la politique d'exécution", example: "Get-ExecutionPolicy", category: "securite" },
+                { name: "Set-ExecutionPolicy", desc: "Modifie la politique", example: "Set-ExecutionPolicy RemoteSigned -Scope CurrentUser", category: "securite" },
+                { name: "Get-WinEvent", desc: "Recherche avancée dans les logs", example: "Get-WinEvent -LogName Security -MaxEvents 10", category: "securite" },
+                { name: "Get-NetFirewallRule", desc: "Liste les règles du firewall", example: "Get-NetFirewallRule | Where-Object Enabled -eq true", category: "securite" },
+                
+                // LOGICIELS
+                { name: "Get-Package", desc: "Liste les logiciels installés", example: "Get-Package | Where-Object Name -like '*Google*'", category: "logiciels" },
+                
+                // UTILITAIRES
+                { name: "Get-Command", desc: "Liste toutes les commandes", example: "Get-Command -Verb Get", category: "utilitaires" },
+                { name: "Get-Help", desc: "Aide sur une commande", example: "Get-Help Get-Process -Detailed", category: "utilitaires" },
+                { name: "Get-Member", desc: "Affiche les propriétés d'un objet", example: "Get-Process | Get-Member", category: "utilitaires" },
+                { name: "Get-Date", desc: "Affiche la date/heure", example: "Get-Date -Format 'yyyy-MM-dd'", category: "utilitaires" },
+                { name: "Where-Object", desc: "Filtre des objets", example: "Get-Service | Where-Object {$_.Status -eq 'Running'}", category: "utilitaires" },
+                { name: "ForEach-Object", desc: "Boucle sur chaque objet", example: "1..10 | ForEach-Object { $_ * $_ }", category: "utilitaires" },
+                { name: "Export-Csv", desc: "Exporte en CSV", example: "Get-Process | Export-Csv process.csv", category: "utilitaires" },
+                { name: "ConvertTo-Json", desc: "Convertit en JSON", example: "Get-Process | ConvertTo-Json", category: "utilitaires" },
+                { name: "Write-Host", desc: "Affiche dans la console", example: "Write-Host 'Hello' -ForegroundColor Green", category: "utilitaires" },
+                
+                // AVANCE
+                { name: "Invoke-Command", desc: "Exécute sur une machine distante", example: "Invoke-Command -ComputerName PC01 -ScriptBlock { Get-Process }", category: "avance" },
+                { name: "Enter-PSSession", desc: "Session interactive distante", example: "Enter-PSSession -ComputerName PC01", category: "avance" },
+                { name: "Start-Job", desc: "Lance un job en arrière-plan", example: "Start-Job -ScriptBlock { Get-Process }", category: "avance" },
+                
+                // ALIAS
+                { name: "ls (alias)", desc: "Alias de Get-ChildItem", example: "ls C:\\", category: "alias" },
+                { name: "dir (alias)", desc: "Alias de Get-ChildItem", example: "dir", category: "alias" },
+                { name: "cd (alias)", desc: "Alias de Set-Location", example: "cd C:\\Windows", category: "alias" },
+                { name: "cp (alias)", desc: "Alias de Copy-Item", example: "cp source.txt dest.txt", category: "alias" },
+                { name: "rm (alias)", desc: "Alias de Remove-Item", example: "rm file.txt", category: "alias" },
+                { name: "cat (alias)", desc: "Alias de Get-Content", example: "cat log.txt", category: "alias" },
+                { name: "ps (alias)", desc: "Alias de Get-Process", example: "ps", category: "alias" },
+                { name: "kill (alias)", desc: "Alias de Stop-Process", example: "kill -Name notepad", category: "alias" },
+                { name: "clear (alias)", desc: "Alias de Clear-Host", example: "clear", category: "alias" },
+            ];
+
+            // --------------------------------------------------------------
+            // ÉTAT DE L'APPLICATION
+            // --------------------------------------------------------------
+            let currentCategory = "all";
+            let searchTerm = "";
+
+            // --------------------------------------------------------------
+            // FONCTIONS D'AFFICHAGE
+            // --------------------------------------------------------------
+            function renderCategories() {
+                const cats = new Set(commands.map(c => c.category));
+                const sortedCats = Array.from(cats).sort();
+                const container = document.getElementById('categoryFilter');
+                
+                let html = `<button class="filter-btn active" data-cat="all">TOUS</button>`;
+                sortedCats.forEach(cat => {
+                    const catUpper = cat.charAt(0).toUpperCase() + cat.slice(1);
+                    html += `<button class="filter-btn" data-cat="${cat}">${catUpper}</button>`;
+                });
+                container.innerHTML = html;
+                
+                // Réattacher les événements
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        currentCategory = btn.dataset.cat;
+                        renderGrid();
+                    });
+                });
+            }
+
+            function filterCommands() {
+                return commands.filter(cmd => {
+                    const matchCategory = currentCategory === "all" || cmd.category === currentCategory;
+                    const matchSearch = searchTerm === "" || 
+                        cmd.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        cmd.desc.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        (cmd.category && cmd.category.toLowerCase().includes(searchTerm.toLowerCase()));
+                    return matchCategory && matchSearch;
+                });
+            }
+
+            function renderGrid() {
+                const filtered = filterCommands();
+                const grid = document.getElementById('commandsGrid');
+                const countSpan = document.getElementById('commandCount');
+                countSpan.textContent = filtered.length;
+
+                if (filtered.length === 0) {
+                    grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:4rem; background:rgba(0,0,0,0.3); border-radius:40px; border:1px solid cyan; font-size:1.5rem;">⛔ AUCUNE COMMANDE TROUVÉE</div>`;
+                    return;
+                }
+
+                let html = '';
+                filtered.forEach(cmd => {
+                    html += `
+                        <div class="command-card">
+                            <div class="card-glow"></div>
+                            <div class="card-header">
+                                <span class="command-name">${cmd.name}</span>
+                                <span class="command-tag">${cmd.category}</span>
+                            </div>
+                            <div class="command-desc">${cmd.desc}</div>
+                            <div class="command-example">❯ ${cmd.example}</div>
+                            <div class="command-footer">
+                                <span>⚡ PowerShell</span>
+                                <button class="copy-btn" data-cmd="${cmd.example}">📋 COPY</button>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                grid.innerHTML = html;
+
+                // Gestion des boutons de copie
+                document.querySelectorAll('.copy-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const cmdText = btn.dataset.cmd;
+                        navigator.clipboard.writeText(cmdText).then(() => {
+                            const original = btn.textContent;
+                            btn.textContent = '✅ COPIÉ';
+                            btn.style.background = '#0cf';
+                            btn.style.color = 'black';
+                            setTimeout(() => {
+                                btn.textContent = original;
+                                btn.style.background = 'transparent';
+                                btn.style.color = '#0cf';
+                            }, 1500);
+                        });
+                    });
+                });
+            }
+
+            // --------------------------------------------------------------
+            // INITIALISATION ET ÉCOUTEURS
+            // --------------------------------------------------------------
+            document.addEventListener('DOMContentLoaded', () => {
+                renderCategories();
+                renderGrid();
+
+                // Recherche
+                document.getElementById('searchInput').addEventListener('input', (e) => {
+                    searchTerm = e.target.value;
+                    renderGrid();
+                });
+
+                // Reset
+                document.getElementById('resetFilters').addEventListener('click', () => {
+                    document.getElementById('searchInput').value = '';
+                    searchTerm = '';
+                    
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelector('.filter-btn[data-cat="all"]').classList.add('active');
+                    currentCategory = 'all';
+                    
+                    renderGrid();
+                });
+
+                // Particules aléatoires (effet futuriste)
+                for (let i = 0; i < 20; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.width = Math.random() * 4 + 'px';
+                    particle.style.height = particle.style.width;
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.top = Math.random() * 100 + '%';
+                    particle.style.animation = `float ${5 + Math.random() * 10}s infinite`;
+                    document.body.appendChild(particle);
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
