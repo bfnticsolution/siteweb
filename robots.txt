@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /cgi-bin/
+
+Sitemap: https://www.nticsolution.org/sitemap.xml
+Crawl-delay: 5
+
+# Protection des fichiers sensibles GitHub
+Disallow: /.git/
+Disallow: /README.md
+Disallow: /LICENSE

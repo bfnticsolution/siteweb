@@ -1,0 +1,62 @@
+{
+    "name": "NTIC Solution - Agence Digitale Banfora",
+    "short_name": "NTIC Solution",
+    "description": "Agence digitale à Banfora, Burkina Faso. Développement web, mobile, marketing digital, conception graphique et formations en informatique.",
+    "start_url": "https://www.nticsolution.org/",
+    "scope": "https://www.nticsolution.org/",
+    "display": "standalone",
+    "orientation": "portrait-primary",
+    "background_color": "#0B3FA5",
+    "theme_color": "#0B3FA5",
+    "lang": "fr-BF",
+    "dir": "ltr",
+    "categories": ["business", "education", "technology"],
+    "icons": [
+        {
+            "src": "https://www.nticsolution.org/favicon-16x16.png",
+            "sizes": "16x16",
+            "type": "image/png"
+        },
+        {
+            "src": "https://www.nticsolution.org/favicon-32x32.png",
+            "sizes": "32x32",
+            "type": "image/png"
+        },
+        {
+            "src": "https://www.nticsolution.org/apple-touch-icon.png",
+            "sizes": "180x180",
+            "type": "image/png",
+            "purpose": "apple touch icon"
+        },
+        {
+            "src": "https://www.nticsolution.org/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "https://www.nticsolution.org/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "https://www.nticsolution.org/screenshot-desktop.png",
+            "sizes": "1280x720",
+            "type": "image/png",
+            "form_factor": "wide",
+            "label": "Page d'accueil NTIC Solution sur desktop"
+        },
+        {
+            "src": "https://www.nticsolution.org/screenshot-mobile.png",
+            "sizes": "750x1334",
+            "type": "image/png",
+            "form_factor": "narrow",
+            "label": "Page d'accueil NTIC Solution sur mobile"
+        }
+    ],
+    "prefer_related_applications": false,
+    "related_applications": []
+}
