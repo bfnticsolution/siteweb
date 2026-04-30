@@ -54,6 +54,11 @@
     <link rel="apple-touch-icon" sizes="180x180" href="https://www.nticsolution.org/apple-touch-icon.png">
     <link rel="manifest" href="https://www.nticsolution.org/site.webmanifest">
 
+    <!-- PWA iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="NTIC Solution">
+
     <!-- Feuilles de style et polices -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -79,7 +84,7 @@
         "employee": [
             {
                 "@type": "Person",
-                "name": "Kevin Sanou",
+                "name": "KEVIN SANOU",
                 "jobTitle": "Lead Développeur Full-Stack & Formateur"
             },
             {
@@ -326,6 +331,150 @@
             color: var(--ntic-white);
         }
 
+        /* === ANIMATIONS AU SCROLL === */
+        .reveal {
+            opacity: 0;
+            transition: all 0.8s ease;
+        }
+
+        .reveal.revealed {
+            opacity: 1;
+        }
+
+        /* Fade Up */
+        .reveal-fade-up {
+            transform: translateY(60px);
+        }
+        .reveal-fade-up.revealed {
+            transform: translateY(0);
+        }
+
+        /* Fade Down */
+        .reveal-fade-down {
+            transform: translateY(-60px);
+        }
+        .reveal-fade-down.revealed {
+            transform: translateY(0);
+        }
+
+        /* Fade Left */
+        .reveal-fade-left {
+            transform: translateX(-60px);
+        }
+        .reveal-fade-left.revealed {
+            transform: translateX(0);
+        }
+
+        /* Fade Right */
+        .reveal-fade-right {
+            transform: translateX(60px);
+        }
+        .reveal-fade-right.revealed {
+            transform: translateX(0);
+        }
+
+        /* Zoom In */
+        .reveal-zoom-in {
+            transform: scale(0.85);
+        }
+        .reveal-zoom-in.revealed {
+            transform: scale(1);
+        }
+
+        /* Zoom Out */
+        .reveal-zoom-out {
+            transform: scale(1.15);
+        }
+        .reveal-zoom-out.revealed {
+            transform: scale(1);
+        }
+
+        /* Rotate */
+        .reveal-rotate {
+            transform: rotate(-5deg) scale(0.9);
+        }
+        .reveal-rotate.revealed {
+            transform: rotate(0) scale(1);
+        }
+
+        /* Délais d'animation */
+        .delay-100 { transition-delay: 0.1s; }
+        .delay-200 { transition-delay: 0.2s; }
+        .delay-300 { transition-delay: 0.3s; }
+        .delay-400 { transition-delay: 0.4s; }
+        .delay-500 { transition-delay: 0.5s; }
+        .delay-600 { transition-delay: 0.6s; }
+        .delay-700 { transition-delay: 0.7s; }
+        .delay-800 { transition-delay: 0.8s; }
+
+        /* === ANIMATIONS HERO === */
+        @keyframes heroTextSlide {
+            0% { opacity: 0; transform: translateY(40px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes heroBtnPop {
+            0% { opacity: 0; transform: scale(0.8); }
+            60% { transform: scale(1.05); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes floatAnimation {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 107, 53, 0.4); }
+            50% { box-shadow: 0 0 0 20px rgba(255, 107, 53, 0); }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes titleGlitch {
+            0%, 100% { text-shadow: none; }
+            2% { text-shadow: 2px 0 var(--ntic-orange), -2px 0 var(--ntic-blue); }
+            4% { text-shadow: -2px 0 var(--ntic-orange), 2px 0 var(--ntic-blue); }
+            6% { text-shadow: none; }
+        }
+
+        @keyframes borderGlow {
+            0%, 100% { border-color: transparent; }
+            50% { border-color: var(--ntic-orange); }
+        }
+
+        @keyframes bounceIn {
+            0% { opacity: 0; transform: scale(0.3); }
+            50% { transform: scale(1.08); }
+            70% { transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes slideInFromRight {
+            0% { opacity: 0; transform: translateX(100px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideInFromLeft {
+            0% { opacity: 0; transform: translateX(-100px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        @keyframes ripple {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(4); opacity: 0; }
+        }
+
         /* Header & Navigation */
         header {
             position: fixed;
@@ -357,6 +506,7 @@
             align-items: center;
             text-decoration: none;
             transition: transform 0.3s ease;
+            animation: slideInFromLeft 0.6s ease-out;
         }
 
         .logo:hover {
@@ -390,7 +540,15 @@
         nav ul li {
             margin-left: 35px;
             position: relative;
+            animation: slideInFromRight 0.6s ease-out;
         }
+
+        nav ul li:nth-child(1) { animation-delay: 0.1s; }
+        nav ul li:nth-child(2) { animation-delay: 0.2s; }
+        nav ul li:nth-child(3) { animation-delay: 0.3s; }
+        nav ul li:nth-child(4) { animation-delay: 0.4s; }
+        nav ul li:nth-child(5) { animation-delay: 0.5s; }
+        nav ul li:nth-child(6) { animation-delay: 0.6s; }
 
         nav ul li a {
             text-decoration: none;
@@ -450,12 +608,24 @@
             overflow: hidden;
         }
 
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255,107,53,0.1), transparent, rgba(11,63,165,0.2));
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            z-index: 1;
+        }
+
         .hero-content {
             position: relative;
             z-index: 2;
             max-width: 900px;
             margin: 0 auto;
-            animation: fadeUp 1s ease-out;
         }
 
         .hero h1 {
@@ -463,12 +633,18 @@
             font-size: clamp(2rem, 6vw, 3.5rem);
             margin-bottom: 20px;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            animation: heroTextSlide 0.8s ease-out;
+        }
+
+        .hero h1:hover {
+            animation: titleGlitch 0.3s ease;
         }
 
         .hero p {
             font-size: clamp(1rem, 3vw, 1.3rem);
             margin-bottom: 35px;
-            opacity: 0.9;
+            opacity: 0;
+            animation: heroTextSlide 0.8s ease-out 0.3s forwards;
         }
 
         .hero-btns {
@@ -481,7 +657,52 @@
 
         .hero-btns .btn {
             min-width: 200px;
+            opacity: 0;
         }
+
+        .hero-btns .btn:nth-child(1) {
+            animation: heroBtnPop 0.6s ease-out 0.6s forwards;
+        }
+
+        .hero-btns .btn:nth-child(2) {
+            animation: heroBtnPop 0.6s ease-out 0.9s forwards;
+        }
+
+        .hero-btns .btn:hover {
+            animation: pulseGlow 1.5s infinite;
+        }
+
+        /* Floating particles */
+        .hero-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .hero-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: floatAnimation 6s ease-in-out infinite;
+        }
+
+        .hero-particle:nth-child(1) { left: 10%; top: 20%; animation-delay: 0s; animation-duration: 6s; }
+        .hero-particle:nth-child(2) { left: 25%; top: 60%; animation-delay: 1s; animation-duration: 7s; }
+        .hero-particle:nth-child(3) { left: 40%; top: 30%; animation-delay: 2s; animation-duration: 5s; }
+        .hero-particle:nth-child(4) { left: 55%; top: 70%; animation-delay: 0.5s; animation-duration: 8s; }
+        .hero-particle:nth-child(5) { left: 70%; top: 40%; animation-delay: 1.5s; animation-duration: 6.5s; }
+        .hero-particle:nth-child(6) { left: 85%; top: 50%; animation-delay: 3s; animation-duration: 7.5s; }
+        .hero-particle:nth-child(7) { left: 15%; top: 80%; animation-delay: 2.5s; animation-duration: 5.5s; }
+        .hero-particle:nth-child(8) { left: 50%; top: 10%; animation-delay: 0.8s; animation-duration: 9s; }
+        .hero-particle:nth-child(9) { left: 75%; top: 15%; animation-delay: 3.5s; animation-duration: 6.2s; }
+        .hero-particle:nth-child(10) { left: 30%; top: 45%; animation-delay: 1.2s; animation-duration: 7.8s; }
 
         /* Services Section */
         .services {
@@ -509,12 +730,29 @@
             position: relative;
             overflow: hidden;
             border-top: 4px solid transparent;
+            cursor: pointer;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,107,53,0.05), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
         }
 
         .service-card:hover {
             transform: translateY(-15px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
             border-top: 4px solid var(--ntic-orange);
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
         }
 
         .service-icon {
@@ -528,19 +766,42 @@
             justify-content: center;
             font-size: 2.2rem;
             color: var(--ntic-blue);
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
+            position: relative;
+            z-index: 1;
         }
 
         .service-card:hover .service-icon {
-            transform: scale(1.1);
+            transform: scale(1.1) rotate(5deg);
             background-color: var(--ntic-orange);
             color: var(--ntic-white);
+            animation: bounceIn 0.5s ease;
         }
 
         .service-btn {
             margin-top: 20px;
             padding: 10px 25px;
             font-size: 0.9rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .service-btn:hover::after {
+            width: 300px;
+            height: 300px;
         }
 
         /* Equipe Section */
@@ -578,7 +839,8 @@
         .team-card:hover {
             transform: translateY(-12px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
-            border-color: rgba(255, 107, 53, 0.2);
+            border-color: rgba(255, 107, 53, 0.3);
+            animation: borderGlow 1.5s infinite;
         }
 
         .team-badge {
@@ -592,6 +854,7 @@
             padding: 4px 10px;
             border-radius: 20px;
             letter-spacing: 0.5px;
+            z-index: 1;
         }
 
         .team-avatar {
@@ -607,11 +870,28 @@
             font-size: 3rem;
             font-weight: 700;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            position: relative;
+        }
+
+        .team-avatar::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            transition: all 0.4s ease;
         }
 
         .team-card:hover .team-avatar {
-            transform: scale(1.05);
+            transform: scale(1.08);
+            box-shadow: 0 15px 30px rgba(255, 107, 53, 0.3);
+        }
+
+        .team-card:hover .team-avatar::after {
+            border-color: var(--ntic-orange);
+            animation: pulseGlow 2s infinite;
         }
 
         .team-card h3 {
@@ -661,7 +941,7 @@
         .team-social a:hover {
             background-color: var(--ntic-orange);
             color: white;
-            transform: translateY(-3px);
+            transform: translateY(-3px) rotate(360deg);
         }
 
         /* Localisation Maps */
@@ -685,6 +965,12 @@
             z-index: 1;
             max-width: 300px;
             width: calc(100% - 40px);
+            transition: all 0.3s ease;
+        }
+
+        .map-overlay:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
         }
 
         /* Contact Section */
@@ -711,12 +997,25 @@
             padding: 40px;
             border-radius: 12px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .contact-info:hover, .contact-form:hover {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
         }
 
         .contact-item {
             display: flex;
             align-items: flex-start;
             margin-bottom: 30px;
+            transition: all 0.3s ease;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .contact-item:hover {
+            background-color: var(--ntic-gray);
+            transform: translateX(5px);
         }
 
         .contact-icon {
@@ -731,6 +1030,12 @@
             color: var(--ntic-blue);
             font-size: 1.4rem;
             flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover .contact-icon {
+            background-color: var(--ntic-orange);
+            color: white;
         }
 
         .social-links {
@@ -756,6 +1061,7 @@
         .social-link:hover {
             transform: translateY(-5px);
             background-color: var(--ntic-orange);
+            animation: bounceIn 0.5s ease;
         }
 
         /* Formulaires */
@@ -789,6 +1095,7 @@
             outline: none;
             border-color: var(--ntic-orange);
             box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.2);
+            transform: translateY(-2px);
         }
 
         select.form-control {
@@ -831,7 +1138,7 @@
             max-width: 500px;
             width: 100%;
             position: relative;
-            animation: modalSlideUp 0.3s ease-out;
+            animation: bounceIn 0.4s ease-out;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             max-height: 90vh;
             overflow-y: auto;
@@ -910,6 +1217,7 @@
         .notification-close:hover {
             background-color: rgba(0, 0, 0, 0.05);
             color: var(--ntic-orange);
+            transform: rotate(90deg);
         }
 
         /* Modal d'inscription */
@@ -940,7 +1248,7 @@
             width: 100%;
             text-align: center;
             position: relative;
-            animation: modalAppear 0.3s ease-out;
+            animation: bounceIn 0.5s ease-out;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
             max-height: 90vh;
             overflow-y: auto;
@@ -1020,6 +1328,11 @@
 
         .footer-links ul li, .footer-services ul li {
             margin-bottom: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links ul li:hover, .footer-services ul li:hover {
+            transform: translateX(8px);
         }
 
         .footer-links ul li a, .footer-services ul li a {
@@ -1085,9 +1398,8 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             display: flex;
             align-items: center;
-            animation: toastSlideIn 0.3s ease-out;
-            transform: translateX(400px);
-            transition: transform 0.3s ease;
+            animation: slideInFromRight 0.4s ease-out;
+            transition: all 0.3s ease;
         }
 
         .toast.show {
@@ -1160,11 +1472,13 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             border-left: 4px solid var(--ntic-orange);
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .faq-item:hover {
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            transform: translateX(5px);
+            transform: translateX(8px);
+            border-left-width: 8px;
         }
 
         .faq-item h3 {
@@ -1202,6 +1516,24 @@
         .footer-seo-links a:hover {
             color: white;
             text-decoration: underline;
+        }
+
+        /* === MICRO-INTERACTIONS SUPPLEMENTAIRES === */
+        .clickable-ripple {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ripple-effect {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.4);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+
+        .shake-on-error {
+            animation: shake 0.5s ease;
         }
 
         /* Animations */
@@ -1447,13 +1779,27 @@
 
     <!-- Hero Section -->
     <section class="hero" id="hero">
+        <!-- Particules flottantes -->
+        <div class="hero-particles">
+            <div class="hero-particle"></div>
+            <div class="hero-particle"></div>
+            <div class="hero-particle"></div>
+            <div class="hero-particle"></div>
+            <div class="hero-particle"></div>
+            <div class="hero-particle"></div>
+            <div class="hero-particle"></div>
+            <div class="hero-particle"></div>
+            <div class="hero-particle"></div>
+            <div class="hero-particle"></div>
+        </div>
+        
         <div class="container">
             <div class="hero-content">
                 <h1>Votre Partenaire Digital au Burkina Faso</h1>
                 <p>NTIC Solution transforme vos idées en expériences digitales puissantes. Développement web et mobile, marketing digital sur mesure et formations expertes pour propulser votre entreprise à Banfora, Bobo-Dioulasso, Ouagadougou et dans toute l'Afrique de l'Ouest.</p>
                 <div class="hero-btns">
-                    <a href="#services" class="btn">Découvrir nos services</a>
-                    <a href="#contact" class="btn btn-outline">Nous contacter</a>
+                    <a href="#services" class="btn clickable-ripple">Découvrir nos services</a>
+                    <a href="#contact" class="btn btn-outline clickable-ripple">Nous contacter</a>
                 </div>
             </div>
         </div>
@@ -1462,46 +1808,46 @@
     <!-- Services Section -->
     <section class="services" id="services">
         <div class="container">
-            <h2>Nos Services</h2>
-            <p style="text-align: center; max-width: 800px; margin: 0 auto 30px;">Nous offrons une gamme complète de services digitaux conçus pour répondre aux besoins spécifiques des entreprises burkinabè et africaines.</p>
+            <h2 class="reveal reveal-fade-up">Nos Services</h2>
+            <p class="reveal reveal-fade-up delay-200" style="text-align: center; max-width: 800px; margin: 0 auto 30px;">Nous offrons une gamme complète de services digitaux conçus pour répondre aux besoins spécifiques des entreprises burkinabè et africaines.</p>
             
             <div class="services-grid">
-                <div class="service-card">
+                <div class="service-card reveal reveal-zoom-in delay-100">
                     <div class="service-icon"><i class="fas fa-code"></i></div>
                     <h3>Développement Web</h3>
                     <p>Création de sites web vitrines, e-commerce et applications web sur mesure, optimisés pour le marché local et international. Sites rapides, responsive et bien référencés.</p>
                     <a href="#contact" class="btn service-btn">Demander un devis</a>
                 </div>
                 
-                <div class="service-card">
+                <div class="service-card reveal reveal-zoom-in delay-200">
                     <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
                     <h3>Développement Mobile</h3>
                     <p>Applications natives (iOS/Android) et cross-platform adaptées aux usages mobiles croissants en Afrique. Solutions mobiles performantes et intuitives.</p>
                     <a href="#contact" class="btn service-btn">Demander un devis</a>
                 </div>
                 
-                <div class="service-card">
+                <div class="service-card reveal reveal-zoom-in delay-300">
                     <div class="service-icon"><i class="fas fa-bullhorn"></i></div>
                     <h3>Marketing Digital</h3>
                     <p>Stratégie de présence en ligne, campagnes publicitaires ciblées et analyse de performance pour maximiser votre ROI sur Facebook, Instagram, Google et TikTok.</p>
                     <a href="#contact" class="btn service-btn">Demander un devis</a>
                 </div>
                 
-                <div class="service-card">
+                <div class="service-card reveal reveal-zoom-in delay-400">
                     <div class="service-icon"><i class="fas fa-palette"></i></div>
                     <h3>Conception Graphique</h3>
                     <p>Identité visuelle complète, logos professionnels, supports print et digital, designs UI/UX pour applications et sites web modernes.</p>
                     <a href="#contact" class="btn service-btn">Demander un devis</a>
                 </div>
                 
-                <div class="service-card">
+                <div class="service-card reveal reveal-zoom-in delay-500">
                     <div class="service-icon"><i class="fas fa-graduation-cap"></i></div>
                     <h3>Formation en Informatique</h3>
                     <p>Formations pratiques en développement web, marketing digital, community management et bureautique avancée à Banfora et en ligne.</p>
                     <a href="#contact" class="btn service-btn">Demander un devis</a>
                 </div>
                 
-                <div class="service-card">
+                <div class="service-card reveal reveal-zoom-in delay-600">
                     <div class="service-icon"><i class="fas fa-users"></i></div>
                     <h3>Community Management</h3>
                     <p>Gestion complète de votre présence sur les réseaux sociaux, création de contenu engageant et animation de communauté pour développer votre marque.</p>
@@ -1514,14 +1860,14 @@
     <!-- Équipe Section -->
     <section class="team" id="team">
         <div class="container">
-            <h2>Notre Équipe d'Experts</h2>
-            <p class="team-intro">Des professionnels passionnés et expérimentés, unis pour transformer votre vision digitale en réalité au Burkina Faso.</p>
+            <h2 class="reveal reveal-fade-up">Notre Équipe d'Experts</h2>
+            <p class="team-intro reveal reveal-fade-up delay-200">Des professionnels passionnés et expérimentés, unis pour transformer votre vision digitale en réalité au Burkina Faso.</p>
             
             <div class="team-grid">
-                <div class="team-card">
+                <div class="team-card reveal reveal-fade-left delay-100">
                     <div class="team-badge">Expert Technique</div>
                     <div class="team-avatar">KS</div>
-                    <h3>KKEVIN SANOU</h3>
+                    <h3>KEVIN SANOU</h3>
                     <div class="team-specialty">Lead Développeur Full-Stack & Formateur</div>
                     <p>Expert en architectures web modernes avec plus de 8 ans d'expérience. Fondateur de NTIC Solution, il forme la nouvelle génération de développeurs au Burkina Faso.</p>
                     <div class="team-social">
@@ -1531,12 +1877,12 @@
                     </div>
                 </div>
                 
-                <div class="team-card">
+                <div class="team-card reveal reveal-fade-up delay-300">
                     <div class="team-badge">Stratège</div>
                     <div class="team-avatar">TS</div>
                     <h3>TENIN SOMA</h3>
                     <div class="team-specialty">Spécialiste Marketing Digital</div>
-                    <p>Stratège en communication digitale, il conçoit des campagnes performantes adaptées au marché burkinabè et ouest-africain. Expert en acquisition et growth hacking.</p>
+                    <p>Stratège en communication digitale, elle conçoit des campagnes performantes adaptées au marché burkinabè et ouest-africain. Experte en acquisition et growth hacking.</p>
                     <div class="team-social">
                         <a href="#" aria-label="LinkedIn Tenin Soma"><i class="fab fa-linkedin-in"></i></a>
                         <a href="#" aria-label="Facebook Tenin Soma"><i class="fab fa-facebook-f"></i></a>
@@ -1544,7 +1890,7 @@
                     </div>
                 </div>
                 
-                <div class="team-card">
+                <div class="team-card reveal reveal-fade-up delay-500">
                     <div class="team-badge">Créative</div>
                     <div class="team-avatar">LS</div>
                     <h3>LEON SANOU</h3>
@@ -1557,7 +1903,7 @@
                     </div>
                 </div>
                 
-                <div class="team-card">
+                <div class="team-card reveal reveal-fade-right delay-700">
                     <div class="team-badge">Finance & Gestion</div>
                     <div class="team-avatar">TF</div>
                     <h3>TRAORE FRANCOISE</h3>
@@ -1576,10 +1922,10 @@
     <!-- Localisation Section -->
     <section class="localisation" id="localisation">
         <div class="container">
-            <h2>Notre Localisation</h2>
-            <p style="text-align: center; max-width: 800px; margin: 0 auto 30px;">Venez nous rencontrer à notre siège situé au cœur de Banfora, dans le secteur 15, quartier Tatana. Nous intervenons dans tout le Burkina Faso.</p>
+            <h2 class="reveal reveal-fade-up">Notre Localisation</h2>
+            <p class="reveal reveal-fade-up delay-200" style="text-align: center; max-width: 800px; margin: 0 auto 30px;">Venez nous rencontrer à notre siège situé au cœur de Banfora, dans le secteur 15, quartier Tatana. Nous intervenons dans tout le Burkina Faso.</p>
             
-            <div class="map-container">
+            <div class="map-container reveal reveal-zoom-in delay-400">
                 <div class="map-overlay">
                     <h4>NTIC Solution</h4>
                     <p><i class="fas fa-map-marker-alt"></i> Secteur 15, Quartier Tatana<br>Banfora, Burkina Faso</p>
@@ -1603,11 +1949,11 @@
     <!-- Contact Section -->
     <section class="contact" id="contact">
         <div class="container">
-            <h2>Contactez-Nous</h2>
-            <p style="text-align: center; max-width: 800px; margin: 0 auto 30px;">Discutons de votre projet digital et trouvons ensemble la solution qui correspond à vos objectifs au Burkina Faso.</p>
+            <h2 class="reveal reveal-fade-up">Contactez-Nous</h2>
+            <p class="reveal reveal-fade-up delay-200" style="text-align: center; max-width: 800px; margin: 0 auto 30px;">Discutons de votre projet digital et trouvons ensemble la solution qui correspond à vos objectifs au Burkina Faso.</p>
             
             <div class="contact-container">
-                <div class="contact-info">
+                <div class="contact-info reveal reveal-fade-left delay-300">
                     <h3>Nos Coordonnées</h3>
                     
                     <div class="contact-item">
@@ -1644,14 +1990,14 @@
                     
                     <h4 style="margin-top: 30px;">Suivez-nous</h4>
                     <div class="social-links">
-                        <a href="#" class="social-link" aria-label="Facebook NTIC Solution"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social-link" aria-label="Instagram NTIC Solution"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-link" aria-label="LinkedIn NTIC Solution"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" class="social-link" aria-label="Twitter NTIC Solution"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.facebook.com/bfnticsolution" class="social-link" aria-label="Facebook NTIC Solution"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/bfnticsolution" class="social-link" aria-label="Instagram NTIC Solution"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/company/bfnticsolution" class="social-link" aria-label="LinkedIn NTIC Solution"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://twitter.com/bfnticsolution" class="social-link" aria-label="Twitter NTIC Solution"><i class="fab fa-twitter"></i></a>
                     </div>
                 </div>
                 
-                <div class="contact-form">
+                <div class="contact-form reveal reveal-fade-right delay-500">
                     <h3>Envoyez-nous un message</h3>
                     <p style="color: #666; font-size: 0.9rem; margin-bottom: 20px;">
                         <i class="fas fa-info-circle"></i> Inscrivez-vous gratuitement pour nous contacter.
@@ -1694,7 +2040,6 @@
                                 <option value="500-1000">500 000 - 1 000 000 FCFA</option>
                                 <option value="1000-2000">1 000 000 - 2 000 000 FCFA</option>
                                 <option value="2000+">Plus de 2 000 000 FCFA</option>
-                                
                             </select>
                         </div>
                         
@@ -1703,7 +2048,7 @@
                             <textarea id="message" class="form-control" rows="5" required placeholder="Décrivez votre projet en détail..."></textarea>
                         </div>
                         
-                        <button type="submit" class="btn" style="width: 100%;">
+                        <button type="submit" class="btn clickable-ripple" style="width: 100%;">
                             <i class="fab fa-whatsapp"></i> Envoyer via WhatsApp
                         </button>
                     </form>
@@ -1715,46 +2060,46 @@
     <!-- Section FAQ SEO Structurée -->
     <section class="faq-section" itemscope itemtype="https://schema.org/FAQPage">
         <div class="container">
-            <h2>Questions Fréquentes sur NTIC Solution</h2>
-            <p style="text-align: center; max-width: 800px; margin: 0 auto 30px; color: var(--ntic-gray-dark);">Tout ce que vous devez savoir sur notre agence digitale à Banfora, Burkina Faso.</p>
+            <h2 class="reveal reveal-fade-up">Questions Fréquentes sur NTIC Solution</h2>
+            <p class="reveal reveal-fade-up delay-200" style="text-align: center; max-width: 800px; margin: 0 auto 30px; color: var(--ntic-gray-dark);">Tout ce que vous devez savoir sur notre agence digitale à Banfora, Burkina Faso.</p>
             
             <div class="faq-grid">
-                <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                <div class="faq-item reveal reveal-fade-left delay-100" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
                     <h3 itemprop="name">Qu'est-ce que NTIC Solution et où se trouve l'agence ?</h3>
                     <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
                         <p itemprop="text">NTIC Solution est une agence digitale basée à <strong>Banfora, secteur 15, quartier Tatana, au Burkina Faso</strong>. Nous proposons des services de développement web, développement mobile, marketing digital, conception graphique, formation en informatique et community management pour les entreprises du Burkina Faso et de l'Afrique de l'Ouest (Bobo-Dioulasso, Ouagadougou, Sikasso, Korhogo). Notre site officiel est <strong>nticsolution.org</strong>.</p>
                     </div>
                 </div>
 
-                <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                <div class="faq-item reveal reveal-fade-left delay-200" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
                     <h3 itemprop="name">Comment contacter NTIC Solution pour un devis gratuit ?</h3>
                     <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
                         <p itemprop="text">Contactez-nous par téléphone au <strong>+226 05 58 58 68</strong> (appels) ou <strong>+226 69 69 69 24</strong> (WhatsApp). Par email à <strong>nticsolution.bf@gmail.com</strong>. Vous pouvez aussi remplir notre formulaire de contact sur <strong>nticsolution.org</strong>. Nous sommes ouverts du lundi au vendredi de 8h à 18h et le samedi de 9h à 13h.</p>
                     </div>
                 </div>
 
-                <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                <div class="faq-item reveal reveal-fade-left delay-300" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
                     <h3 itemprop="name">Quels sont les services proposés par NTIC Solution à Banfora ?</h3>
                     <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
                         <p itemprop="text">Nous proposons 6 services principaux : développement web (sites vitrines, e-commerce), développement mobile (iOS/Android), marketing digital (référencement SEO, campagnes sponsorisées), conception graphique (logos, charte graphique), formations en informatique (développement web, bureautique) et community management (gestion de réseaux sociaux Facebook, Instagram, TikTok).</p>
                     </div>
                 </div>
 
-                <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                <div class="faq-item reveal reveal-fade-left delay-400" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
                     <h3 itemprop="name">Qui est le fondateur de NTIC Solution ?</h3>
                     <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-                        <p itemprop="text">NTIC Solution a été fondée par <strong>KEVIN KIESSE SANOU</strong>, développeur full-stack et formateur basé à Banfora, Burkina Faso. Il dirige une équipe de 4 experts : Leon Sanou (marketing digital), LEON SANOU (design UI/UX) et TRAORE FRANCOISE (comptabilité et gestion financière).</p>
+                        <p itemprop="text">NTIC Solution a été fondée par <strong>KEVIN KIESSE SANOU</strong>, développeur full-stack et formateur basé à Banfora, Burkina Faso. Il dirige une équipe de 4 experts : TENIN SOMA (marketing digital), LEON SANOU (design UI/UX) et TRAORE FRANCOISE (comptabilité et gestion financière).</p>
                     </div>
                 </div>
 
-                <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                <div class="faq-item reveal reveal-fade-left delay-500" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
                     <h3 itemprop="name">Comment se former au développement web avec NTIC Solution ?</h3>
                     <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
                         <p itemprop="text">NTIC Solution propose des formations pratiques en développement web, marketing digital et bureautique à Banfora. Nos formations sont conçues pour les débutants et les professionnels souhaitant acquérir des compétences numériques recherchées au Burkina Faso. Contactez-nous pour le calendrier et les programmes disponibles. Possibilité de formation en ligne.</p>
                     </div>
                 </div>
 
-                <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                <div class="faq-item reveal reveal-fade-left delay-600" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
                     <h3 itemprop="name">NTIC Solution intervient-elle dans d'autres villes du Burkina Faso ?</h3>
                     <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
                         <p itemprop="text">Oui, bien que notre siège soit à Banfora, nous intervenons à <strong>Bobo-Dioulasso, Ouagadougou, Koudougou, Ouahigouya</strong> et dans toute la région des Cascades. Nous travaillons également avec des clients au Mali (Sikasso) et en Côte d'Ivoire (Korhogo). Nos services digitaux sont accessibles partout en Afrique de l'Ouest.</p>
@@ -1855,6 +2200,47 @@
 
     <!-- Scripts -->
     <script>
+        // ==================== REVEAL ON SCROLL ====================
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.reveal');
+            const windowHeight = window.innerHeight;
+            const revealPoint = 100; // px avant le bas de l'écran
+            
+            reveals.forEach(reveal => {
+                const revealTop = reveal.getBoundingClientRect().top;
+                if (revealTop < windowHeight - revealPoint) {
+                    reveal.classList.add('revealed');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+        // Premier déclenchement après chargement
+        setTimeout(revealOnScroll, 300);
+
+        // ==================== RIPPLE EFFECT ====================
+        document.querySelectorAll('.clickable-ripple').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                ripple.classList.add('ripple-effect');
+                
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+
+        // ==================== APP SCRIPT & FORM ====================
         const APP_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwS7SQpJjbLAZBAJKBhTi7c_gCcyKPkfOAevpUk6oQuWSe6lU2yHiQ0eHLHq1f-UkLP3Q/exec';
         
         // Éléments DOM
@@ -1941,6 +2327,12 @@
             setTimeout(() => registerModal.style.display = 'none', 300);
         }
 
+        // Shake animation on form error
+        function shakeElement(el) {
+            el.classList.add('shake-on-error');
+            setTimeout(() => el.classList.remove('shake-on-error'), 500);
+        }
+
         contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const name = document.getElementById('name').value.trim();
@@ -1951,12 +2343,14 @@
             
             if (!name || !email || !phone || !service || !message) {
                 showNotification('Champs requis', 'Veuillez remplir tous les champs obligatoires (*).', 'warning');
+                shakeElement(contactForm);
                 return;
             }
             
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
                 showNotification('Email invalide', 'Veuillez entrer une adresse email valide.', 'warning');
+                shakeElement(document.getElementById('email'));
                 return;
             }
             
@@ -1984,7 +2378,11 @@
             const name = document.getElementById('regName').value.trim();
             const email = document.getElementById('regEmail').value.trim();
             const phone = document.getElementById('regPhone').value.trim();
-            if (!name || !email || !phone) { showNotification('Champs requis', 'Veuillez remplir tous les champs.', 'warning'); return; }
+            if (!name || !email || !phone) { 
+                showNotification('Champs requis', 'Veuillez remplir tous les champs.', 'warning'); 
+                shakeElement(registerForm);
+                return; 
+            }
             showLoading();
             try {
                 const response = await fetch(APP_SCRIPT_URL, { method: 'POST', body: JSON.stringify({ action: 'register', name, email, phone }) });
@@ -2028,7 +2426,8 @@
                     'community': 'Community Management' 
                 };
                 const budgetNames = { 
-                    '0-500': '0 - 500 000 FCFA', 
+                    '0-100': '0 - 100 000 FCFA',
+                    '100-500': '100 000 - 500 000 FCFA',
                     '500-1000': '500 000 - 1 000 000 FCFA', 
                     '1000-2000': '1 000 000 - 2 000 000 FCFA', 
                     '2000+': 'Plus de 2 000 000 FCFA' 
